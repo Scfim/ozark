@@ -1,0 +1,24 @@
+.textBoxStyle{
+    height: 40px;
+    outline: none;
+    background: none;
+    font-size: 17px;
+
+}
+.textBoxStyle::placeholder{
+    font-size: 17px;
+}
+.textBoxStyles{
+    width: 40px;
+}
+.textBoxInitial{
+    border: 2px solid transparent;
+}
+.textBoxInitial:hover{
+    border-color: #38acec;
+    color: #38acec;
+    font-weight: 400;
+}
+.textBoxInitial:hover > svg{
+    color: #38acec;
+}

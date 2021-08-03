@@ -1,0 +1,29 @@
+
+.primaryColor{
+    color: #38acec;
+}
+.primaryBg{
+    background: #38acec;
+}
+.primary-border{
+    border-color: #38acec;
+}
+.borderPrimaryBottom{
+    color: #38acec;
+    border-bottom: 2px solid #38acec;
+    font-size: 20px;
+    font-weight: 500;
+}
+.primary-outline{
+    outline: #38acec;
+}
+.contextError{
+    border: 2px solid #ff4747;
+}
+.error{
+    color: #ff4747;
+}
+
+.easeAllInOut{
+    transition: ease-in-out all 2s height ;
+}
