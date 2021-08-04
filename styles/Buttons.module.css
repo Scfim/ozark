@@ -1,0 +1,17 @@
+.buttonInitStyle{
+    height: 40px;
+    outline: none;
+    background: #38acec;
+    color: white;
+    padding: 2px 5px;
+    font-size: 19px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid transparent;
+}
+.buttonInitStyle:hover, .buttonInitStyle:focus{
+    box-shadow: #38adec7c 0px 0px 0px 3px;
+    background: #0da2f8;
+    outline: none;
+}
