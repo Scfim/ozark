@@ -32,8 +32,8 @@ export default function signup() {
     event.preventDefault();
     useLogin(username, password).then((res) => console.log(res));
   };
-  const getPhoto = ()=>{
-    
+  const getPhoto = (image)=>{
+console.log(image)
   }
   return (
     <>

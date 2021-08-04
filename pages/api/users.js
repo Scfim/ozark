@@ -1,5 +1,4 @@
 import axios from "axios"
-import {server} from "../../constants/common"
 import { post_login, post_signup } from "../../constants/users"
 
 export const useLogin = (username, password) =>{

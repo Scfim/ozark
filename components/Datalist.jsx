@@ -6,11 +6,19 @@ import {
 } from "../styles/TextBoxes.module.css";
 import PropTypes from "prop-types";
 
-function DataList({ type, icon, placeholder, name, value, event, options }) {
+function DataList({
+  icon,
+  placeholder,
+  name,
+  value,
+  event,
+  options,
+  style,
+}) {
   return (
     <>
       <div
-        className={`bg-blue-50 w-full rounded-md my-2 h-26 flex justify-around items-center ${textBoxWrapper} ${textBoxInitial}`}
+        className={`bg-blue-50 ${style} w-full rounded-md my-2 h-26 flex justify-around items-center ${textBoxWrapper} ${textBoxInitial}`}
       >
         <span className="w-6 ml-1 text-gray-600">{icon}</span>
         <input
@@ -47,6 +55,7 @@ DataList.defaultProps = {
   },
   icon: undefined,
   options: [{}],
+  style: "",
 };
 
 DataList.propTypes = {
@@ -56,6 +65,7 @@ DataList.propTypes = {
   event: PropTypes.func.isRequired,
   icon: PropTypes.any,
   options: PropTypes.array.isRequired,
+  style: PropTypes.string,
 };
 
 export default DataList;
