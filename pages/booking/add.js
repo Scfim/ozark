@@ -4,6 +4,8 @@ import {
   FaCheckCircle,
   FaComment,
   FaDollarSign,
+  FaMinus,
+  FaPlusCircle,
   FaPollH,
   FaSortNumericUp,
   FaUser,
@@ -18,14 +20,7 @@ import { useAddBooking } from "../api/booking";
 
 export default function add() {
   const [
-    {
-      product,
-      customer,
-      comment,
-      daysDate,
-      quantity,
-      initialPrice,
-    },
+    { product, customer, comment, daysDate, quantity, initialPrice },
     handleChange,
   ] = useForm({
     customer: "",
@@ -49,8 +44,8 @@ export default function add() {
   return (
     <>
       <Headers title="Umarps Shop Manager | Enregister une commande" />
-      <div className="grid h-screen place-items-center w-full mx-auto md:w-9/12">
-        <div className="md:border-2 md:border-gray-100 rounded w-11/12 py-4 md:w-8/12 grid place-items-center">
+      <div className="grid h-screen my-auto grid-cols-6 w-full mx-auto">
+        <div className=" md:col-span-2 h-2/3 my-auto py-4 grid place-items-center">
           <HeadSection
             leader="Umarps Shop Manager"
             follower="Ajouter une commande "
@@ -90,13 +85,13 @@ export default function add() {
                 icon={<FaDollarSign />}
               />
             </div>
-              <TextBox
-                type="date"
-                style="md:mr-1"
-                event={handleChange}
-                value={daysDate}
-                name="daysDate"
-              />
+            <TextBox
+              type="date"
+              style="md:mr-1"
+              event={handleChange}
+              value={daysDate}
+              name="daysDate"
+            />
             <TextBox
               event={handleChange}
               placeholder="Commentaire"
@@ -107,11 +102,38 @@ export default function add() {
             <div className="flex justify-between ">
               <p className="mt-5 text-lg">Annuler</p>
               <Button event={onHandleAddInput} design="mt-3">
-                <FaCheckCircle className="mt-1" />
-                <span className="ml-1">Enregistrer</span>
+                <FaPlusCircle className="mt-1" />
+                <span className="ml-1">Ajouter</span>
               </Button>
             </div>
           </form>
+        </div>
+        <div className="col-span-4 flex justify-center my-auto h-9/12">
+          <table className="table-auto w-10/12 border">
+            <thead>
+              <tr>
+                <th className="border w-1/6">Quantité</th>
+                <th className="border w-2/6">Produit</th>
+                <th className="border w-1/6">Prix Unitaire</th>
+                <th className="border w-1/6">Prix total</th>
+                <th className="border w-1/6"></th>
+              </tr>
+            </thead>
+            <tbody>
+             
+              <tr className="text-center border">
+                <td className="border">45</td>
+                <td className="border">Adam</td>
+                <td className="border">Intro to CSS</td>
+                <td className="border">858</td>
+                <td className="grid place-items-center">
+                  <button className="w-7 h-7 rounded focus:ring-2 focus:outline-none border-none focus:ring-red-600 bg-red-500 cursor-pointer text-white grid place-items-center">
+                    <FaMinus />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </>
