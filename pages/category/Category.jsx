@@ -16,9 +16,7 @@ const Caterory = ({ state }) => {
           setTypecategory(e.target.value);
      };
 
-     function AddCategory() {
-
-     }
+     function AddCategory() {     }
 
      return <div className={`${state} flex flex-row justify-center items-start w-full h-screen`}>
           <div className={`flex flex-col`}>
