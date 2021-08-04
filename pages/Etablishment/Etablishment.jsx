@@ -8,69 +8,36 @@ import Router from 'next/router'
 
 const NewProduct = () => {
 
-     const [designation, setDesignation] = useState("");
-     const onDesignation = (e) => {
-          setDesignation(e.target.value);
+     const [shop, setShop] = useState("");
+     const onSetShop = (e) => {
+          setShop(e.target.value);
      };
-     const [dosage, setDosage] = useState("");
-     const onDosage = (e) => {
-          setDosage(e.target.value);
+     const [mailAddress, setMailAdress] = useState("");
+     const onSetAdressmail = (e) => {
+          setMailAdress(e.target.value);
      };
-     const [forme, setForme] = useState("");
-     const onForme = (e) => {
-          setForme(e.target.value);
+     const [phone, setPhone] = useState("");
+     const onSetPhone = (e) => {
+          setPhone(e.target.value);
      };
-     const [format, setFormat] = useState("");
-     const onFormat = (e) => {
-          setFormat(e.target.value);
+     const [siteWeb, setSiteWeb] = useState("");
+     const onSetSiteWeb = (e) => {
+          setSiteWeb(e.target.value);
      };
-     const [alertStock, setAlerteStock] = useState("");
-     const onAlerteStock = (e) => {
-          setAlerteStock(e.target.value);
+     const [bp, setBp] = useState("");
+     const onSetBp = (e) => {
+          setBp(e.target.value);
+     };
+     const [adressShop, setAdressShop] = useState("");
+     const onSetAdressShop = (e) => {
+          setAdressShop(e.target.value);
      };
 
-     const [categorie, setCategorie] = useState("");
-     const [idCategorie, setIdCategorie] = useState("");
-     const [dataCategorie, setDataCategorie] = useState([]);
-     const onCategorisation = (e) => {
-          setCategorie(e.target.value);
-          if (e.target.value != "") {
-               const data = { id: "12EC", category: "Garoumie" }
-               setDataCategorie([data])
-               setCategoryState("")
-          } else setCategoryState("hidden")
-     };
-     const GetCategory = (id, category) => {
-          setCategoryState("hidden")
-          setCategorie(category)
-          setIdCategorie(id)
-          console.log(id, category)
-     }
-     const [mark, setMark] = useState("");
-     const [Idmark, setIdMark] = useState("");
-     const [dataMarque, setDataMarque] = useState([]);
-     const onSetMark = (e) => {
-          setMark(e.target.value);
-          if (e.target.value != "") {
-               const data = { id: "ODK", mark: "Melancolique" }
-               setDataMarque([data])
-               setMarkState("")
-          } else setMarkState("hidden")
-     }; const GetMark = (id, mark) => {
-          setMarkState("hidden")
-          setMark(mark)
-          setIdMark(id)
-          console.log(id, mark)
-     }
-
-     const [categoryState, setCategoryState] = useState("hidden")
-     const [categoryFomState, setCategoryFomState] = useState("hidden")
-     const [markState, setMarkState] = useState("hidden")
-     const AddProduct = async () => {
-          //  await NewProduct().then((response)=>{
-          //        console.log(response.data)
-          //  })
-          console.log(idCategorie, Idmark, designation, dosage, format, forme, alertStock)
+      const UpdateShop = async () => {
+        //    await NewProduct().then((response)=>{
+        //            console.log(response.data)
+        //    })
+          console.log(shop, mailAddress, phone, siteWeb, bp, adressShop)
      }
 
      return (
@@ -82,13 +49,13 @@ const NewProduct = () => {
                </div>
               
                <div className={` flex flex-col w-full`}>
-                    <Input type="text" htmlFor="designationId" name="designation" label="Nom du magasin" event={onDesignation} icon={<BiHome size="0.95rem" />} />
-                    <Input type="numeric" htmlFor="dosageId" name="dosage" label="Adresse mail" event={onDosage} icon={<BiMailSend size="0.95rem" />} />
-                    <Input type="numeric" htmlFor="formatId" namat="format" label="Numéro de télephone" event={onFormat} icon={<BiPhone size="0.95rem" />} />
-                    <Input type="numeric" htmlFor="formeId" name="forme" label="Site web" event={onForme} icon={<BiGlobe size="0.95rem" />} />
-                    <Input type="text" htmlFor="saId" name="sa" label="Boîte postale" event={onAlerteStock} icon={<BiRepost size="0.95rem" />} />
-                    <Input type="text" htmlFor="saId" name="sa" label="Adresse du magasin" event={onAlerteStock} icon={<BiWorld size="0.95rem" />} />
-                    <Button text={'Valider les informations'} event={() => AddProduct()} />
+                    <Input type="text" htmlFor="designationId" name="designation" label="Nom du magasin" event={onSetShop} icon={<BiHome size="0.95rem" />} />
+                    <Input type="numeric" htmlFor="mailId" name="mail" label="Adresse mail" event={onSetAdressmail} icon={<BiMailSend size="0.95rem" />} />
+                    <Input type="numeric" htmlFor="phoneId" namat="phone" label="Numéro de télephone" event={onSetPhone} icon={<BiPhone size="0.95rem" />} />
+                    <Input type="numeric" htmlFor="phoneId" name="phone" label="Site web" event={onSetSiteWeb} icon={<BiGlobe size="0.95rem" />} />
+                    <Input type="text" htmlFor="bpId" name="bp" label="Boîte postale" event={onSetBp} icon={<BiRepost size="0.95rem" />} />
+                    <Input type="text" htmlFor="adressId" name="adress" label="Adresse du magasin" event={onSetAdressShop} icon={<BiWorld size="0.95rem" />} />
+                    <Button text={'Valider les informations'} event={() => UpdateShop()} />
                </div>
               
           </div>
