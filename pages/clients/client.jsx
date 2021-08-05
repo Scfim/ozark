@@ -8,9 +8,9 @@ import Router from 'next/router'
 
 const NewProvider = () => {
 
-     const [provider, setProvider] = useState("");
-     const onSetProvider = (e) => {
-          setProvider(e.target.value);
+     const [client, setClient] = useState("");
+     const onSetClient = (e) => {
+          setClient(e.target.value);
      };
      const [addres, setAdress] = useState("");
      const onSetAdress = (e) => {
@@ -25,18 +25,18 @@ const NewProvider = () => {
           setMailAdress(e.target.value);
      };
  
-     const AddProvider = async () => {
+     const AddClient = async () => {
           //  await NewProduct().then((response)=>{
           //        console.log(response.data)
           //  })
-          console.log(provider,addres,phone,mailAdress)
+          console.log(client,addres,phone,mailAdress)
      }
 
      return (
           <div className={` flex flex-col bg-gray-4 my-10`}>
                <div className={` flex flex-col w-full mb-8`}>
-                    <label className={`mx-16 text-xl font-bold`}> Ajouter un nouveau fournisseur </label>
-                    <label className={`mx-16 text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un nouveau founisseur </label>
+                    <label className={`mx-16 text-xl font-bold`}> Ajouter un nouveau Client </label>
+                    <label className={`mx-16 text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un nouveau client </label>
                </div>
                {/* <div className={`flex flex-col mx-16 my-4`}>
                     <div className={`w-44`}>
@@ -44,11 +44,11 @@ const NewProvider = () => {
                     </div>                  
                </div> */}
                <div className={` flex flex-col w-full`}>
-                    <Input type="text" htmlFor="ProviderId" name="Provider" label="Nom du fournisseur" event={onSetProvider} icon={<BiUser size="0.95rem" />} />
+                    <Input type="text" htmlFor="ClientId" name="client" label="Nom du Client" event={onSetClient} icon={<BiUser size="0.95rem" />} />
                     <Input type="numeric" htmlFor="AdressId" name="Adress" label="Adresse du fournisseur" event={onSetAdress} icon={<BiBox size="0.95rem" />} />
                     <Input type="numeric" htmlFor="PhoneId" namat="Phone" label="Téléphone" event={onSetPhone} icon={<BiPhone size="0.95rem" />} />
                     <Input type="numeric" htmlFor="mailId" name="mail" label="Adresse Email" event={onSetMailAdress} icon={<BiMailSend size="0.95rem" />} />
-                    <Button text={'Enregistrer le founisseur'} event={() => AddProvider()} />
+                    <Button text={'Enregistrer le client'} event={() => AddClient()} />
                </div>
           </div>
      )
