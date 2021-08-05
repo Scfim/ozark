@@ -43,8 +43,7 @@ const NewProduct = () => {
      const GetCategory = (id, category) => {
           setCategoryState("hidden")
           setCategorie(category)
-          setIdCategorie(id)
-          console.log(id, category)
+          setIdCategorie(id)         
      }
      const [mark, setMark] = useState("");
      const [Idmark, setIdMark] = useState("");
