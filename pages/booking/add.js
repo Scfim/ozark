@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   FaBoxes,
-  FaCheckCircle,
   FaComment,
   FaDollarSign,
   FaMinus,
   FaPlusCircle,
   FaPollH,
-  FaSortNumericUp,
+  FaSave,
   FaUser,
 } from "react-icons/fa";
 import Headers from "../../components/Headers";
@@ -17,8 +16,14 @@ import Datalist from "../../components/Datalist";
 import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
 import { useAddBooking } from "../api/booking";
+import useArrayContainsObject from "../../hooks/useArrayContainsObject";
+import validate from "../../hooks/useValidate";
 
 export default function add() {
+  const [bookings, setBookings] = useState([]);
+  const [bookingIds, setBookingIds] = useState([]);
+  const [totalOfTotal, setTotalOfTotal] = useState([]);
+  const [generalTotal, setGeneralTotal] = useState(0);
   const [
     { product, customer, comment, daysDate, quantity, initialPrice },
     handleChange,
@@ -30,16 +35,62 @@ export default function add() {
     daysDate: "",
     comment: "",
   });
+  useEffect(() => {
+    console.log(bookings);
+    const total = totalOfTotal.reduce(
+      (acc, val) => parseFloat(acc) + parseFloat(val),
+      0
+    );
+    setGeneralTotal(parseFloat(total));
+  }, [bookings, totalOfTotal]);
   const onHandleAddInput = (event) => {
     event.preventDefault();
-    useAddBooking({
+    let total = parseFloat(quantity) * parseFloat(initialPrice);
+    total = parseFloat(total);
+    let bookingId =
+      product + quantity + customer + daysDate + comment + initialPrice + total;
+    bookingId = bookingId.trim();
+    const newItem = {
       product,
       customer,
       comment,
       daysDate,
       quantity,
       initialPrice,
-    }).then((res) => console.log(res));
+      total,
+      bookingId,
+    };
+    if (
+      !bookingIds.includes(bookingId) &&
+      validate.parse(product).not.empty() &&
+      validate.parse(customer).not.empty() &&
+      validate.parse(comment).not.empty() &&
+      validate.parse(daysDate).not.empty() &&
+      validate.parse(quantity).not.empty() &&
+      validate.parse(initialPrice).not.empty() &&
+      validate.parse(total).not.empty()
+    ) {
+      setBookings([...bookings, newItem]);
+      setTotalOfTotal([...totalOfTotal, total]);
+      setBookingIds([...bookingIds, bookingId]);
+    }
+  };
+  const onSaveBookings = () => {
+    useAddBooking(bookings)
+      .then((booking) => {})
+      .catch((err) => console.info(err));
+  };
+  const removeBooking = (item) => {
+    console.log(item);
+    let nBookings = bookings.slice()
+    let nBookingIds = bookingIds.slice()
+    let nTotalOfTotal = totalOfTotal.slice()
+    nTotalOfTotal.splice(nTotalOfTotal.indexOf(item.total),1)
+    nBookings.splice(nBookings.indexOf(item), 1)
+    nBookingIds.splice(nBookingIds.indexOf(item.bookingId),1)
+    setBookings(nBookings);
+    setTotalOfTotal(nTotalOfTotal);
+    setBookingIds(nBookingIds);
   };
   return (
     <>
@@ -75,6 +126,7 @@ export default function add() {
                 value={quantity}
                 name="quantity"
                 icon={<FaBoxes />}
+                type="number"
               />
               <TextBox
                 style="md:ml-1"
@@ -83,6 +135,7 @@ export default function add() {
                 value={initialPrice}
                 name="initialPrice"
                 icon={<FaDollarSign />}
+                type="number"
               />
             </div>
             <TextBox
@@ -108,8 +161,8 @@ export default function add() {
             </div>
           </form>
         </div>
-        <div className="col-span-4 flex justify-center my-auto h-9/12">
-          <table className="table-auto w-10/12 border">
+        <div className="col-span-4 flex flex-col justify-center my-auto h-9/12">
+          <table className="table-auto rounded w-10/12 border">
             <thead>
               <tr>
                 <th className="border w-1/6">Quantité</th>
@@ -120,20 +173,45 @@ export default function add() {
               </tr>
             </thead>
             <tbody>
-             
-              <tr className="text-center border">
-                <td className="border">45</td>
-                <td className="border">Adam</td>
-                <td className="border">Intro to CSS</td>
-                <td className="border">858</td>
-                <td className="grid place-items-center">
-                  <button className="w-7 h-7 rounded focus:ring-2 focus:outline-none border-none focus:ring-red-600 bg-red-500 cursor-pointer text-white grid place-items-center">
-                    <FaMinus />
-                  </button>
-                </td>
-              </tr>
+              {bookings.length > 0
+                ? bookings.map((booking) => {
+                    return (
+                      <tr
+                        key={booking.bookingId}
+                        className="text-center border"
+                      >
+                        <td className="border">{booking.quantity}</td>
+                        <td className="border">{booking.product}</td>
+                        <td className="border">{booking.initialPrice}</td>
+                        <td className="border">{booking.total.toFixed(3)}</td>
+                        <td className="grid place-items-center">
+                          <button
+                            onClick={() => removeBooking(booking)}
+                            className="w-7 h-7 rounded focus:ring-2 m-1 p-1 focus:outline-none border-none focus:ring-red-600 bg-red-500 cursor-pointer text-white grid place-items-center"
+                          >
+                            <FaMinus />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })
+                : null}
             </tbody>
           </table>
+          <div
+            style={{ width: "40%" }}
+            className="flex h-36 justify-between items-center"
+          >
+            <div className="w-36 p-2 rounded border flex mr-5 items-center h-10 mt-2">
+              <p>
+                <span className="font-semibold">Total</span> :{" "}
+                {generalTotal.toFixed(3)} $
+              </p>
+            </div>
+            <Button event={onSaveBookings} design="w-36 p-2 mt-2 ml-3">
+              <FaSave className="mr-1" /> Enregistrer
+            </Button>
+          </div>
         </div>
       </div>
     </>
