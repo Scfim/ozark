@@ -3,7 +3,7 @@ import style from "../../styles/App.module.css";
 
 export const Button = ({ text, event }) => {
   return (
-    <div className="px-12 2xl:px-16 xl:px-16 lg:px-16 md:px-16 sm:px-16 my-2  ">
+    <div className="my-2  ">
       <button 
         type="submit"
         onClick={event}
