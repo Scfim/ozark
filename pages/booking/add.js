@@ -164,7 +164,7 @@ export default function add() {
         <div className="col-span-4 flex flex-col justify-center my-auto h-9/12">
           <table className="table-auto rounded w-10/12 border">
             <thead>
-              <tr>
+              <tr className="bg-blue-50">
                 <th className="border w-1/6">Quantité</th>
                 <th className="border w-2/6">Produit</th>
                 <th className="border w-1/6">Prix Unitaire</th>
