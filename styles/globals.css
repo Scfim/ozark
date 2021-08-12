@@ -1,3 +1,24 @@
+.h-60 {
+  height: 60vh;
+}
+.hover-menus-parent:hover > div,
+.hover-menus-parent:hover,
+.hover-menus-parent:hover > div > .menu-icon {
+  background: #38acec;
+  color: #fff;
+}
+.menu-items-wrapper{
+    transition: height ease-in 3s;
+    animation: animate-menu-items-wrapper 3s ease .1s linear;
+}
+@keyframes  animate-menu-items-wrapper{
+    0%{
+        height: 0%;
+    }
+    100%{
+        height: auto;
+    }
+}
 .h-60{
     height: 60vh;
 }

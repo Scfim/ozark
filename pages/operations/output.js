@@ -54,23 +54,16 @@ export default function input() {
   };
   return (
     <>
-      <Headers title="Entrée Stock | Umarps Shop Manager" />
+      <Headers title=" Sortie Stock | Umarps Shop Manager" />
       <div className="grid h-screen place-items-center w-full mx-auto md:w-9/12">
-        <div className=" shadow bg-white rounded w-11/12 py-4 md:w-8/12 grid place-items-center">
+        <div className="md:border-2 md:border-gray-100 rounded w-11/12 py-4 md:w-8/12 grid place-items-center">
           <HeadSection
             leader="Umarps Shop Manager"
-            follower="Ajouter une entrée "
+            follower="Ajouter une sortie "
             showUploadPhoto={false}
             icon=""
           />
           <form className="w-9/12 mt-5 flex flex-col justify-center">
-            <Datalist
-              event={handleChange}
-              placeholder="Fournisseur (falcultatif)"
-              value={provider}
-              name="provider"
-              icon={<FaUser />}
-            />
             <Datalist
               event={handleChange}
               placeholder="Produit"
