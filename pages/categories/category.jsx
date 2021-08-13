@@ -4,7 +4,7 @@ import { Input } from '../../components/s/input'
 import { Button, ButtonIcon } from '../../components/s/button'
 import style from '../../styles/App.module.css'
 import Router from 'next/router'
-import { SubCategory } from './SubCategory';
+import SubCategory  from './subCategory';
 
 
 const Caterory = ({ state }) => {

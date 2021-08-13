@@ -22,3 +22,31 @@
 .h-60{
     height: 60vh;
 }
+.w-98{
+    width: 95%;
+}
+.h-fit-content{
+    height: fit-content;
+    margin-top: 104px;
+}
+.scrollBar::-webkit-scrollbar-track
+{
+    background-color: rgba(243, 244, 246);
+    border-radius: 15px;
+}
+
+.scrollBar::-webkit-scrollbar
+{
+    width: 10px;
+    background-color:rgba(243, 244, 246);
+    
+}
+
+.scrollBar::-webkit-scrollbar-thumb
+{
+    background-color: #cacaca;
+}
+.scrollBar::-webkit-scrollbar-thumb:hover
+{
+    background-color: #b3b2b2;
+}
