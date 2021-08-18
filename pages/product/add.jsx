@@ -83,7 +83,7 @@ const NewProduct = () => {
                     </div>
                     <div className={`flex flex-col  my-4`}>
                          <div className={`w-44`}>
-                              <ButtonIcon text={'Nouvelle Catégorie'} event={() => Router.push("/category/Category")} icon={<BiAddToQueue size="0.95rem" className={`${style.text}  mx-1 group-hover:text-white `} />} />
+                              <ButtonIcon text={'Nouvelle Catégorie'} event={() => Router.push("/categories/category")} icon={<BiAddToQueue size="0.95rem" className={`${style.text}  mx-1 group-hover:text-white `} />} />
                          </div>
                     </div>
                     <div className={` flex flex-col w-full`}>

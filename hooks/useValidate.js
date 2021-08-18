@@ -48,6 +48,15 @@ const validate = {
         return false;
       }
     },
+    undefined(){
+
+    },
+    null(){
+
+    },
+    eun(){
+      
+    }
   },
   getValue() {
     if (this.value !== undefined) return this.value;

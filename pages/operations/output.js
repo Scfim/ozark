@@ -56,7 +56,7 @@ export default function input() {
     <>
       <Headers title=" Sortie Stock | Umarps Shop Manager" />
       <div className="grid h-screen place-items-center w-full mx-auto md:w-9/12">
-        <div className="md:border-2 md:border-gray-100 rounded w-11/12 py-4 md:w-8/12 grid place-items-center">
+        <div className="shadow bg-white rounded w-11/12 py-4 md:w-8/12 grid place-items-center">
           <HeadSection
             leader="Umarps Shop Manager"
             follower="Ajouter une sortie "

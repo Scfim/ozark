@@ -95,8 +95,8 @@ export default function add() {
   return (
     <>
       <Headers title="Umarps Shop Manager | Enregister une commande" />
-      <div className="grid h-screen my-auto grid-cols-6 w-full mx-auto">
-        <div className=" md:col-span-2 h-2/3 my-auto py-4 grid place-items-center">
+      <div className="grid h-screen grid-cols-12 w-full mx-auto">
+        <div className=" md:col-span-4 h-8/12 bg-white rounded shadow my-auto py-4 grid place-items-center">
           <HeadSection
             leader="Umarps Shop Manager"
             follower="Ajouter une commande "
@@ -161,8 +161,8 @@ export default function add() {
             </div>
           </form>
         </div>
-        <div className="col-span-4 flex flex-col justify-center my-auto h-9/12">
-          <table className="table-auto rounded w-10/12 border">
+        <div className="col-span-8 mx-3 bg-white rounded shadow flex flex-col h-fit-content justify-center">
+          <table className="table-auto rounded w-10/12 border mt-2 mx-auto">
             <thead>
               <tr className="bg-blue-50">
                 <th className="border w-1/6">Quantité</th>
@@ -200,7 +200,7 @@ export default function add() {
           </table>
           <div
             style={{ width: "40%" }}
-            className="flex h-36 justify-between items-center"
+            className="flex h-36 ml-16 justify-between items-center"
           >
             <div className="w-36 p-2 rounded border flex mr-5 items-center h-10 mt-2">
               <p>

@@ -7,18 +7,43 @@
   background: #38acec;
   color: #fff;
 }
-.menu-items-wrapper{
-    transition: height ease-in 3s;
-    animation: animate-menu-items-wrapper 3s ease .1s linear;
+.active-menus-parent > div,
+.active-menus-parent,
+.active-menus-parent > div > .menu-icon {
+  background: #38acec;
+  color: #fff;
 }
-@keyframes  animate-menu-items-wrapper{
-    0%{
-        height: 0%;
-    }
-    100%{
-        height: auto;
-    }
+.set-legend-to-38acec:hover > legend{
+    color: #38acec;
 }
 .h-60{
     height: 60vh;
+}
+.w-98{
+    width: 95%;
+}
+.h-fit-content{
+    height: fit-content;
+    margin-top: 104px;
+}
+.scrollBar::-webkit-scrollbar-track
+{
+    background-color: rgba(243, 244, 246);
+    border-radius: 15px;
+}
+
+.scrollBar::-webkit-scrollbar
+{
+    width: 10px;
+    background-color:rgba(243, 244, 246);
+    
+}
+
+.scrollBar::-webkit-scrollbar-thumb
+{
+    background-color: #cacaca;
+}
+.scrollBar::-webkit-scrollbar-thumb:hover
+{
+    background-color: #b3b2b2;
 }

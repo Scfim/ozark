@@ -1,5 +1,4 @@
-import React from "react";
-import { BiUser } from "react-icons/bi";
+import React, { useState } from "react";
 import {
   FaCheckCircle,
   FaEnvelope,
@@ -14,9 +13,13 @@ import TextBox from "../../components/TextBox";
 import Datalist from "../../components/Datalist";
 import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
-import { useLogin } from "../api/users";
+import { userSignUp } from "../api/users";
+import Status from "../../components/Status";
 
 export default function signup() {
+  const [statusType, setStatusType] = useState("");
+  const [isStatusHidden, setIsStatusHidden] = useState(true);
+  const [statusMessage, setStatusMessage] = useState("");
   const [
     { name, lastName, type, password, confirmPassword, email, phone },
     handleChange,
@@ -28,18 +31,39 @@ export default function signup() {
     email: "",
     phone: "",
   });
-  const onHandleLoginUser = (event) => {
+  const onHandleAddUser = (event) => {
     event.preventDefault();
-    useLogin(username, password).then((res) => console.log(res));
+    userSignUp({
+      name,
+      lastName,
+      type,
+      password,
+      confirmPassword,
+      email,
+      phone,
+    }).then((res) => {
+      setIsStatusHidden(false);
+      setStatusMessage(res.message);
+      res.type.toLowerCase() === "failure"
+        ? setStatusType("error")
+        : setStatusType("success");
+    });
   };
-  const getPhoto = (image)=>{
-console.log(image)
-  }
+  const resetStatusIsHidden = () => setIsStatusHidden(true);
+  const getPhoto = (image) => {
+    console.log(image);
+  };
   return (
     <>
       <Headers title="Umarps Shop Manager | Inscription" />
       <div className="grid h-screen place-items-center w-full mx-auto md:w-9/12">
-        <div className="md:border-2 md:border-gray-100 rounded w-11/12 py-4 md:w-8/12 grid place-items-center">
+        <div className="bg-white rounded shadow w-11/12 py-4 md:w-8/12 grid place-items-center">
+          <Status
+            type={statusType}
+            isHidden={isStatusHidden}
+            message={statusMessage}
+            resetStatusIsHidden={resetStatusIsHidden}
+          />
           <HeadSection
             leader="Umarps Shop Manager"
             follower="Remplissez ce formulaire ci-dessous "
@@ -112,12 +136,11 @@ console.log(image)
             </div>
             <div className="flex justify-between ">
               <p className="mt-5 text-lg">Annuler</p>
-              <Button event={onHandleLoginUser} design="mt-3">
-              <FaCheckCircle className="mt-1" />
-              <span className="ml-1">Enregistrer</span>
-            </Button>
+              <Button event={onHandleAddUser} design="mt-3">
+                <FaCheckCircle className="mt-1" />
+                <span className="ml-1">Enregistrer</span>
+              </Button>
             </div>
-            
           </form>
         </div>
       </div>
