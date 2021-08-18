@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Menu from "./Menu";
 import MenuWrapper from "./MenuWrapper";
 import {
@@ -17,40 +17,26 @@ import {
   BiCalendarPlus,
 } from "react-icons/bi";
 
-export default function LeftMenuSection() {
-  const [currentTarget, setCurrentTarget] = useState("");
-  const [isMenuOpened, setIsMenuOpened] = useState(false);
-  useEffect(() => {
-    const letRenderMenuClickable = (canRender, callback = () => {}) => {
-      if (canRender) {
-        const items = document.querySelectorAll("[data-menu]");
-        items.forEach((item) => {
-          item.addEventListener("click", onClickMenu);
-          function onClickMenu(_self) {
-            const _currentItem = _self.currentTarget;
-            setCurrentTarget(_currentItem.getAttribute("data-menu"));
-            setIsMenuOpened(true);
-            _currentItem.nextElementSibling.classList.toggle("h-0");
-            _currentItem.nextElementSibling.classList.toggle("border");
-          }
-          callback(item, onClickMenu);
-        });
-      }
-    };
-    letRenderMenuClickable(true);
+export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
+  //currentOpenedPage and layout
+  const [currentPage, setCurrentPage] = useState("Dashboard");
+  const onClickMenu = (activePage, links) => {
+    setCurrentPage(activePage);
+    setNavLinks(links);
+    onInitNewPage();
+  };
 
-    return () => {
-      letRenderMenuClickable(false, (item, func) =>
-        item.removeEventLister("click", func)
-      );
-    };
-  }, [setCurrentTarget]);
   return (
     <div className="w-2/12 overflow-y-auto scrollBar">
       <MenuWrapper>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/providers/data",
+            dash: "/providers/provider",
+            form: "/providers/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Fournisseurs"
           isDropDown={false}
           icon={<FaUsers />}
@@ -58,8 +44,13 @@ export default function LeftMenuSection() {
           withShadow={false}
         ></Menu>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/users/data",
+            dash: "/users/dash",
+            form: "/users/signup",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Utilisateurs"
           isDropDown={false}
           icon={<FaUserFriends />}
@@ -67,8 +58,13 @@ export default function LeftMenuSection() {
           withShadow={false}
         ></Menu>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/customers/data",
+            dash: "/clients/client",
+            form: "/customers/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Clients"
           isDropDown={false}
           icon={<BiUserCheck />}
@@ -78,8 +74,13 @@ export default function LeftMenuSection() {
       </MenuWrapper>
       <MenuWrapper>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/operations/output/data",
+            dash: "/operations/output",
+            form: "/operations/output/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Sortie"
           isDropDown={false}
           icon={<FaArrowLeft />}
@@ -87,8 +88,13 @@ export default function LeftMenuSection() {
           withShadow={false}
         ></Menu>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/operations/input/data",
+            dash: "/operations/input",
+            form: "/operations/input/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Entrée"
           isDropDown={false}
           icon={<FaArrowRight />}
@@ -96,8 +102,13 @@ export default function LeftMenuSection() {
           withShadow={false}
         ></Menu>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/bookings/data",
+            dash: "/bookings",
+            form: "/bookings/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Commandes"
           isDropDown={false}
           icon={<BiCommand />}
@@ -105,8 +116,13 @@ export default function LeftMenuSection() {
           withShadow={false}
         ></Menu>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/payment/data",
+            dash: "/payment",
+            form: "/payment/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Paiement"
           isDropDown={false}
           icon={<BiDollar />}
@@ -116,17 +132,27 @@ export default function LeftMenuSection() {
       </MenuWrapper>
 
       <Menu
-        isOpened={isMenuOpened}
-        activeMenu={currentTarget}
+        links={{
+          data: "/exercise/data",
+          dash: "/exercise",
+          form: "/exercise/add",
+        }}
+        onClick={onClickMenu}
+        activeMenu={currentPage}
         title="Exercices"
         isDropDown={false}
         icon={<BiCalendarPlus />}
-        router="/categories/subCategory"
+        router="/exercise/add"
       ></Menu>
       <MenuWrapper>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/categories/output/data",
+            dash: "/categories/subCategory",
+            form: "/categories/output/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Sous categories"
           isDropDown={false}
           icon={<FaList />}
@@ -134,8 +160,13 @@ export default function LeftMenuSection() {
           withShadow={false}
         ></Menu>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/categories/category/data",
+            dash: "/categories/category",
+            form: "/categories/category/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Categories"
           isDropDown={false}
           icon={<FaTasks />}
@@ -143,8 +174,13 @@ export default function LeftMenuSection() {
           withShadow={false}
         ></Menu>
         <Menu
-          isOpened={isMenuOpened}
-          activeMenu={currentTarget}
+          links={{
+            data: "/product/output/data",
+            dash: "/product",
+            form: "/product/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
           title="Produits"
           isDropDown={false}
           icon={<BiBox />}

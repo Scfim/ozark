@@ -1,20 +1,16 @@
 import React from "react";
 import { BiCalendar } from "react-icons/bi";
-import {
-  FaCheckCircle,
-} from "react-icons/fa";
+import { FaCheckCircle } from "react-icons/fa";
 import Headers from "../../components/Headers";
 import HeadSection from "../../components/HeadSection";
 import Datalist from "../../components/Datalist";
 import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
 import { useAddExercise } from "../api/exercise";
+import DateInput from "../../components/DateInput";
 
 export default function add() {
-  const [
-    { startYear, endYear},
-    handleChange,
-  ] = useForm({
+  const [{ startYear, endYear }, handleChange] = useForm({
     startYear: "",
     endYear: "",
   });
@@ -24,40 +20,31 @@ export default function add() {
   };
   return (
     <>
-      <Headers title="Umarps Shop Manager | Nouvel exercice" />
+      <Headers title="Nouvel exercice | Umarps Shop Manager" />
       <div className="grid h-screen place-items-center w-full mx-auto md:w-9/12">
-        <div className="md:border-2 md:border-gray-100 rounded w-11/12 py-4 md:w-8/12 grid place-items-center">
+        <div className="shadow bg-white rounded w-11/12 py-4 md:w-8/12 grid place-items-center">
           <HeadSection
-            leader="Umarps Shop Manager"
+            leader="Nouvel exercice"
             follower="Ajouter un exercice "
             showUploadPhoto={false}
             icon=""
           />
           <form className="w-9/12 mt-5 flex flex-col justify-center">
             <div className="md:flex justify-between ">
-              <Datalist
-              style="mr-1"
+              <DateInput
+                style="ml-1"
+                style="mr-1"
                 event={handleChange}
                 placeholder="Année de début"
                 value={startYear}
                 name="startYear"
-                icon={<BiCalendar />}
-                options={[
-                  { key: "Administrateur", value: "Super user" },
-                  { key: "Vendeur", value: "user" },
-                ]}
               />
-              <Datalist
-              style="ml-1"
+              <DateInput
+                style="ml-1"
                 event={handleChange}
                 placeholder="Année de  fin"
                 value={endYear}
                 name="endYear"
-                icon={<BiCalendar />}
-                options={[
-                  { key: "Administrateur", value: "Super user" },
-                  { key: "Vendeur", value: "user" },
-                ]}
               />
             </div>
             <div className="flex justify-between ">

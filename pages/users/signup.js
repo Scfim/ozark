@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { BiUser } from "react-icons/bi";
+import React, { useState } from "react";
 import {
   FaCheckCircle,
   FaEnvelope,
@@ -43,7 +42,6 @@ export default function signup() {
       email,
       phone,
     }).then((res) => {
-      console.log(res);
       setIsStatusHidden(false);
       setStatusMessage(res.message);
       res.type.toLowerCase() === "failure"

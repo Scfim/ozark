@@ -7,17 +7,14 @@
   background: #38acec;
   color: #fff;
 }
-.menu-items-wrapper{
-    transition: height ease-in 3s;
-    animation: animate-menu-items-wrapper 3s ease .1s linear;
+.active-menus-parent > div,
+.active-menus-parent,
+.active-menus-parent > div > .menu-icon {
+  background: #38acec;
+  color: #fff;
 }
-@keyframes  animate-menu-items-wrapper{
-    0%{
-        height: 0%;
-    }
-    100%{
-        height: auto;
-    }
+.set-legend-to-38acec:hover > legend{
+    color: #38acec;
 }
 .h-60{
     height: 60vh;
