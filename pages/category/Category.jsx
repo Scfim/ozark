@@ -71,25 +71,24 @@ const Caterory = ({ state }) => {
                          {
                               dataCategory.map((value) => {
                                    return <div className={`mt-3`}>
-                                        <table className={`border border-gray-200 w-96`}>
-                                             <tr className={`${style.bg}`}>
-                                                  <td className={`border border-gray-200 text-white px-2`}>Categorie</td>
-                                                  <td className={`border border-gray-200 text-white px-2`}>Type</td>
-                                             </tr >
-                                             <tr className={`border border-gray-200 text-xs`}>
-                                                  <td className={`border border-gray-200 text-sm px-2 `}>{value.category}</td>
-                                                  <td className={`border border-gray-200 text-sm px-2`}>{value.type}</td>
-                                                  <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                                  <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                             </tr>
-                                        </table>
+                                             <table className={`border border-gray-200 w-96`}>
+                                                  <tr className={`${style.bg}`}>
+                                                       <td className={`border border-gray-200 text-white px-2`}>Categorie</td>
+                                                       <td className={`border border-gray-200 text-white px-2`}>Type</td>
+                                                  </tr >
+                                                  <tr className={`border border-gray-200 text-xs`}>
+                                                       <td className={`border border-gray-200 text-sm px-2 `}>{value.category}</td>
+                                                       <td className={`border border-gray-200 text-sm px-2`}>{value.type}</td>
+                                                       <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                                       <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                                  </tr>
+                                             </table>
                                    </div>
                               })
                          }
                     </div>
                </div>
                <SubCategory state={stateSubCategory} />
-
           </div>
      </div>
 }

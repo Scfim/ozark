@@ -51,11 +51,9 @@ export const SubCategory = ({ state }) => {
     const DeleteSubCategory=async()=>{
         await deleteSubCategory().then((res)=>{
              console.log(res.data) 
-             // console.log(idCategory,subCategory,typeCategory)       
+             // console.log(id)       
         })
     }
-
-
 
     return (
         <div id="categorie" className={`w-full flex ${state}`}>
