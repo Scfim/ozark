@@ -15,6 +15,9 @@ import {
   BiDollar,
   BiUserCheck,
   BiCalendarPlus,
+  BiListOl,
+  BiListUl,
+  BiListPlus,
 } from "react-icons/bi";
 
 export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
@@ -118,7 +121,7 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
         <Menu
           links={{
             data: "/payment/data",
-            dash: "/payment",
+            dash: "/payment/Payment",
             form: "/payment/add",
           }}
           onClick={onClickMenu}
@@ -126,7 +129,7 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
           title="Paiement"
           isDropDown={false}
           icon={<BiDollar />}
-          router="/payment"
+          router="/payment/Payment"
           withShadow={false}
         ></Menu>
       </MenuWrapper>
@@ -147,6 +150,20 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
       <MenuWrapper>
         <Menu
           links={{
+            data: "/categories/category/data",
+            dash: "/categories/category",
+            form: "/categories/category/add",
+          }}
+          onClick={onClickMenu}
+          activeMenu={currentPage}
+          title="Categories"
+          isDropDown={false}
+          icon={<FaTasks />}
+          router="/categories/category"
+          withShadow={false}
+        ></Menu>
+        <Menu
+          links={{
             data: "/categories/output/data",
             dash: "/categories/subCategory",
             form: "/categories/output/add",
@@ -162,15 +179,15 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
         <Menu
           links={{
             data: "/categories/category/data",
-            dash: "/categories/category",
+            dash: "/categories/Mark",
             form: "/categories/category/add",
           }}
           onClick={onClickMenu}
           activeMenu={currentPage}
-          title="Categories"
+          title="Marques"
           isDropDown={false}
-          icon={<FaTasks />}
-          router="/categories/category"
+          icon={<BiListPlus size="1.4rem" />}
+          router="/categories/Mark"
           withShadow={false}
         ></Menu>
         <Menu
