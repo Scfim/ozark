@@ -1,27 +1,33 @@
 import axios from 'axios'
 import {server} from "../../constants/common"
 
-export const addCategory=(data)=>{
-    const url=`${server}/categories/add`
+export const addMark=(data)=>{
+    const url=`${server}/marks/add`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const editCategory=()=>{
+export const editMark=()=>{
     const url=`${server}/....`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const deleteCategory=()=>{
+export const deleteMark=()=>{
     const url=`${server}/....`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const getCategory=()=>{
-    const url=`${server}/categories/getAll`
+export const getMark=()=>{
+    const url=`${server}/marks/getAll`
     return new Promise((resolve,reject)=>{
         axios.post(url).then((res)=>resolve(res)).catch((err)=> reject(err))
+    })
+}
+export const getAllLike=(data)=>{
+    const url=`${server}/products/getMarks`
+    return new Promise((resolve,reject)=>{
+        axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
