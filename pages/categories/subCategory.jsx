@@ -85,7 +85,7 @@ export default function SubCategory({ state }) {
         </label>
         <Dropdown state={categoryState} type="text" htmlFor="categorieId" name="catergorie" label="Catégorie du produit" value={category} event={onSetCategory}>
           {
-          dataCategory!=undefined && dataCategory.length>0? dataCategory.map((value) => {
+          dataCategory!=undefined && dataCategory!=null? dataCategory.map((value) => {
             return (
               <div
                 className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`}
@@ -125,7 +125,7 @@ export default function SubCategory({ state }) {
               <td className={`border border-gray-200 text-white px-2`}>SOUS CATEGORIE</td>
             </tr >
             {
-              dataSubCategory != undefined  && dataSubCategory.length>0? dataSubCategory.map((value) => {
+              dataSubCategory != undefined  && dataSubCategory!=null? dataSubCategory.map((value) => {
                 return <tr className={`border border-gray-200 text-xs`}>
                   <td className={`border border-gray-200 text-sm px-2 `}>{value.sub_categorie_name}</td>
                   <td className={`border border-gray-200 text-sm px-2`}>{value.sub_categorie_type}</td>

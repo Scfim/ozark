@@ -78,7 +78,7 @@ const NewProvider = () => {
                                    <td className={`border border-gray-200 text-white px-2`}>Adresse</td>
                               </tr >
                               {
-                                 data!=undefined && data.length>0?data.map((value) => {
+                                 data!=undefined && data!=null?data.map((value) => {
                                         return <tr  className={`border border-gray-200 text-xs`}>
                                              <td className={`border border-gray-200 text-sm px-2 `}>{value.client_name}</td>
                                              <td className={`border border-gray-200 text-sm px-2`}>{value.client_phone_number}</td>

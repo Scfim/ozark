@@ -64,7 +64,7 @@ const Payement = () => {
             </div>
             <div className={` flex flex-col w-full mt-5`}>
                 <Dropdown state={bookingState} type="text" htmlFor="bookingId" name="booking" label="N° de la commande" value={booking} event={onSetBooking}>
-                    {bookingData!=undefined && bookingData.length>0 ?bookingData.map((value) => {
+                    {bookingData!=undefined && bookingData!=null ?bookingData.map((value) => {
                         return <div key={value.bookingId} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetBooking(value.bookingId, value.bookingDesignation, value.bookingDate)}>{value.bookingDesignation}</div>
                     }):setBookingData([])}
                 </Dropdown>

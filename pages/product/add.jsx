@@ -113,12 +113,12 @@ const NewProduct = () => {
                               {/* </div>
                          <div className={` flex flex-col w-full mt-4`}> */}
                               <Dropdown state={categoryState} type="text" htmlFor="categorieId" name="catergorie" label="Catégorie du produit" value={categorie} event={onCategorisation}>
-                                   {dataCategorie != undefined && dataCategorie.length>0? dataCategorie.map((value) => {
+                                   {dataCategorie != undefined && dataCategorie!=null? dataCategorie.map((value) => {
                                         return <div key={value.sub_categorie_id} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetCategory(value.sub_categorie_id, value.sub_categorie_name)}>{value.sub_categorie_name}</div>
                                    }) : setDataCategorie([])}
                               </Dropdown>
                               <Dropdown state={markState} type="text" htmlFor="markId" name="mark" label="Marque du produit" value={mark} event={onSetMark}>
-                                   {dataMarque != undefined && dataMarque.length>0 ? dataMarque.map((value) => {
+                                   {dataMarque != undefined ? dataMarque.map((value) => {
                                         return <div key={value.mark_id} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetMark(value.mark_id, value.mark_name)}>{value.mark_name}</div>
                                    }) : setDataMarque([])}
                               </Dropdown>
@@ -134,7 +134,7 @@ const NewProduct = () => {
                                    <td className={`border border-gray-200 text-white px-2`}>Stock Alerte</td>                                  
                               </tr >
                               {
-                                   data != undefined && data.length>0? data.map((value) => {
+                                   data != undefined? data.map((value) => {
                                         return <tr className={`border border-gray-200 text-xs`}>
                                              <td className={`border border-gray-200 text-sm px-2 `}>{value.sub_categorie_name}</td>
                                              <td className={`border border-gray-200 text-sm px-2 `}>{value.mark_name}</td>

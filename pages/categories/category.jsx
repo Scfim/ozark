@@ -78,7 +78,7 @@ const Caterory = ({ state }) => {
                               <tr className={`${style.bg}`}>
                                    <td className={`border border-gray-200 text-white px-2`}>Categorie</td>                               
                               </tr >
-                              {dataCategory != undefined|| dataCategory.length>0? dataCategory.map((value) => {
+                              {dataCategory != undefined|| dataCategory!=null? dataCategory.map((value) => {
                                    return <tr className={`border border-gray-200 text-xs`}>
                                         <td className={`border border-gray-200 text-sm px-2 `}>{value.categorie_name}</td>
                                         <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
