@@ -110,48 +110,45 @@ const NewProduct = () => {
                               <Input type="text" htmlFor="designationId" name="designation" label="Désignation" event={onDesignation} icon={<BiNavigation size="0.95rem" />} />
                               <Input type="text" htmlFor="saId" name="sa" label="Stock d'alèrte" event={onAlerteStock} icon={<BiAddToQueue size="0.95rem" />} />
                               {/* <Button text={'Enregistrer le produit'} event={() => AddProduct()} /> */}
-                         {/* </div>
+                              {/* </div>
                          <div className={` flex flex-col w-full mt-4`}> */}
                               <Dropdown state={categoryState} type="text" htmlFor="categorieId" name="catergorie" label="Catégorie du produit" value={categorie} event={onCategorisation}>
-                                   {dataCategorie.map((value) => {
+                                   {dataCategorie != undefined && dataCategorie.length>0? dataCategorie.map((value) => {
                                         return <div key={value.sub_categorie_id} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetCategory(value.sub_categorie_id, value.sub_categorie_name)}>{value.sub_categorie_name}</div>
-                                   })}
+                                   }) : setDataCategorie([])}
                               </Dropdown>
                               <Dropdown state={markState} type="text" htmlFor="markId" name="mark" label="Marque du produit" value={mark} event={onSetMark}>
-                                   {dataMarque.map((value) => {
+                                   {dataMarque != undefined && dataMarque.length>0 ? dataMarque.map((value) => {
                                         return <div key={value.mark_id} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetMark(value.mark_id, value.mark_name)}>{value.mark_name}</div>
-                                   })}
+                                   }) : setDataMarque([])}
                               </Dropdown>
                               <Button text={'Enregistrer le produit'} event={() => AddProduct()} />
                          </div>
                     </div>
                     <div className={`mt-4`}>
-                    <table className={` w-auto`}>
-                         <tr className={`${style.bg}`}>
-                              <td className={`border border-gray-200 text-white px-2`}>Catégorie</td>
-                              <td className={`border border-gray-200 text-white px-2`}>Marques</td>
-                              <td className={`border border-gray-200 text-white px-2`}>Désignation</td>
-                              <td className={`border border-gray-200 text-white px-2`}>Stock Alerte</td>
-                              {/* <td className={`border border-gray-200 text-white px-2`}>Adresse</td> */}
-                         </tr >
-                         {
-                              data.map((value) => {
-                                   return <tr className={`border border-gray-200 text-xs`}>
-                                        <td className={`border border-gray-200 text-sm px-2 `}>{value.sub_categorie_name}</td>
-                                        <td className={`border border-gray-200 text-sm px-2 `}>{value.mark_name}</td>
-                                        <td className={`border border-gray-200 text-sm px-2`}>{value.product_name}</td>
-                                        <td className={`border border-gray-200 text-sm px-2`}>{value.product_alert_stock}</td>
-                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                   </tr>
-
-                                   // </div>
-                              })
-
-                         }
-                    </table>
+                         <table className={` w-auto`}>
+                              <tr className={`${style.bg}`}>
+                                   <td className={`border border-gray-200 text-white px-2`}>Catégorie</td>
+                                   <td className={`border border-gray-200 text-white px-2`}>Marques</td>
+                                   <td className={`border border-gray-200 text-white px-2`}>Désignation</td>
+                                   <td className={`border border-gray-200 text-white px-2`}>Stock Alerte</td>                                  
+                              </tr >
+                              {
+                                   data != undefined && data.length>0? data.map((value) => {
+                                        return <tr className={`border border-gray-200 text-xs`}>
+                                             <td className={`border border-gray-200 text-sm px-2 `}>{value.sub_categorie_name}</td>
+                                             <td className={`border border-gray-200 text-sm px-2 `}>{value.mark_name}</td>
+                                             <td className={`border border-gray-200 text-sm px-2`}>{value.product_name}</td>
+                                             <td className={`border border-gray-200 text-sm px-2`}>{value.product_alert_stock}</td>
+                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                        </tr>
+                                      
+                                   }) : setData([])
+                              }
+                         </table>
+                    </div>
                </div>
-               </div>             
           </div>
      )
 

@@ -27,7 +27,7 @@ const Caterory = ({ state }) => {
      async function GetCategory() {
           await getCategory().then((res) => {
                setDataCategory(res.data.data)
-             //  console.log(res.data.data)
+               //  console.log(res.data.data)
           })
      }
 
@@ -53,7 +53,7 @@ const Caterory = ({ state }) => {
                type: typeCategory,
           }).then((res) => {
                if (res.data.type === "success") {
-                         GetCategory()
+                    GetCategory()
                } else { }
           })
      }
@@ -63,12 +63,7 @@ const Caterory = ({ state }) => {
      return <div className={`${state} flex flex-col w-full h-screen justify- items-center `}>
           <div className={`${state} flex flex-col `}>
                <div className={` flex my-3`}>
-                    <div className={`w-44 mt-8 `}>
-                         <ButtonIcon text={'Nouveau produit'} event={() => Router.push("/product/add")} icon={<BiAbacus size="0.95rem" className={`${style.text}  mx-1 group-hover:text-white `} />} />
-                    </div>
-                    {/* <div className={`w-44 mt-8`}>
-                         <ButtonIcon text={title} event={() => ChangeState()} icon={<BiAlarmExclamation size="0.95rem" className={`${style.text}  mx-1 group-hover:text-white `} />} />
-                    </div> */}
+
                </div>
                <div id="categorie" className={`w-full flex ${stateCategory}`} >
                     <div className={`flex flex-col`}>
@@ -81,26 +76,21 @@ const Caterory = ({ state }) => {
                     <div className={`flex flex-row mx-16`}>
                          <table className={`border border-gray-200 w-96`}>
                               <tr className={`${style.bg}`}>
-                                   <td className={`border border-gray-200 text-white px-2`}>Categorie</td>
-                                   {/* <td className={`border border-gray-200 text-white px-2`}>Type</td> */}
+                                   <td className={`border border-gray-200 text-white px-2`}>Categorie</td>                               
                               </tr >
-                              {
-                                   dataCategory.map((value) => {
-                                        return <tr className={`border border-gray-200 text-xs`}>
-                                             <td className={`border border-gray-200 text-sm px-2 `}>{value.categorie_name}</td>
-                                             {/* <td className={`border border-gray-200 text-sm px-2`}>{value.categorie_type}</td> */}
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                        </tr>
-
-                                        // </div>
-                                   })
+                              {dataCategory != undefined|| dataCategory.length>0? dataCategory.map((value) => {
+                                   return <tr className={`border border-gray-200 text-xs`}>
+                                        <td className={`border border-gray-200 text-sm px-2 `}>{value.categorie_name}</td>
+                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                   </tr>
+                              }) : null
 
                               }
                          </table>
                     </div>
                </div>
-               {/* <SubCategory state={stateSubCategory} /> */}
+
           </div>
      </div>
 }
