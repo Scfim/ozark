@@ -52,7 +52,7 @@ const Mark = () => {
                                                       <td className={`border border-gray-200 text-white px-2`}>Descriptions</td>
                                                  </tr >
                         {
-                           data!=undefined && data.length>0?   data.map((value) => {
+                           data!=undefined && data!=null?   data.map((value) => {
                                   return  <tr className={`border border-gray-200 text-xs`}>
                                                       <td className={`border border-gray-200 text-sm px-2 `}>{value.mark_name}</td>
                                                       <td className={`border border-gray-200 text-sm px-2`}>{value.mark_description}</td>
