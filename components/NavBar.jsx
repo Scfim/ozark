@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiFullscreen } from "react-icons/bi";
 import { FaBars, FaCog, FaMoon, FaPowerOff } from "react-icons/fa";
 import NavBarLink from "./NavBarLink";
 
 export default function NavBar({ activeLayout, onSetNewLayout, links }) {
+  const [showModeSection, setShowModeSection] = useState(false)
+  const onClickModeIcon = () =>{
+
+  }
   return (
     <div className="flex w-full items-center font-semibold shadow rounded bg-white text-gray-700 p-1">
       <div className="mx-2">
@@ -15,8 +19,20 @@ export default function NavBar({ activeLayout, onSetNewLayout, links }) {
       <div className="mx-2">
         <FaCog size="1.3rem" className="text-gray-500 cursor-pointer" />
       </div>
-      <div className="mx-2">
+      <div onClick={onClickModeIcon} className="mx-2 relative">
         <FaMoon size="1.3rem" className="text-gray-500 cursor-pointer" />
+        <div className="absolute -left-2 mt-2 top-10 bg-white p-3 rounded shadow z-30">
+          <div className="relative">
+            <span className="absolute -top-3 h-2.5 rotate-pi/2 z-10 w-2.5  bg-white border-t border-l p-2"></span>
+            <div className="bg-white">
+            <div className="text-xs border-b -m-2">Mode sombre</div>
+            <div className="mt-1">
+              <div>Activer</div>
+              <div>Desactiver</div>
+            </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div className="mx-2">
         <BiFullscreen size="1.3rem" className="text-gray-500 cursor-pointer" />

@@ -31,7 +31,7 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
 
   return (
     <div className="w-2/12 overflow-y-auto scrollBar">
-      <MenuWrapper>
+      <MenuWrapper title="Partenaires">
         <Menu
           links={{
             data: "/providers/data",
@@ -75,7 +75,7 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
           withShadow={false}
         ></Menu>
       </MenuWrapper>
-      <MenuWrapper>
+      <MenuWrapper title="Opérations">
         <Menu
           links={{
             data: "/operations/output/data",
@@ -147,7 +147,7 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
         icon={<BiCalendarPlus />}
         router="/exercise/add"
       ></Menu>
-      <MenuWrapper>
+      <MenuWrapper title="Identification produits">
         <Menu
           links={{
             data: "/categories/category/data",

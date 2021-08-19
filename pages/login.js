@@ -7,15 +7,19 @@ import TextBox from "../components/TextBox";
 import useForm from "../hooks/useForm";
 import Button from "../components/Button";
 import { useLogin } from "./api/users";
+import useIsLoggedIn from "../hooks/useIsLoggedIn";
+import Router from "next/router";
 
 export default function login() {
   const [{ username, password }, handleChange] = useForm({
     username: "",
     password: "",
   });
+  const isLoggedIn = useIsLoggedIn()
+  isLoggedIn && Router.push("/")
   const onHandleLoginUser = (event) => {
-    event.preventDefault();
-    useLogin(username, password).then((res) => console.log(res));
+    event.preventDefault()
+    useLogin(username, password)
   };
   return (
     <>
