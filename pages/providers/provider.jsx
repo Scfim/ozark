@@ -53,7 +53,9 @@ const NewProvider = () => {
      const [data, setData] = useState([])
      const GetProvider = async () => {
           await getProvider().then((response) => {
-               setData(response.data.data)
+               if (response.data.data != undefined && response.data.data.lenght < 1) {
+                    setData(response.data.data)
+               } else setData([])
                console.log(response.data.data)
           })
      }
@@ -75,29 +77,29 @@ const NewProvider = () => {
                     </div>
                </div>
                <div className={`mt-24`}>
-               <table className={`border border-gray-200 w-96`}>
-                              <tr className={`${style.bg}`}>
-                                   <td className={`border border-gray-200 text-white px-2`}>Nom</td>
-                                   <td className={`border border-gray-200 text-white px-2`}>Télephone</td>
-                                   <td className={`border border-gray-200 text-white px-2`}>Mail</td>
-                                   <td className={`border border-gray-200 text-white px-2`}>Adresse</td>
-                              </tr >
-                              {
-                                   data.map((value) => {
-                                        return <tr  className={`border border-gray-200 text-xs`}>
-                                             <td className={`border border-gray-200 text-sm px-2 `}>{value.provider_name}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{value.provider_phone_number}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{value.provider_mail_adress}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{value.provider_adress}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                        </tr>
+                    <table className={`border border-gray-200 w-96`}>
+                         <tr className={`${style.bg}`}>
+                              <td className={`border border-gray-200 text-white px-2`}>Nom</td>
+                              <td className={`border border-gray-200 text-white px-2`}>Télephone</td>
+                              <td className={`border border-gray-200 text-white px-2`}>Mail</td>
+                              <td className={`border border-gray-200 text-white px-2`}>Adresse</td>
+                         </tr >
+                         {
+                            data!=undefined && data.length>0? data.map((value) => {
+                                   return <tr className={`border border-gray-200 text-xs`}>
+                                        <td className={`border border-gray-200 text-sm px-2 `}>{value.provider_name}</td>
+                                        <td className={`border border-gray-200 text-sm px-2`}>{value.provider_phone_number}</td>
+                                        <td className={`border border-gray-200 text-sm px-2`}>{value.provider_mail_adress}</td>
+                                        <td className={`border border-gray-200 text-sm px-2`}>{value.provider_adress}</td>
+                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                   </tr>
 
-                                        // </div>
-                                   })
+                                   // </div>
+                              }):null
 
-                              }
-                         </table>
+                         }
+                    </table>
                </div>
           </div>
      )

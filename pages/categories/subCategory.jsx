@@ -9,9 +9,9 @@ import { getCategory } from "../api/category";
 
 export default function SubCategory({ state }) {
 
- useEffect(()=>{
-  GetSubCategory()
- },[])
+  useEffect(() => {
+    GetSubCategory()
+  }, [])
 
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
@@ -50,8 +50,8 @@ export default function SubCategory({ state }) {
       name: subCategory,
       type: typeCategory
     }).then((res) => {
-      console.log(res);  
-      GetSubCategory() 
+      console.log(res);
+      GetSubCategory()
     });
   };
   const EditSubCategory = async () => {
@@ -68,12 +68,12 @@ export default function SubCategory({ state }) {
   };
 
 
-  const [dataSubCategory,SetDatatSubCategory]=useState([])
+  const [dataSubCategory, SetDatatSubCategory] = useState([])
   async function GetSubCategory() {
-    await getSubCategory().then((res) => {    
+    await getSubCategory().then((res) => {
       SetDatatSubCategory(res.data.data)
     })
-}
+  }
   return (
     <div id="categorie" className={`w-full flex justify-center `}>
       <div className={`flex flex-col  `}>
@@ -84,7 +84,8 @@ export default function SubCategory({ state }) {
           Assurez vous de mieux complèter les champs ci-bas
         </label>
         <Dropdown state={categoryState} type="text" htmlFor="categorieId" name="catergorie" label="Catégorie du produit" value={category} event={onSetCategory}>
-          {dataCategory.map((value) => {
+          {
+          dataCategory!=undefined && dataCategory.length>0? dataCategory.map((value) => {
             return (
               <div
                 className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`}
@@ -93,7 +94,7 @@ export default function SubCategory({ state }) {
                 {value.categorie_name}
               </div>
             );
-          })}
+          }):setDataCategory([])}
         </Dropdown>
         <Input
           type="text"
@@ -101,7 +102,7 @@ export default function SubCategory({ state }) {
           name="category"
           label="Sous catégorie"
           event={onSetSubcategory}
-          icon={<BiBeer size="0.95rem"/>}
+          icon={<BiBeer size="0.95rem" />}
         />
         <Input
           type="text"
@@ -117,29 +118,29 @@ export default function SubCategory({ state }) {
         />
       </div>
       <div className='mt-9'>
-      <div className={`flex flex-row mx-16`}>
-                         <table className={`border border-gray-200 w-96`}>
-                              <tr className={`${style.bg}`}>
-                                   <td className={`border border-gray-200 text-white px-2`}>CATEGORIE</td>
-                                   <td className={`border border-gray-200 text-white px-2`}>SOUS CATEGORIE</td>
-                              </tr >
-                              {
-                                   dataSubCategory.map((value) => {
-                                        return <tr className={`border border-gray-200 text-xs`}>
-                                             <td className={`border border-gray-200 text-sm px-2 `}>{value.sub_categorie_name}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{value.sub_categorie_type}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                        </tr>
+        <div className={`flex flex-row mx-16`}>
+          <table className={`border border-gray-200 w-96`}>
+            <tr className={`${style.bg}`}>
+              <td className={`border border-gray-200 text-white px-2`}>CATEGORIE</td>
+              <td className={`border border-gray-200 text-white px-2`}>SOUS CATEGORIE</td>
+            </tr >
+            {
+              dataSubCategory != undefined  && dataSubCategory.length>0? dataSubCategory.map((value) => {
+                return <tr className={`border border-gray-200 text-xs`}>
+                  <td className={`border border-gray-200 text-sm px-2 `}>{value.sub_categorie_name}</td>
+                  <td className={`border border-gray-200 text-sm px-2`}>{value.sub_categorie_type}</td>
+                  <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                  <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                </tr>
 
-                                        // </div>
-                                   })
+                // </div>
+              }) : SetDatatSubCategory([])
 
-                              }
-                         </table>
-                    </div>
+            }
+          </table>
+        </div>
       </div>
-     
+
 
     </div>
   );

@@ -64,9 +64,9 @@ const Payement = () => {
             </div>
             <div className={` flex flex-col w-full mt-5`}>
                 <Dropdown state={bookingState} type="text" htmlFor="bookingId" name="booking" label="N° de la commande" value={booking} event={onSetBooking}>
-                    {bookingData.map((value) => {
+                    {bookingData!=undefined && bookingData.length>0 ?bookingData.map((value) => {
                         return <div key={value.bookingId} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetBooking(value.bookingId, value.bookingDesignation, value.bookingDate)}>{value.bookingDesignation}</div>
-                    })}
+                    }):setBookingData([])}
                 </Dropdown>
                 <Input type="date" htmlFor="dateId" name="date" label="Date de l'opération" event={onSetDate} />
                 <Input type="number" htmlFor="mountId" name="mount" label="Montant payé" event={onSetMount} icon={<BiMoney size="0.95rem" />} />
