@@ -8,7 +8,7 @@ import SubCategory from './subCategory';
 import { addCategory, getCategory } from '../api/category'
 
 
-const Caterory = ({ state }) => {
+const Category = ({ state }) => {
 
      useEffect(() => {
           GetCategory()
@@ -95,4 +95,4 @@ const Caterory = ({ state }) => {
      </div>
 }
 
-export default Caterory
+export default Category
