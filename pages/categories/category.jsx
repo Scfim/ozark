@@ -26,8 +26,7 @@ const Category = ({ state }) => {
      const [dataCategory, setDataCategory] = useState([])
      async function GetCategory() {
           await getCategory().then((res) => {
-               setDataCategory(res.data.data)
-               //  console.log(res.data.data)
+               setDataCategory(res.data.data)              
           })
      }
 

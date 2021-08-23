@@ -57,13 +57,13 @@ export default function SubCategory({ state }) {
   const EditSubCategory = async () => {
     await editSubCategory().then((res) => {
       console.log(res.data);
-      // console.log(idCategory,subCategory,typeCategory)
+     
     });
   };
   const DeleteSubCategory = async () => {
     await getSubCategory().then((res) => {
       console.log(res.data.data);
-      // console.log(idCategory,subCategory,typeCategory)
+     
     });
   };
 
