@@ -29,12 +29,12 @@
     * Create you working branch locally and remotely
     * First run this command on your computer 
         ```
-            yarn install 
+        yarn install 
         ```
     * Then make sure you are working in your branch
     * Now run    
     ```
-        yarn dev to stark working 
+    yarn dev to stark working 
     ```
 
 #### Pushing commits
