@@ -14,7 +14,7 @@
         e. yarn
     2. How do we code it ?
         We code this version using React Hooks, due to some new features that are provided by them.
-        We chosed tailwindCss cause its help to make styles very fast
+        We chosen tailwindCss cause its help to make styles very fast
         We chosen yarn for its speed
         NextJs is the new game changer for React Developers
     3. How to make this project then ?
@@ -27,9 +27,15 @@
     * Make sure you have of course NodeJs v14.12 or later
     * Folk the repository
     * Create you working branch locally and remotely
-    * First run this command on your computer ``` yarn install ```shell
+    * First run this command on your computer 
+        ```console
+            yarn install 
+        ```
     * Then make sure you are working in your branch
-    * Now run    ```shell yarn dev to stark working ```shell
+    * Now run    
+    ```console 
+        yarn dev to stark working 
+    ```
 
 #### Pushing commits
 
