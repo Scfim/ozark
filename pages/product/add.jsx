@@ -97,7 +97,7 @@ const NewProduct = () => {
      }
 
      return (
-          <div className={` flex flex-col bg-gray-4 my-6 justify-center items-center`}>
+          <div className={` flex  bg-gray-4 my-6 justify-center `}>
                <div className={` flex flex-col bg-gray-4 my-6 w-auto `}>
                     <div className={` flex flex-col w-full`}>
                          <label className={` text-xl font-bold`}> Ajouter un nouveu produit </label>
@@ -108,11 +108,6 @@ const NewProduct = () => {
                          <div className={` flex flex-col w-full mt-4`}>
                               <Input type="text" htmlFor="designationId" name="designation" label="Désignation" event={onDesignation} icon={<BiNavigation size="0.95rem" />} />
                               <Input type="text" htmlFor="saId" name="sa" label="Stock d'alèrte" event={onAlerteStock} icon={<BiAddToQueue size="0.95rem" />} />
-                              {/* <Dropdown state={categoryState} type="text" htmlFor="categorieId" name="catergorie" label="Catégorie du produit" value={categorie} event={onCategorisation}>
-                                   {dataCategorie != undefined && dataCategorie!=null? dataCategorie.map((value) => {
-                                        return <div key={value.sub_categorie_id} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetCategory(value.sub_categorie_id, value.sub_categorie_name)}>{value.sub_categorie_name}</div>
-                                   }) : setDataCategorie([])}
-                              </Dropdown> */}
                               <Dropdown state={markState} type="text" htmlFor="markId" name="mark" label="Marque du produit" value={mark} event={onSetMark}>
                                    {dataMarque != undefined ? dataMarque.map((value) => {
                                         return <div key={value.mark_id} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetMark(value.mark_id, value.mark_name)}>{value.mark_name}</div>
@@ -121,7 +116,8 @@ const NewProduct = () => {
                               <Button text={'Enregistrer le produit'} event={() => AddProduct()} />
                          </div>
                     </div>
-                    <div className={`mt-4`}>
+                   
+               </div> <div className={`mt-10 w-auto `}>
                          <table className={` w-auto`}>
                               <tr className={`${style.bg}`}>
                                    <td className={`border border-gray-200 text-white px-2`}>Catégorie</td>
@@ -144,7 +140,6 @@ const NewProduct = () => {
                               }
                          </table>
                     </div>
-               </div>
           </div>
      )
 

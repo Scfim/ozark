@@ -41,6 +41,7 @@ const Mark = () => {
            if(e.target.value!=""){
                await getSubCategory().then((response)=>{                
                     setDataSubCategory(response.data.data)
+                    console.log(response.data.data)
                     setStateSubCategory("")
                })
            }else setStateSubCategory("hidden")
@@ -90,16 +91,13 @@ const Mark = () => {
                                                   <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
                                                   <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
                                              </tr>
-
-
-                                        }) : setData([])
+                                        }) : null
                                    } </table>
                          </div>
                     </div>
                </div>
                {/* <SubCategory state={stateSubCategory} /> */}
           </div>
-
      </div>
 
 
