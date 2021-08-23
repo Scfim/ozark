@@ -21,7 +21,7 @@ export default function NavBar({ activeLayout, onSetNewLayout, links }) {
       </div>
       <div onClick={onClickModeIcon} className="mx-2 relative">
         <FaMoon size="1.3rem" className="text-gray-500 cursor-pointer" />
-        <div className="absolute -left-2 mt-2 top-10 bg-white p-3 rounded shadow z-30">
+        <div className="absolute hidden -left-2 mt-2 top-10 bg-white p-3 rounded shadow z-30">
           <div className="relative">
             <span className="absolute -top-3 h-2.5 rotate-pi/2 z-10 w-2.5  bg-white border-t border-l p-2"></span>
             <div className="bg-white">

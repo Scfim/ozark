@@ -16,7 +16,6 @@ import Button from "../../components/Button";
 import { userSignUp } from "../api/users";
 import Status from "../../components/Status";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
-import Router from "next/router";
 
 export default function signup() {
   const isLoggedIn = useIsLoggedIn();

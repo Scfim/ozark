@@ -6,9 +6,34 @@ import style from '../../styles/App.module.css'
 import Router from 'next/router'
 import SubCategory from './subCategory';
 import { addCategory, getCategory } from '../api/category'
+import axios from 'axios';
+import { server } from '../../constants/common';
 
 
-const Caterory = ({ state }) => {
+const Category = ({ state }) => {
+     useEffect(async () => {
+          const authenticated = await axios
+            .get(`${server}/users/login`)
+            .then((res) => {
+              return res.data.authenticated;
+            })
+            .catch((err) => console.log(err));
+          const auth = await axios
+            .get(`${server}/users/auth`, {
+              headers: {
+                "x-access-token": localStorage.getItem("token"),
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              return res.data.auth;
+            })
+            .catch((err) => console.log(err));
+            if (authenticated && auth) {
+               //  Router.push("/");
+            } else Router.push("/login");
+        }, []);
+      
 
      useEffect(() => {
           GetCategory()
@@ -95,4 +120,4 @@ const Caterory = ({ state }) => {
      </div>
 }
 
-export default Caterory
+export default Category

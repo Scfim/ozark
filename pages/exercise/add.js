@@ -8,21 +8,39 @@ import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
 import { useAddExercise } from "../api/exercise";
 import DateInput from "../../components/DateInput";
+import Status from "../../components/Status";
+import { useState } from "react";
 
 export default function add() {
-  const [{ startYear, endYear }, handleChange] = useForm({
-    startYear: "",
-    endYear: "",
+  const [statusType, setStatusType] = useState("");
+  const [isStatusHidden, setIsStatusHidden] = useState(true);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [{ startDate, endDate }, handleChange] = useForm({
+    startDate: "",
+    endDate: "",
   });
+  const resetStatusIsHidden = () => setIsStatusHidden(true);
   const onHandleAddExercise = (event) => {
     event.preventDefault();
-    useAddExercise(startYear, endYear).then((res) => console.log(res));
+    useAddExercise(startDate, endDate).then((res) => {
+      setIsStatusHidden(false);
+      setStatusMessage(res.message || "Enregistrement reussi !");
+      res.type.toLowerCase() === "failure"
+        ? setStatusType("error")
+        : setStatusType("success");
+    });
   };
   return (
     <>
       <Headers title="Nouvel exercice | Umarps Shop Manager" />
       <div className="grid h-screen place-items-center w-full mx-auto md:w-9/12">
         <div className="shadow bg-white rounded w-11/12 py-4 md:w-8/12 grid place-items-center">
+          <Status
+            type={statusType}
+            isHidden={isStatusHidden}
+            message={statusMessage}
+            resetStatusIsHidden={resetStatusIsHidden}
+          />
           <HeadSection
             leader="Nouvel exercice"
             follower="Ajouter un exercice "
@@ -36,15 +54,15 @@ export default function add() {
                 style="mr-1"
                 event={handleChange}
                 placeholder="Année de début"
-                value={startYear}
-                name="startYear"
+                value={startDate}
+                name="startDate"
               />
               <DateInput
                 style="ml-1"
                 event={handleChange}
                 placeholder="Année de  fin"
-                value={endYear}
-                name="endYear"
+                value={endDate}
+                name="endDate"
               />
             </div>
             <div className="flex justify-between ">

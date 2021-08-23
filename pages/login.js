@@ -9,6 +9,7 @@ import Button from "../components/Button";
 import { useLogin } from "./api/users";
 import useIsLoggedIn from "../hooks/useIsLoggedIn";
 import Router from "next/router";
+import useRedirect from "../hooks/useRedirect";
 
 export default function login() {
   const [{ username, password }, handleChange] = useForm({
@@ -16,7 +17,7 @@ export default function login() {
     password: "",
   });
   const isLoggedIn = useIsLoggedIn()
-  isLoggedIn && Router.push("/")
+  isLoggedIn && useRedirect("/", false)
   const onHandleLoginUser = (event) => {
     event.preventDefault()
     useLogin(username, password)
