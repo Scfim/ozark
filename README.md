@@ -28,12 +28,12 @@
     * Folk the repository
     * Create you working branch locally and remotely
     * First run this command on your computer 
-        ```console
+        ```
             yarn install 
         ```
     * Then make sure you are working in your branch
     * Now run    
-    ```console 
+    ```
         yarn dev to stark working 
     ```
 
