@@ -11,28 +11,28 @@ import { server } from '../../constants/common';
 
 
 const Category = ({ state }) => {
-     useEffect(async () => {
-          const authenticated = await axios
-            .get(`${server}/users/login`)
-            .then((res) => {
-              return res.data.authenticated;
-            })
-            .catch((err) => console.log(err));
-          const auth = await axios
-            .get(`${server}/users/auth`, {
-              headers: {
-                "x-access-token": localStorage.getItem("token"),
-              },
-            })
-            .then((res) => {
-              console.log(res);
-              return res.data.auth;
-            })
-            .catch((err) => console.log(err));
-            if (authenticated && auth) {
-               //  Router.push("/");
-            } else Router.push("/login");
-        }, []);
+     // useEffect(async () => {
+     //      const authenticated = await axios
+     //        .get(`${server}/users/login`)
+     //        .then((res) => {
+     //          return res.data.authenticated;
+     //        })
+     //        .catch((err) => console.log(err));
+     //      const auth = await axios
+     //        .get(`${server}/users/auth`, {
+     //          headers: {
+     //            "x-access-token": localStorage.getItem("token"),
+     //          },
+     //        })
+     //        .then((res) => {
+     //          console.log(res);
+     //          return res.data.auth;
+     //        })
+     //        .catch((err) => console.log(err));
+     //        if (authenticated && auth) {
+     //           //  Router.push("/");
+     //        } else Router.push("/login");
+     //    }, []);
       
 
      useEffect(() => {
@@ -51,8 +51,7 @@ const Category = ({ state }) => {
      const [dataCategory, setDataCategory] = useState([])
      async function GetCategory() {
           await getCategory().then((res) => {
-               setDataCategory(res.data.data)
-               //  console.log(res.data.data)
+               setDataCategory(res.data.data)              
           })
      }
 

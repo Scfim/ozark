@@ -55,6 +55,7 @@ const NewProvider = () => {
           await getProvider().then((response) => {
                if (response.data.data != undefined && response.data.data.lenght < 1) {
                     setData(response.data.data)
+                    console.log(response.data.data,'yfkduyksduydsydslisd')
                } else setData([])
                console.log(response.data.data)
           })
