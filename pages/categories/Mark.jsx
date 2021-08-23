@@ -23,7 +23,7 @@ const Mark = () => {
           setDescriptionMark(e.target.value);
      };
 
-     const [subCategorieId, setSubCategorieId] = useState("")
+   
      const [data, setData] = useState([])
      async function AddMark() {
           await addMark({ name: mark, description: descriptionMark, subCategorieId: subCategoryId }).then((response) => {
@@ -65,8 +65,7 @@ const Mark = () => {
                     <div className={`flex flex-col`}>
                          <label htmlFor="" className={`text-xl font-bold my-1`}>Ajouter une nouvelle catégorie</label>
                          <label htmlFor="" className={`text-sm mt-1 mb-5 ${style.text} `}>Assurez vous de mieux complèter les champs ci-bas</label>
-
-                         <Dropdown state={stateSubCategory} type="text" htmlFor="categorieId" name="catergorie" label="Catégorie du produit" value={subCategory} event={OnsetSubCategory}>
+                         <Dropdown state={stateSubCategory} type="text" htmlFor="subcategorieId" name="subcatergorie" label="Sous Catégorie du produit" value={subCategory} event={OnsetSubCategory}>
                               {dataSubCategory != undefined && dataSubCategory != null ? dataSubCategory.map((value) => {
                                    return <div key={value.sub_categorie_id} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetCategory(value.sub_categorie_id, value.sub_categorie_name)}>{value.sub_categorie_name}</div>
                               }) :null}
