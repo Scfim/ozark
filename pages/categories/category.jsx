@@ -4,10 +4,36 @@ import { Input } from '../../components/s/input'
 import { Button, ButtonIcon } from '../../components/s/button'
 import style from '../../styles/App.module.css'
 import Router from 'next/router'
-import SubCategory  from './subCategory';
+import SubCategory from './subCategory';
+import { addCategory, getCategory } from '../api/category'
+import axios from 'axios';
+import { server } from '../../constants/common';
 
 
-const Caterory = ({ state }) => {
+const Category = ({ state }) => {
+     useEffect(async () => {
+          const authenticated = await axios
+            .get(`${server}/users/login`)
+            .then((res) => {
+              return res.data.authenticated;
+            })
+            .catch((err) => console.log(err));
+          const auth = await axios
+            .get(`${server}/users/auth`, {
+              headers: {
+                "x-access-token": localStorage.getItem("token"),
+              },
+            })
+            .then((res) => {
+              console.log(res);
+              return res.data.auth;
+            })
+            .catch((err) => console.log(err));
+            if (authenticated && auth) {
+               //  Router.push("/");
+            } else Router.push("/login");
+        }, []);
+      
 
      useEffect(() => {
           GetCategory()
@@ -23,12 +49,11 @@ const Caterory = ({ state }) => {
      };
 
      const [dataCategory, setDataCategory] = useState([])
-     function GetCategory() {
-          const data = {
-               category: "automobile",
-               type: "voiture lambourgino"
-          }
-          setDataCategory([data])
+     async function GetCategory() {
+          await getCategory().then((res) => {
+               setDataCategory(res.data.data)
+               //  console.log(res.data.data)
+          })
      }
 
 
@@ -47,17 +72,23 @@ const Caterory = ({ state }) => {
                setTitle("Sous Catégorie")
           }
      }
-     function AddCategory() { }
+     const AddCategory = async () => {
+          await addCategory({
+               name: category,
+               type: typeCategory,
+          }).then((res) => {
+               if (res.data.type === "success") {
+                    GetCategory()
+               } else { }
+          })
+     }
 
-     return <div className={`${state} flex flex-col w-full h-screen justify-center items-center `}>
-           <div className={`${state} flex flex-col `}>
+
+
+     return <div className={`${state} flex flex-col w-full h-screen justify- items-center `}>
+          <div className={`${state} flex flex-col `}>
                <div className={` flex my-3`}>
-                    <div className={`w-44 mt-8 `}>
-                         <ButtonIcon text={'Nouveau produit'} event={() => Router.push("/product/add")} icon={<BiAbacus size="0.95rem" className={`${style.text}  mx-1 group-hover:text-white `} />} />
-                    </div>
-                    <div className={`w-44 mt-8`}>
-                         <ButtonIcon text={title} event={() => ChangeState()} icon={<BiAlarmExclamation size="0.95rem" className={`${style.text}  mx-1 group-hover:text-white `} />} />
-                    </div>
+
                </div>
                <div id="categorie" className={`w-full flex ${stateCategory}`} >
                     <div className={`flex flex-col`}>
@@ -68,30 +99,25 @@ const Caterory = ({ state }) => {
                          <Button text={'Enregistrer la catégorie'} event={() => AddCategory()} />
                     </div>
                     <div className={`flex flex-row mx-16`}>
-                         {
-                              dataCategory.map((value) => {
-                                   return <div className={`mt-3`}>
-                                        <table className={`border border-gray-200 w-96`}>
-                                             <tr className={`${style.bg}`}>
-                                                  <td className={`border border-gray-200 text-white px-2`}>Categorie</td>
-                                                  <td className={`border border-gray-200 text-white px-2`}>Type</td>
-                                             </tr >
-                                             <tr className={`border border-gray-200 text-xs`}>
-                                                  <td className={`border border-gray-200 text-sm px-2 `}>{value.category}</td>
-                                                  <td className={`border border-gray-200 text-sm px-2`}>{value.type}</td>
-                                                  <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                                  <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                             </tr>
-                                        </table>
-                                   </div>
-                              })
-                         }
+                         <table className={`border border-gray-200 w-96`}>
+                              <tr className={`${style.bg}`}>
+                                   <td className={`border border-gray-200 text-white px-2`}>Categorie</td>                               
+                              </tr >
+                              {dataCategory != undefined|| dataCategory!=null? dataCategory.map((value) => {
+                                   return <tr className={`border border-gray-200 text-xs`}>
+                                        <td className={`border border-gray-200 text-sm px-2 `}>{value.categorie_name}</td>
+                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                   </tr>
+                              }) : null
+
+                              }
+                         </table>
                     </div>
                </div>
-               <SubCategory state={stateSubCategory} />
 
           </div>
      </div>
 }
 
-export default Caterory
+export default Category

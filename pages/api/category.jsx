@@ -1,26 +1,26 @@
 import axios from 'axios'
 import {server} from "../../constants/common"
 
-export const addClient=(data)=>{
-    const url=`${server}/clients/add`
+export const addCategory=(data)=>{
+    const url=`${server}/categories/add`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const editClient=()=>{
+export const editCategory=()=>{
     const url=`${server}/....`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const deleteClient=()=>{
+export const deleteCategory=()=>{
     const url=`${server}/....`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const getClient=()=>{
-    const url=`${server}/clients/getAll`
+export const getCategory=()=>{
+    const url=`${server}/categories/getAll`
     return new Promise((resolve,reject)=>{
         axios.post(url).then((res)=>resolve(res)).catch((err)=> reject(err))
     })

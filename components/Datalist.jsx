@@ -33,7 +33,7 @@ function DataList({
           {options.length > 0
             ? options.map((option) => {
                 return (
-                  <option key={option.value} value={option.value}>
+                  <option key={option.value+option.key} value={option.value}>
                     {option.key}
                   </option>
                 );

@@ -15,8 +15,10 @@ import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
 import { userSignUp } from "../api/users";
 import Status from "../../components/Status";
+import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 
 export default function signup() {
+  const isLoggedIn = useIsLoggedIn();
   const [statusType, setStatusType] = useState("");
   const [isStatusHidden, setIsStatusHidden] = useState(true);
   const [statusMessage, setStatusMessage] = useState("");
@@ -112,6 +114,7 @@ export default function signup() {
               options={[
                 { key: "Administrateur", value: "Super user" },
                 { key: "Vendeur", value: "user" },
+                { key: "Caissier", value: "user" },
               ]}
             />
             <div className="md:flex justify-between ">

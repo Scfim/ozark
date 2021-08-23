@@ -1,18 +1,23 @@
 import { useState, useEffect } from "react";
+4;
+import { useRouter } from "next/router";
 
 export default function useNavBar() {
   const [navBarIsNeeded, setNavBarIsNeeded] = useState(true);
+  const router = useRouter();
   useEffect(() => {
-    window.addEventListener("load", getUrlPathName);
-
-    function getUrlPathName() {
-      const validPathNames = ["/login", "/users/add", '/users/profile'];
-      const currentPathName = window.location.pathname;
-     validPathNames.indexOf(currentPathName) !== -1 && setNavBarIsNeeded(false)
+    function getPathname(load = false) {
+      if (load) {
+        console.log("me");
+        const validPathNames = ["/login", "/users/add", "/users/profile"];
+        const currentPathName = router.pathname;
+        console.log(currentPathName);
+        validPathNames.indexOf(currentPathName) !== -1 &&
+          setNavBarIsNeeded(false);
+      }
     }
-    return () => {
-      window.removeEventListener("load", getUrlPathName);
-    };
-  },[]);
+    getPathname(true);
+    return () => getPathname();
+  }, [router.pathname, navBarIsNeeded]);
   return navBarIsNeeded;
 }

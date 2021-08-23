@@ -1,8 +1,8 @@
 import axios from 'axios'
 import {server} from "../../constants/common"
 
-export const addSubCategory=()=>{
-    const url=`${server}/....`
+export const addSubCategory=(data)=>{
+    const url=`${server}/subCategories/add`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
@@ -20,7 +20,7 @@ export const deleteSubCategory=()=>{
     })
 }
 export const getSubCategory=()=>{
-    const url=`${server}/....`
+    const url=`${server}/subCategories/getAll`
     return new Promise((resolve,reject)=>{
         axios.post(url).then((res)=>resolve(res)).catch((err)=> reject(err))
     })

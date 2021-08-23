@@ -1,11 +1,9 @@
-import axios from "axios"
-import { post_add_exercise } from "../../constants/exercise"
+import axios from "axios";
+import { post_add_exercise } from "../../constants/exercise";
 
-export const useAddExercise = (startYear, endYear) =>{
-    return new Promise((resolve, reject)=>{
-        axios.post(post_add_exercise,{startYear,endYear}).then(result=>{
-            //waiting for mak
-            
-        }).catch(err => reject(err))
-    })
-}
+export const useAddExercise = async (startDate, endDate) => {
+  try {
+    const response = await axios.post(post_add_exercise, { startDate, endDate });
+    return response.data
+  } catch (e) {}
+};

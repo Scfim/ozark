@@ -2,14 +2,16 @@ import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
 import Head from "next/head";
 import LeftMenuSection from "../components/LeftMenuSection";
-import React, {useState} from "react";
+import React, { useState} from "react";
 import NavBar from "../components/NavBar";
 import useNavBar from "../hooks/useNavBar";
+import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
   const isNavbarNeeded = useNavBar();
   const [currentLayout, setCurrentLayout] = useState("");
   const [navLinks, setNavLinks] = useState({})
+  console.log("Navbar is needed: "+ isNavbarNeeded)
 
   const onSetNewLayout = activeLayout => setCurrentLayout(activeLayout)
   const onSetNavLinks = links=> setNavLinks (links)
