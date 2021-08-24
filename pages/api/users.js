@@ -34,7 +34,7 @@ export const userSignUp = async (user) => {
 
 /**
  * This function is use to get user asynchronously from the database
- * @returns an array of users available in the database otherwise it will return an empty array
+ * @returns  an array of users available in the database otherwise it will return an empty array
  */
 
 export const userGetAll = async () => {
@@ -44,5 +44,18 @@ export const userGetAll = async () => {
     else return [];
   } catch (err) {
     throw err;
+  }
+};
+
+/**
+ * 
+ * @param {string} userId : User id to delete in the database
+ */
+export const useDeleteUser = async(userId) => {
+  try{
+    const response = await axios.post(delete_user)
+    return response.data
+  }catch(err){
+    throw err
   }
 };
