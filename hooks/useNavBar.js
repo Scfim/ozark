@@ -8,16 +8,15 @@ export default function useNavBar() {
   useEffect(() => {
     function getPathname(load = false) {
       if (load) {
-        console.log("me");
-        const validPathNames = ["/login", "/users/add", "/users/profile"];
         const currentPathName = router.pathname;
-        console.log(currentPathName);
-        validPathNames.indexOf(currentPathName) !== -1 &&
-          setNavBarIsNeeded(false);
+        if(currentPathName === "/login"){
+          setNavBarIsNeeded(false)
+        }
       }
     }
     getPathname(true);
     return () => getPathname();
   }, [router.pathname, navBarIsNeeded]);
+  console.log(navBarIsNeeded)
   return navBarIsNeeded;
 }
