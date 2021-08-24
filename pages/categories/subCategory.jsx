@@ -6,9 +6,10 @@ import { BiAlarmSnooze, BiBeer, BiPencil, BiTrash } from "react-icons/bi";
 import { Dropdown } from "../../components/s/dropdown";
 import { addSubCategory, editSubCategory, deleteSubCategory, getSubCategory } from "../api/subCategory";
 import { getCategory } from "../api/category";
+import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 
 export default function SubCategory({ state }) {
-
+useIsLoggedIn()
   useEffect(() => {
     GetSubCategory()
   }, [])

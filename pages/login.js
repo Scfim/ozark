@@ -10,12 +10,12 @@ import { useLogin } from "./api/users";
 import useIsLoggedIn from "../hooks/useIsLoggedIn";
 
 export default function login() {
+  useIsLoggedIn("/")
   const [{ username, password }, handleChange] = useForm({
     username: "",
     password: "",
   });
 
-  useIsLoggedIn("/")
 
   const onHandleLoginUser = (event) => {
     event.preventDefault();

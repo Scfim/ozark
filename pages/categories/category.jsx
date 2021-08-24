@@ -16,33 +16,13 @@ import { addCategory, getCategory } from "../api/category";
 import axios from "axios";
 import { server } from "../../constants/common";
 import Status from "../../components/Status";
+import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 
 const Category = ({ state }) => {
+  useIsLoggedIn()
   const [statusType, setStatusType] = useState("");
   const [isStatusHidden, setIsStatusHidden] = useState(true);
   const [statusMessage, setStatusMessage] = useState("");
-  // useEffect(async () => {
-  //      const authenticated = await axios
-  //        .get(`${server}/users/login`)
-  //        .then((res) => {
-  //          return res.data.authenticated;
-  //        })
-  //        .catch((err) => console.log(err));
-  //      const auth = await axios
-  //        .get(`${server}/users/auth`, {
-  //          headers: {
-  //            "x-access-token": localStorage.getItem("token"),
-  //          },
-  //        })
-  //        .then((res) => {
-  //          console.log(res);
-  //          return res.data.auth;
-  //        })
-  //        .catch((err) => console.log(err));
-  //        if (authenticated && auth) {
-  //           //  Router.push("/");
-  //        } else Router.push("/login");
-  //    }, []);
 
   useEffect(() => {
     GetCategory();
