@@ -15,8 +15,10 @@ import Datalist from "../../components/Datalist";
 import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
 import { useAddInput } from "../api/inputs";
+import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 
 export default function input() {
+  useIsLoggedIn()
   const [
     {
       product,

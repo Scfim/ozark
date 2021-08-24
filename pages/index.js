@@ -1,11 +1,7 @@
 import Head from "next/head";
-import { useEffect } from "react";
 import useIsLoggedIn from "../hooks/useIsLoggedIn";
-import useRedirect from "../hooks/useRedirect";
-
 export default function Home() {
-  
-
+  useIsLoggedIn();
   return (
     <div className="flex flex-col items-center justify-center min-h-screen py-2">
       <Head>

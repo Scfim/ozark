@@ -4,10 +4,12 @@ import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
 import { BiBox, BiMailSend, BiPencil, BiPhone, BiTrash, BiUser } from 'react-icons/bi'
 import { addProvider, editProvider, deleteProvider, getProvider } from '../api/provider'
+import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 
 
 
 const NewProvider = () => {
+     useIsLoggedIn()
 
      useEffect(() => {
           GetProvider()

@@ -8,9 +8,11 @@ import Router from 'next/router'
 import { getMark} from '../api/Mark'
 import { getSubCategory } from '../api/subCategory'
 import { addProduct, getProduct } from '../api/product'
+import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 
 
 const NewProduct = () => {
+     useIsLoggedIn()
 
      useEffect(() => {
           GetProduct()
@@ -36,24 +38,6 @@ const NewProduct = () => {
           setAlerteStock(e.target.value);
      };
 
-     // const [categorie, setCategorie] = useState("");
-     // const [idCategorie, setIdCategorie] = useState("");
-     // const [dataCategorie, setDataCategorie] = useState([]);
-     // const onCategorisation = async (e) => {
-     //      setCategorie(e.target.value);
-     //      if (e.target.value != "") {
-     //           await getSubCategory().then((response) => {
-     //                setDataCategorie(response.data.data)
-     //                setCategoryState("")
-     //           })
-
-     //      } else setCategoryState("hidden")
-     // };
-     // const GetCategory = (id, category) => {
-     //      setCategoryState("hidden")
-     //      setCategorie(category)
-     //      setIdCategorie(id)
-     // }
      const [mark, setMark] = useState("");
      const [Idmark, setIdMark] = useState("");
      const [dataMarque, setDataMarque] = useState([]);

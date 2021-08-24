@@ -4,10 +4,8 @@ import { FaBars, FaCog, FaMoon, FaPowerOff } from "react-icons/fa";
 import NavBarLink from "./NavBarLink";
 
 export default function NavBar({ activeLayout, onSetNewLayout, links }) {
-  const [showModeSection, setShowModeSection] = useState(false)
-  const onClickModeIcon = () =>{
-
-  }
+  const [showModeSection, setShowModeSection] = useState(false);
+  const onClickModeIcon = () => {};
   return (
     <div className="flex w-full items-center font-semibold shadow rounded bg-white text-gray-700 p-1">
       <div className="mx-2">
@@ -25,17 +23,24 @@ export default function NavBar({ activeLayout, onSetNewLayout, links }) {
           <div className="relative">
             <span className="absolute -top-3 h-2.5 rotate-pi/2 z-10 w-2.5  bg-white border-t border-l p-2"></span>
             <div className="bg-white">
-            <div className="text-xs border-b -m-2">Mode sombre</div>
-            <div className="mt-1">
-              <div>Activer</div>
-              <div>Desactiver</div>
-            </div>
+              <div className="text-xs border-b -m-2">Mode sombre</div>
+              <div className="mt-1">
+                <div>Activer</div>
+                <div>Desactiver</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div className="mx-2">
-        <BiFullscreen size="1.3rem" className="text-gray-500 cursor-pointer" />
+        <BiFullscreen
+          onClick={() =>
+            document.documentElement.requestFullscreen &&
+            document.documentElement.requestFullscreen()
+          }
+          size="1.3rem"
+          className="text-gray-500 cursor-pointer"
+        />
       </div>
       <div className="cursor-pointer mx-3">Journal</div>
 
@@ -43,9 +48,24 @@ export default function NavBar({ activeLayout, onSetNewLayout, links }) {
       <div className="cursor-pointer ">Inventaire</div>
       <div className="w-full flex justify-end">
         <div className="w-9/12 flex items-center  justify-evenly h-12 ">
-          <NavBarLink layoutName="Dashboard" activeLayout={activeLayout} onClickLayout={onSetNewLayout} route={links.dash} />
-          <NavBarLink layoutName="Formulaire" activeLayout={activeLayout} onClickLayout={onSetNewLayout} route={links.form}/>
-          <NavBarLink layoutName="Données" activeLayout={activeLayout} onClickLayout={onSetNewLayout} route={links.data}/>
+          <NavBarLink
+            layoutName="Dashboard"
+            activeLayout={activeLayout}
+            onClickLayout={onSetNewLayout}
+            route={links.dash}
+          />
+          <NavBarLink
+            layoutName="Formulaire"
+            activeLayout={activeLayout}
+            onClickLayout={onSetNewLayout}
+            route={links.form}
+          />
+          <NavBarLink
+            layoutName="Données"
+            activeLayout={activeLayout}
+            onClickLayout={onSetNewLayout}
+            route={links.data}
+          />
         </div>
       </div>
       <div>
