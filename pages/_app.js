@@ -11,6 +11,17 @@ function MyApp({ Component, pageProps }) {
   const [currentLayout, setCurrentLayout] = useState("");
   const [navLinks, setNavLinks] = useState({});
   const { pathname } = useRouter();
+  const [showNavbar, setShowNavbar] = useState(true);
+
+  /**
+   * This function should toggle the navbar
+   * Hide it or may just show it
+   */
+  const onToggleNavbar = () => {
+    if (showNavbar) {
+      setShowNavbar(false);
+    } else setShowNavbar(true);
+  };
   useEffect(() => {
     function setNavBar(canHandleSetter = true) {
       if (canHandleSetter) {
@@ -36,16 +47,19 @@ function MyApp({ Component, pageProps }) {
           <link rel="shortcut icon" href="logo.JPG" />
         </Head>
         <div className="flex overflow-x-hidden overflow-y-hidden justify-between w-screen h-screen bg-gray-100">
-          <LeftMenuSection
-            onInitNewPage={onInitNewPage}
-            setNavLinks={onSetNavLinks}
-          />
-          <div className={`w-10/12 h-screen scrollBar overflow-y-auto`}>
+          {showNavbar && (
+            <LeftMenuSection
+              onInitNewPage={onInitNewPage}
+              setNavLinks={onSetNavLinks}
+            />
+          )}
+          <div className={`${showNavbar ? "w-10/12" : "w-full"} h-screen scrollBar overflow-y-auto`}>
             <div className="w-11/12 ml-11 mt-2 p-1 sticky top-0">
               <NavBar
                 activeLayout={currentLayout}
                 onSetNewLayout={onSetNewLayout}
                 links={navLinks}
+                onToggleNavbar={onToggleNavbar}
               />
             </div>
             <Component {...pageProps} />
