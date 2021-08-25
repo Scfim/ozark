@@ -15,7 +15,7 @@ import TextBox from "../../components/TextBox";
 import Datalist from "../../components/Datalist";
 import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
-import { useAddBooking } from "../api/booking";
+import { useAddBooking } from "../api/booking"; 
 import validate from "../../hooks/useValidate";
 
 export default function add() {
