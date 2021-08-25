@@ -7,14 +7,14 @@ export const addClient=(data)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const editClient=()=>{
-    const url=`${server}/....`
+export const editClient=(data)=>{
+    const url=`${server}/clients/update`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const deleteClient=()=>{
-    const url=`${server}/....`
+export const deleteClient=(data)=>{
+    const url=`${server}/clients/delete`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })

@@ -8,8 +8,12 @@ import {
   BiPencil,
 } from "react-icons/bi";
 import { Input } from "../../components/s/input";
-import { Button, ButtonIcon } from "../../components/s/button";
+import { Button} from "../../components/s/button";
 import style from "../../styles/App.module.css";
+<<<<<<< HEAD
+import { addCategory, getCategory,deleteCategory,updateCategory } from "../api/category";
+
+=======
 import Router from "next/router";
 import SubCategory from "./subCategory";
 import { addCategory, getCategory } from "../api/category";
@@ -17,6 +21,7 @@ import axios from "axios";
 import { server } from "../../constants/common";
 import Status from "../../components/Status";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
+>>>>>>> 469c81906d6dda5be10ce94cf6f5bf3db8193b29
 
 const Category = ({ state }) => {
   useIsLoggedIn()
@@ -63,61 +68,36 @@ const Category = ({ state }) => {
     await addCategory({
       name: category,
       type: typeCategory,
-    }).then((res) => {
-      setStatusMessage(res.data.message || "Enregistrement reussi !");
-      setIsStatusHidden(false);
-      if (res.data.type === "success") {
-        GetCategory();
-        setStatusType("success");
-      } else {
-        setStatusType("error");
-      }
+    }).then((res) => {     
+        GetCategory();       
     });
-  };
+  }
+  const DeleteCategory = async (category_id) => {
+    await deleteCategory({
+      categorieid:category_id,
+    }).then((res) => {     
+        GetCategory();       
+        console.log(res)
+    });
+  }
   return (
-    <div
-      className={`${state} flex flex-col w-full h-screen justify- items-center `}
-    >
-      <div className={`${state} flex flex-col `}>
-        <Status
-          type={statusType}
-          isHidden={isStatusHidden}
-          message={statusMessage}
-          resetStatusIsHidden={resetStatusIsHidden}
-        />
-        <div className={` flex my-3`}></div>
-        <div id="categorie" className={`w-full flex ${stateCategory}`}>
-          <div className={`flex flex-col`}>
-            <label htmlFor="" className={`text-xl font-bold my-1`}>
-              Ajouter une nouvelle catégorie
-            </label>
-            <label htmlFor="" className={`text-sm mt-1 mb-5 ${style.text} `}>
-              Assurez vous de mieux complèter les champs ci-bas
-            </label>
-            <Input
-              type="text"
-              htmlFor="categoryId"
-              name="category"
-              label="Catégorie"
-              event={onSetcategory}
-              icon={<BiBeer size="0.95rem" />}
-            />
-            <Input
-              type="text"
-              htmlFor="designationId"
-              name="designation"
-              label="Type de la catégorie"
-              event={onSetTypecategoty}
-              icon={<BiTrophy size="0.95rem" />}
-            />
-            <Button
-              text={"Enregistrer la catégorie"}
-              event={() => AddCategory()}
-            />
+    <div className={`flex flex-col my-6`} >
+      <div className={` flex flex-col w-full mx-14`}>
+        <label className={` text-xl font-bold`}> Ajouter une nouvelle catégorie </label>
+        <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier une catégorie </label>
+      </div>
+
+      <div className=" flex mx-14 my-8" >
+        <div className="flex">
+          <div className="flex flex-col bg-white shadow-md rounded-md p-4  ">
+            <Input type="text" htmlFor="categoryId" name="category" label="Catégorie" event={onSetcategory} icon={<BiBeer size="0.95rem" />} />
+            <Input type="text" hmlFor="designationId" name="designation" label="Description de la catégorie" event={onSetTypecategoty} icon={<BiTrophy size="0.95rem" />} />
+            <Button text={"Enregistrer la catégorie"} event={() => AddCategory()} />
           </div>
-          <div className={`flex flex-row mx-16`}>
-            <div>
-              <table className={`border border-gray-200 w-96`}>
+        </div>
+
+        <div className="ml-6 bg-white shadow-md rounded-md p-4 w-full ">
+              <table className={`border  border-gray-200 w-full`}>
                 <tr className={`${style.bg}`}>
                   <td className={`border border-gray-200 text-white px-2`}>
                     Categorie
@@ -125,38 +105,41 @@ const Category = ({ state }) => {
                 </tr>
                 {dataCategory != undefined || dataCategory != null
                   ? dataCategory.map((value) => {
-                      return (
-                        <tr className={`border border-gray-200 text-xs`}>
-                          <td
-                            className={`border border-gray-200 text-sm px-2 `}
-                          >
-                            {value.categorie_name}
-                          </td>
-                          <td className={`border border-gray-200 text-sm px-2`}>
-                            {
-                              <BiTrash
-                                size="0.95rem"
-                                className={`cursor-pointer hover:text-gray-900`}
-                              />
-                            }
-                          </td>
-                          <td className={`border border-gray-200 text-sm px-2`}>
-                            {
-                              <BiPencil
-                                size="0.95rem"
-                                className={`cursor-pointer hover:text-gray-900`}
-                              />
-                            }
-                          </td>
-                        </tr>
-                      );
-                    })
+                    return (
+                      <tr key={value.categorie_id} className={`border border-gray-200 text-xs`}>
+                        <td
+                          className={`border border-gray-200 text-sm px-2 `}
+                        >
+                          {value.categorie_name}
+                        </td>
+                        <td className={`border border-gray-200 text-sm px-2`}>
+                          {
+                            <BiTrash
+                              size="0.95rem"
+                              className={`cursor-pointer hover:text-gray-900`}
+                              onClick={() =>DeleteCategory(value.categorie_id)}
+                            />
+                          }
+                        </td>
+                        <td className={`border border-gray-200 text-sm px-2`}>
+                          {
+                            <BiPencil
+                              size="0.95rem"
+                              className={`cursor-pointer hover:text-gray-900`}
+                              
+                            />
+                          }
+                        </td>
+                      </tr>
+                    );
+                  })
                   : null}
               </table>
             </div>
-          </div>
-        </div>
+
       </div>
+
+
     </div>
   );
 };

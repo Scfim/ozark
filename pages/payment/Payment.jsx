@@ -56,25 +56,30 @@ const Payement = () => {
 
 
     const AddPayement = () => {
-        console.log(bookingId, date, time, mount, envoy)        
+        console.log("63119d9d-45ad-42e5-8022-935e9458a88c", date, time, mount, envoy)
+        // console.log(bookingId, date, time, mount, envoy)
     }
 
-    return <div className={` flex flex-col bg-gray-4 my-6 justify-center items-center  `}>
-        <div className={` flex flex-col bg-gray-4 my-6 w-auto `}>
-            <div className={` flex flex-col w-full`}>
-                <label className={` text-xl font-bold`}> Transaction de paiement </label>
+    return <div className={`flex flex-col my-6`} >
+        <div className={` flex flex-col w-full mx-14`}>
+            <label className={` text-xl font-bold`}> Transaction de paiement </label>
+        </div>
+
+        <div className=" flex mx-14 my-8" >
+            <div className="flex">
+                <div className="flex flex-col bg-white shadow-md rounded-md p-4  ">
+                    <Dropdown state={bookingState} type="text" htmlFor="bookingId" name="booking" label="N° de la commande" value={booking} event={onSetBooking}>
+                        {bookingData != undefined && bookingData != null ? bookingData.map((value) => {
+                            return <div key={value.bookingId} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetBooking(value.bookingId, value.bookingDesignation, value.bookingDate)}>{value.bookingDesignation}</div>
+                        }) : setBookingData([])}
+                    </Dropdown>
+                    <Input type="date" htmlFor="dateId" name="date" label="Date de l'opération" event={onSetDate} />
+                    <Input type="number" htmlFor="mountId" name="mount" label="Montant payé" event={onSetMount} icon={<BiMoney size="0.95rem" />} />
+                    <Input type="text" htmlFor="envoyId" name="envoy" label="Envoyé" event={onSetEnvoy} icon={<BiNavigation size="0.95rem" />} />
+                    <Button text={'Enregistrer la Transaction'} event={() => AddPayement()} />
+                </div>
             </div>
-            <div className={` flex flex-col w-full mt-5`}>
-                <Dropdown state={bookingState} type="text" htmlFor="bookingId" name="booking" label="N° de la commande" value={booking} event={onSetBooking}>
-                    {bookingData!=undefined && bookingData!=null ?bookingData.map((value) => {
-                        return <div key={value.bookingId} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetBooking(value.bookingId, value.bookingDesignation, value.bookingDate)}>{value.bookingDesignation}</div>
-                    }):setBookingData([])}
-                </Dropdown>
-                <Input type="date" htmlFor="dateId" name="date" label="Date de l'opération" event={onSetDate} />
-                <Input type="number" htmlFor="mountId" name="mount" label="Montant payé" event={onSetMount} icon={<BiMoney size="0.95rem" />} />
-                <Input type="text" htmlFor="envoyId" name="envoy" label="Envoyé" event={onSetEnvoy} icon={<BiNavigation size="0.95rem" />} />
-                <Button text={'Enregistrer la Transaction'} event={() => AddPayement()} />
-            </div>
+
         </div>
 
 
