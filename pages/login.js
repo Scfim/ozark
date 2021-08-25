@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BiUser } from "react-icons/bi";
 import { FaCheckCircle, FaLock, FaUser } from "react-icons/fa";
 import Headers from "../components/Headers";
@@ -8,19 +8,18 @@ import useForm from "../hooks/useForm";
 import Button from "../components/Button";
 import { useLogin } from "./api/users";
 import useIsLoggedIn from "../hooks/useIsLoggedIn";
-import Router from "next/router";
-import useRedirect from "../hooks/useRedirect";
 
 export default function login() {
+  useIsLoggedIn("/")
   const [{ username, password }, handleChange] = useForm({
     username: "",
     password: "",
   });
-  const isLoggedIn = useIsLoggedIn()
-  isLoggedIn && useRedirect("/", false)
+
+
   const onHandleLoginUser = (event) => {
-    event.preventDefault()
-    useLogin(username, password)
+    event.preventDefault();
+    useLogin(username, password);
   };
   return (
     <>

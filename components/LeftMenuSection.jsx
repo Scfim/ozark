@@ -49,7 +49,7 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
         <Menu
           links={{
             data: "/users/data",
-            dash: "/users/dash",
+            dash: "/users",
             form: "/users/signup",
           }}
           onClick={onClickMenu}
@@ -57,7 +57,7 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
           title="Utilisateurs"
           isDropDown={false}
           icon={<FaUserFriends />}
-          router="/users/signup"
+          router="/users"
           withShadow={false}
         ></Menu>
         <Menu

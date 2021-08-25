@@ -10,8 +10,10 @@ import { useAddExercise } from "../api/exercise";
 import DateInput from "../../components/DateInput";
 import Status from "../../components/Status";
 import { useState } from "react";
+import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 
 export default function add() {
+  useIsLoggedIn()
   const [statusType, setStatusType] = useState("");
   const [isStatusHidden, setIsStatusHidden] = useState(true);
   const [statusMessage, setStatusMessage] = useState("");

@@ -6,11 +6,11 @@ import style from '../../styles/App.module.css'
 import { addMark, getMark,deleteMark,updateMark } from '../api/Mark';
 import { getSubCategory,getSubCategoryLike } from '../api/subCategory'
 import { Dropdown } from '../../components/s/dropdown';
+import useIsLoggedIn from '../../hooks/useIsLoggedIn';
 
 
 const Mark = () => {
-
-
+     useIsLoggedIn()
      useEffect(() => {
           GetMark()
      }, [])

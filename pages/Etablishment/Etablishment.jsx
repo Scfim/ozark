@@ -3,9 +3,11 @@ import { Input } from '../../components/s/input'
 import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
 import { BiGlobe, BiHome, BiMailSend, BiPhone, BiRepost, BiWorld } from 'react-icons/bi'
+import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 
 
 const NewProduct = () => {
+     useIsLoggedIn()
 
      const [shop, setShop] = useState("");
      const onSetShop = (e) => {

@@ -4,9 +4,11 @@ import { Input } from '../../components/s/input'
 import { BiMoney, BiNavigation, BiTime } from 'react-icons/bi'
 import { Dropdown } from '../../components/s/dropdown'
 import { Button } from '../../components/s/button'
+import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 
 
 const Payement = () => {
+    useIsLoggedIn()
 
     useEffect(() => {
         var today = new Date();

@@ -3,11 +3,13 @@ import { Input } from '../../components/s/input'
 import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
 import { BiBox, BiMailSend, BiPencil, BiPhone, BiTrash, BiUser } from 'react-icons/bi'
-import { addClient, editClient, deleteClient, getClient } from '../api/client'
+
+import { addClient, editClient,deleteClient,getClient } from '../api/client'
+import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 
 const NewProvider = () => {
-
-     useEffect(() => {
+useIsLoggedIn()
+     useEffect(()=>{  
           GetClient()
      }, [])
 

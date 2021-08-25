@@ -4,11 +4,15 @@ import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
 import { BiAddToQueue, BiNavigation, BiPencil, BiTrash } from 'react-icons/bi'
 import { Dropdown } from '../../components/s/dropdown'
+
 import {getAllLike } from '../api/Mark'
 import { addProduct, getProduct,editProduct,deleteProduct } from '../api/product'
+import useIsLoggedIn from '../../hooks/useIsLoggedIn'
+
 
 
 const NewProduct = () => {
+     useIsLoggedIn()
 
      useEffect(() => {
           GetProduct()
@@ -34,8 +38,9 @@ const NewProduct = () => {
           setAlerteStock(e.target.value);
      };
 
+
     
-     const [mark, setMark] = useState("");
+   const [mark, setMark] = useState("");
      const [Idmark, setIdMark] = useState("");
      const [dataMarque, setDataMarque] = useState([]);
      const onSetMark = async (e) => {
