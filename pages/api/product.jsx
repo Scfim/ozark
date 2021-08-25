@@ -7,14 +7,14 @@ export const addProduct=(data)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const editProduct=()=>{
-    const url=`${server}/....`
+export const editProduct=(data)=>{
+    const url=`${server}/products/update`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const deleteProduct=()=>{
-    const url=`${server}/....`
+export const deleteProduct=(data)=>{
+    const url=`${server}/products/delete`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })

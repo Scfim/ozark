@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Input } from '../../components/s/input'
-import { Button} from '../../components/s/button'
+import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
-import { BiAddToQueue, BiNavigation, BiPencil, BiSquareRounded, BiTrash } from 'react-icons/bi'
+import { BiAddToQueue, BiNavigation, BiPencil, BiTrash } from 'react-icons/bi'
 import { Dropdown } from '../../components/s/dropdown'
-import Router from 'next/router'
-import { getMark} from '../api/Mark'
-import { getSubCategory } from '../api/subCategory'
-import { addProduct, getProduct } from '../api/product'
+import {getAllLike } from '../api/Mark'
+import { addProduct, getProduct,editProduct,deleteProduct } from '../api/product'
 
 
 const NewProduct = () => {
@@ -36,24 +34,7 @@ const NewProduct = () => {
           setAlerteStock(e.target.value);
      };
 
-     // const [categorie, setCategorie] = useState("");
-     // const [idCategorie, setIdCategorie] = useState("");
-     // const [dataCategorie, setDataCategorie] = useState([]);
-     // const onCategorisation = async (e) => {
-     //      setCategorie(e.target.value);
-     //      if (e.target.value != "") {
-     //           await getSubCategory().then((response) => {
-     //                setDataCategorie(response.data.data)
-     //                setCategoryState("")
-     //           })
-
-     //      } else setCategoryState("hidden")
-     // };
-     // const GetCategory = (id, category) => {
-     //      setCategoryState("hidden")
-     //      setCategorie(category)
-     //      setIdCategorie(id)
-     // }
+    
      const [mark, setMark] = useState("");
      const [Idmark, setIdMark] = useState("");
      const [dataMarque, setDataMarque] = useState([]);
@@ -61,7 +42,7 @@ const NewProduct = () => {
           setMark(e.target.value);
           console.log(e.target.value)
           if (e.target.value != "") {
-               await getMark({ name: e.target.value }).then((response) => {
+               await getAllLike({ markName: e.target.value }).then((response) => {
                     console.log(response.data.data)
                     setDataMarque(response.data.data)
                     setMarkState("")
@@ -76,17 +57,26 @@ const NewProduct = () => {
           console.log(id, mark)
      }
 
-     // const [categoryState, setCategoryState] = useState("hidden")
-     // const [categoryFomState, setCategoryFomState] = useState("hidden")
+
      const [markState, setMarkState] = useState("hidden")
-
      const AddProduct = async () => {
-          await addProduct({ markId: Idmark, name: designation, dosage: dosage, forme: forme, format: format, alertStock: alertStock }).then((response) => {
-               GetProduct()
-               // console.log(response)
+          await addProduct({ markId: Idmark, name: designation,alertStock: alertStock }).then((response) => {
+               GetProduct()               
           })
-
      }
+     // const EditProduct = async () => {
+     //      await addProduct({ markId: Idmark, name: designation, alertStock: alertStock }).then((response) => {
+     //           GetProduct()               
+     //      })
+     // }
+     const DeleteProduct = async (product_Id) => {
+          await deleteProduct({productId:product_Id }).then((response) => {
+               GetProduct()     
+               console.log(product_Id)          
+          })
+     }
+
+    
 
      const [data, setData] = useState([])
      const GetProduct = async () => {
@@ -97,17 +87,16 @@ const NewProduct = () => {
      }
 
      return (
-          <div className={` flex  bg-gray-4 my-6 justify-center `}>
-               <div className={` flex flex-col bg-gray-4 my-6 w-auto `}>
-                    <div className={` flex flex-col w-full`}>
-                         <label className={` text-xl font-bold`}> Ajouter un nouveu produit </label>
-                         <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un nouveau produit </label>
-                    </div>
-
-                    <div className={`flex`}>
-                         <div className={` flex flex-col w-full mt-4`}>
+          <div className={` flex flex-col  bg-gray-4 my-6 `}>
+               <div className={` flex flex-col w-full mx-14`}>
+                    <label className={` text-xl font-bold`}> Ajouter un nouveu produit </label>
+                    <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un nouveau produit </label>
+               </div>
+               <div className="flex mx-14  ">
+                    <div className={`flex  `}>
+                         <div className={` flex flex-col w-auto bg-white mt-4 p-4 rounded-md shadow-md`}>
                               <Input type="text" htmlFor="designationId" name="designation" label="Désignation" event={onDesignation} icon={<BiNavigation size="0.95rem" />} />
-                              <Input type="text" htmlFor="saId" name="sa" label="Stock d'alèrte" event={onAlerteStock} icon={<BiAddToQueue size="0.95rem" />} />
+                              <Input type="number" htmlFor="saId" name="sa" label="Stock d'alèrte" event={onAlerteStock} icon={<BiAddToQueue size="0.95rem" />} />
                               <Dropdown state={markState} type="text" htmlFor="markId" name="mark" label="Marque du produit" value={mark} event={onSetMark}>
                                    {dataMarque != undefined ? dataMarque.map((value) => {
                                         return <div key={value.mark_id} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetMark(value.mark_id, value.mark_name)}>{value.mark_name}</div>
@@ -116,30 +105,33 @@ const NewProduct = () => {
                               <Button text={'Enregistrer le produit'} event={() => AddProduct()} />
                          </div>
                     </div>
-                   
-               </div> <div className={`mt-10 w-auto `}>
-                         <table className={` w-auto`}>
+                    
+                    <div className={`mt-4 w-full ml-3 bg-white p-4  rounded-md shadow-md`}>
+                         <table className={`w-full`}>
                               <tr className={`${style.bg}`}>
-                                   <td className={`border border-gray-200 text-white px-2`}>Catégorie</td>
+                                  
                                    <td className={`border border-gray-200 text-white px-2`}>Marques</td>
                                    <td className={`border border-gray-200 text-white px-2`}>Désignation</td>
                                    <td className={`border border-gray-200 text-white px-2`}>Stock Alerte</td>                                  
                               </tr >
                               {
                                    data != undefined? data.map((value) => {
-                                        return <tr className={`border border-gray-200 text-xs`}>
-                                             <td className={`border border-gray-200 text-sm px-2 `}>{value.sub_categorie_name}</td>
+                                        return <tr key={value.product_id} className={`border border-gray-200 text-xs`}>                                        
                                              <td className={`border border-gray-200 text-sm px-2 `}>{value.mark_name}</td>
                                              <td className={`border border-gray-200 text-sm px-2`}>{value.product_name}</td>
                                              <td className={`border border-gray-200 text-sm px-2`}>{value.product_alert_stock}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-blue-400`} onClick={()=>DeleteProduct(value.product_id)} />}</td>
+                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-blue-400`} />}</td>
                                         </tr>
                                       
                                    }) : setData([])
                               }
                          </table>
                     </div>
+                    
+               </div>
+
+            
           </div>
      )
 
