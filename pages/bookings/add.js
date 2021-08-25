@@ -15,8 +15,7 @@ import TextBox from "../../components/TextBox";
 import Datalist from "../../components/Datalist";
 import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
-import { useAddBooking } from "../api/booking";
-import useArrayContainsObject from "../../hooks/useArrayContainsObject";
+import { useAddBooking } from "../api/booking"; 
 import validate from "../../hooks/useValidate";
 
 export default function add() {
@@ -77,7 +76,7 @@ export default function add() {
   };
   const onSaveBookings = () => {
     useAddBooking(bookings)
-      .then((booking) => {})
+      .then((result) => console.log(result))
       .catch((err) => console.info(err));
   };
   const removeBooking = (item) => {

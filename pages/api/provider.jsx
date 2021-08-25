@@ -7,14 +7,14 @@ export const addProvider=(data)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const editProvider=()=>{
-    const url=`${server}/....`
+export const editProvider=(data)=>{
+    const url=`${server}/providers/update`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const deleteProvider=()=>{
-    const url=`${server}/....`
+export const deleteProvider=(data)=>{
+    const url=`${server}/providers/delete`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })

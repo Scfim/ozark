@@ -8,13 +8,13 @@ export const addMark=(data)=>{
     })
 }
 export const editMark=()=>{
-    const url=`${server}/....`
+    const url=`${server}/marks/update`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const deleteMark=()=>{
-    const url=`${server}/....`
+export const deleteMark=(data)=>{
+    const url=`${server}/marks/delete`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })

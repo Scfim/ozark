@@ -7,14 +7,14 @@ export const addSubCategory=(data)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const editSubCategory=()=>{
-    const url=`${server}/....`
+export const editSubCategory=(data)=>{
+    const url=`${server}/subCategories/add`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const deleteSubCategory=()=>{
-    const url=`${server}/....`
+export const deleteSubCategory=(data)=>{
+    const url=`${server}/subCategories/delete`
     return new Promise((resolve,reject)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
@@ -23,5 +23,11 @@ export const getSubCategory=()=>{
     const url=`${server}/subCategories/getAll`
     return new Promise((resolve,reject)=>{
         axios.post(url).then((res)=>resolve(res)).catch((err)=> reject(err))
+    })
+}
+export const getSubCategoryLike=(data)=>{    
+    const url=`${server}/marks/getSubCategory`
+    return new Promise((resolve,reject)=>{
+        axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }

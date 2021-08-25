@@ -2,17 +2,18 @@ import React, { useState } from "react";
 import { BiFullscreen } from "react-icons/bi";
 import { FaBars, FaCog, FaMoon, FaPowerOff } from "react-icons/fa";
 import NavBarLink from "./NavBarLink";
+import {useUserLogout} from "../pages/api/users"
 
-export default function NavBar({ activeLayout, onSetNewLayout, links }) {
+export default function NavBar({ activeLayout, onSetNewLayout, links,onToggleNavbar }) {
   const [showModeSection, setShowModeSection] = useState(false);
   const onClickModeIcon = () => {};
   return (
     <div className="flex w-full items-center font-semibold shadow rounded bg-white text-gray-700 p-1">
       <div className="mx-2">
-        <FaBars size="1.3rem" className="text-gray-500 cursor-pointer" />
+        <FaBars onClick={onToggleNavbar} size="1.3rem" className="text-gray-500 cursor-pointer" />
       </div>
       <div className="mx-2">
-        <FaPowerOff size="1.3rem" className="text-gray-500 cursor-pointer" />
+        <FaPowerOff onClick={()=> useUserLogout()} size="1.3rem" className="text-gray-500 cursor-pointer" />
       </div>
       <div className="mx-2">
         <FaCog size="1.3rem" className="text-gray-500 cursor-pointer" />
