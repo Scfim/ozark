@@ -5,12 +5,8 @@ import style from "../../styles/App.module.css";
 import { BiAlarmSnooze, BiBeer, BiPencil, BiTrash } from "react-icons/bi";
 import { Dropdown } from "../../components/s/dropdown";
 import { addSubCategory, editSubCategory, deleteSubCategory, getSubCategory } from "../api/subCategory";
-<<<<<<< HEAD
 import { getCategory, getCategoryLike } from "../api/category";
-=======
-import { getCategory } from "../api/category";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
->>>>>>> 469c81906d6dda5be10ce94cf6f5bf3db8193b29
 
 export default function SubCategory({ state }) {
 useIsLoggedIn()

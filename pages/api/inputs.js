@@ -7,9 +7,10 @@ import { post_add_input } from "../../constants/input";
  * @returns
  */
 export const useAddInput = async (inputData) => {
+  console.log(inputData)
   try {
     const response = await axios.post(post_add_input, inputData);
-    return response;
+    return response.data;
   } catch (error) {
     /**
      * In future version we'll through errors in a better way of good user experiences

@@ -10,18 +10,10 @@ import {
 import { Input } from "../../components/s/input";
 import { Button} from "../../components/s/button";
 import style from "../../styles/App.module.css";
-<<<<<<< HEAD
 import { addCategory, getCategory,deleteCategory,updateCategory } from "../api/category";
-
-=======
-import Router from "next/router";
 import SubCategory from "./subCategory";
-import { addCategory, getCategory } from "../api/category";
-import axios from "axios";
-import { server } from "../../constants/common";
 import Status from "../../components/Status";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
->>>>>>> 469c81906d6dda5be10ce94cf6f5bf3db8193b29
 
 const Category = ({ state }) => {
   useIsLoggedIn()
