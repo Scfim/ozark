@@ -3,9 +3,10 @@ import { Input } from '../../components/s/input'
 import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
 import { BiBox, BiMailSend, BiPencil, BiPhone, BiTrash, BiUser } from 'react-icons/bi'
-
 import { addClient, editClient,deleteClient,getClient } from '../api/client'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
+import Headers from '../../components/Headers'
+
 
 const NewProvider = () => {
 useIsLoggedIn()
@@ -58,6 +59,7 @@ useIsLoggedIn()
 
      return (
           <div className={`flex flex-col my-6`} >
+               <Headers title="Ajouter un client"/>
                <div className={` flex flex-col w-full mx-14`}>
                     <label className={` text-xl font-bold`}> Ajouter un client </label>
                     <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un client </label>

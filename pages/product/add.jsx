@@ -4,16 +4,15 @@ import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
 import { BiAddToQueue, BiNavigation, BiPencil, BiTrash } from 'react-icons/bi'
 import { Dropdown } from '../../components/s/dropdown'
-
+import Headers from '../../components/Headers'
 import {getAllLike } from '../api/Mark'
-import { addProduct, getProduct,editProduct,deleteProduct } from '../api/product'
+import { addProduct, getProduct,deleteProduct } from '../api/product'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 
 
 
 const NewProduct = () => {
      useIsLoggedIn()
-
      useEffect(() => {
           GetProduct()
      }, [])
@@ -69,11 +68,7 @@ const NewProduct = () => {
                GetProduct()               
           })
      }
-     // const EditProduct = async () => {
-     //      await addProduct({ markId: Idmark, name: designation, alertStock: alertStock }).then((response) => {
-     //           GetProduct()               
-     //      })
-     // }
+  
      const DeleteProduct = async (product_Id) => {
           await deleteProduct({productId:product_Id }).then((response) => {
                GetProduct()     
@@ -93,6 +88,7 @@ const NewProduct = () => {
 
      return (
           <div className={` flex flex-col  bg-gray-4 my-6 `}>
+              <Headers title="Ajouter Produit" />
                <div className={` flex flex-col w-full mx-14`}>
                     <label className={` text-xl font-bold`}> Ajouter un nouveu produit </label>
                     <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un nouveau produit </label>

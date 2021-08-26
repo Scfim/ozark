@@ -5,15 +5,12 @@ import style from "../../styles/App.module.css";
 import { BiAlarmSnooze, BiBeer, BiPencil, BiTrash } from "react-icons/bi";
 import { Dropdown } from "../../components/s/dropdown";
 import { addSubCategory, editSubCategory, deleteSubCategory, getSubCategory } from "../api/subCategory";
-<<<<<<< HEAD
-import { getCategory, getCategoryLike } from "../api/category";
-=======
-import { getCategory } from "../api/category";
+import { getCategoryLike } from "../api/category";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
->>>>>>> 469c81906d6dda5be10ce94cf6f5bf3db8193b29
+import Headers from '../../components/Headers'
 
 export default function SubCategory({ state }) {
-useIsLoggedIn()
+  useIsLoggedIn()
   useEffect(() => {
     GetSubCategory()
   }, [])
@@ -81,13 +78,11 @@ useIsLoggedIn()
   }
   return (
     <div className={`flex flex-col my-6`} >
-
+      <Headers title="Ajouter une sous-categorie" />
       <div className={` flex flex-col w-full mx-14`}>
         <label className={` text-xl font-bold`}> Ajouter une nouvelle sous-catégorie </label>
         <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier une sous-catégorie </label>
       </div>
-
-
       <div className=" flex mx-14 my-8" >
         <div className="flex">
           <div className="flex flex-col bg-white shadow-md rounded-md p-4  ">

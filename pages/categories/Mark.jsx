@@ -3,11 +3,11 @@ import { BiBeer, BiPencil, BiTrash, BiTrophy } from 'react-icons/bi';
 import { Input } from '../../components/s/input'
 import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
-import { addMark, getMark,deleteMark,updateMark } from '../api/Mark';
-import { getSubCategory,getSubCategoryLike } from '../api/subCategory'
+import { addMark, getMark,deleteMark} from '../api/Mark';
+import {getSubCategoryLike } from '../api/subCategory'
 import { Dropdown } from '../../components/s/dropdown';
 import useIsLoggedIn from '../../hooks/useIsLoggedIn';
-
+import Headers from '../../components/Headers'
 
 const Mark = () => {
      useIsLoggedIn()
@@ -64,6 +64,7 @@ const Mark = () => {
      }
 
      return <div className={`flex flex-col my-6`} >
+          <Headers title="Ajouter une marque" />
           <div className={` flex flex-col w-full mx-14`}>
                <label className={` text-xl font-bold`}> Ajouter une nouvelle marque des produits </label>
                <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier une marque </label>
