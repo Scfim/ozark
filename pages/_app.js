@@ -53,7 +53,11 @@ function MyApp({ Component, pageProps }) {
               setNavLinks={onSetNavLinks}
             />
           )}
-          <div className={`${showNavbar ? "w-10/12" : "w-full"} h-screen scrollBar overflow-y-auto`}>
+          <div
+            className={`${
+              showNavbar ? "w-10/12" : "w-full"
+            } h-screen scrollBar overflow-y-auto`}
+          >
             <div className="w-11/12 ml-11 mt-2 p-1 sticky top-0">
               <NavBar
                 activeLayout={currentLayout}

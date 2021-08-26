@@ -5,7 +5,7 @@ import {
   post_login,
   post_signup,
   delete_user,
-  user_logout
+  user_logout,
 } from "../../constants/users";
 axios.defaults.withCredentials = true;
 /**
@@ -40,7 +40,11 @@ export const useLogin = async (username, password, redirect) => {
  */
 export const userSignUp = async (user) => {
   try {
-    const response = await axios.post(post_signup, user);
+    const response = await axios.post(post_signup, user, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
     return response.data;
   } catch (err) {
     /**
@@ -58,7 +62,11 @@ export const userSignUp = async (user) => {
 
 export const userGetAll = async () => {
   try {
-    const response = await axios.get(get_all);
+    const response = await axios.get(get_all, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
     if (response.data.data !== undefined) return response.data.data;
     else return [];
   } catch (err) {
@@ -78,7 +86,15 @@ export const userGetAll = async () => {
  */
 export const useDeleteUser = async (userId) => {
   try {
-    const response = await axios.post(delete_user, {userId});
+    const response = await axios.post(
+      delete_user,
+      { userId },
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+    );
     return response.data;
   } catch (err) {
     /**
@@ -94,7 +110,11 @@ export const useDeleteUser = async (userId) => {
  */
 export const useUserLogout = async () => {
   try {
-    const response = await axios.post(user_logout);
+    const response = await axios.post(user_logout, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
   } catch (err) {
     /**
      * In future version we'll through errors in a better way of good user experiences

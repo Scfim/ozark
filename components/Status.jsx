@@ -8,6 +8,7 @@ export default function Status({
   isHidden,
   resetStatusIsHidden,
 }) {
+
   useEffect(() => {
     const timeout = setTimeout(() => resetStatusIsHidden(), 5000);
     return () => clearTimeout(timeout, 5000);
@@ -16,7 +17,7 @@ export default function Status({
     success = "bg-green-200 text-green-600 ";
   return (
     <div
-      className={`w-3/12 shadow-lg z-30 absolute bottom-10 left-2 ${
+      className={`w-3/12 shadow-lg z-30 __status absolute bottom-10 left-2 ${
         isHidden ? "hidden" : "flex"
       } flex-col p-2 ${
         type === "error" ? error : type === "success" ? success : null
@@ -51,4 +52,5 @@ Status.propTypes = {
   message: PropTypes.string.isRequired,
   isHidden: PropTypes.bool,
   resetStatusIsHidden: PropTypes.func,
+  getRef : PropTypes.func
 };

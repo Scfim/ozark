@@ -9,7 +9,11 @@ import { post_add_booking } from "../../constants/booking";
 
 export const useAddBooking = async (inputData) => {
   try {
-    const response = await axios.post(post_add_booking, inputData);
+    const response = await axios.post(post_add_booking, inputData, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    });
     return response;
   } catch (error) {
     /**
