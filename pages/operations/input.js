@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Status from "../../components/Status";
 import {
   FaBoxes,
@@ -6,7 +6,6 @@ import {
   FaComment,
   FaDollarSign,
   FaPollH,
-  FaSortNumericUp,
   FaUser,
 } from "react-icons/fa";
 import Headers from "../../components/Headers";
@@ -152,7 +151,6 @@ export default function input() {
               >
                 {products.length > 0 &&
                   products.map((item) => {
-                    console.log(item);
                     return (
                       <div
                         onClick={() =>
