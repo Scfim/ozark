@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import style from '../../styles/App.module.css'
 
 export const Dropdown = ({ state, label, htmlFor, type, name, event, value, close ,children}) => {

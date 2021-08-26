@@ -19,9 +19,9 @@ export const deleteProduct=(data)=>{
         axios.post(url,data).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
-export const getProduct=()=>{
-    const url=`${server}/products/getAll`
+export const getProduct=(productName)=>{
+    const url=`${server}/input/getProduct`
     return new Promise((resolve,reject)=>{
-        axios.post(url).then((res)=>resolve(res)).catch((err)=> reject(err))
+        axios.post(url,{productName}).then((res)=>resolve(res)).catch((err)=> reject(err))
     })
 }
