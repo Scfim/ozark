@@ -15,8 +15,6 @@ import {
   BiDollar,
   BiUserCheck,
   BiCalendarPlus,
-  BiListOl,
-  BiListUl,
   BiListPlus,
 } from "react-icons/bi";
 
@@ -145,7 +143,7 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
         title="Exercices"
         isDropDown={false}
         icon={<BiCalendarPlus />}
-        router="/exercise/add"
+        router="/exercise"
       ></Menu>
       <MenuWrapper title="Identification produits">
         <Menu
