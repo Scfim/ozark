@@ -21,8 +21,10 @@ import { getProduct } from "../api/product";
 import Status from "../../components/Status";
 import { getClients } from "../api/client";
 import Checkbox from "../../components/Checkbox";
+import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 
 export default function add() {
+  useIsLoggedIn()
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState("");
   const [productId, setProductId] = useState("");
@@ -114,7 +116,6 @@ export default function add() {
       initialPrice,
       total,
       bookingId,
-      allowOutPut, isCash
     };
     if (
       !bookingIds.includes(bookingId) &&
@@ -136,7 +137,7 @@ export default function add() {
     }
   };
   const onSaveBookings = () => {
-    useAddBooking(bookings)
+    useAddBooking(bookings, allowOutPut, isCash)
       .then((result) => console.log(result))
       .catch((err) => console.info(err));
   };

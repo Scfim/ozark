@@ -1,9 +1,8 @@
-import React from "react";
+import React, { useCallback } from "react";
 import {
-  FaBoxes,
   FaCheckCircle,
   FaComment,
-  FaDollarSign,
+
   FaPollH,
 } from "react-icons/fa";
 import Headers from "../../components/Headers";
@@ -12,35 +11,35 @@ import TextBox from "../../components/TextBox";
 import Datalist from "../../components/Datalist";
 import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
-import { getProduct } from "../api/product";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 import DateInput from "../../components/DateInput";
-import { useAddOutPut } from "../api/output";
+import { getOutPuts, useAddOutPut } from "../api/output";
 import Status from "../../components/Status";
+import { usePascalCase } from "../../hooks/usePascalCase";
 
 export default function input() {
-  const [product, setProduct] = React.useState("");
-  const [productId, setProductId] = React.useState("");
-  const [products, setProducts] = React.useState([]);
+  const [booking, setBooking] = React.useState("");
+  const [bookingId, setBookingId] = React.useState("");
+  const [bookings, setBookings] = React.useState([]);
 
   const [statusType, setStatusType] = React.useState("");
   const [isStatusHidden, setIsStatusHidden] = React.useState(true);
   const [statusMessage, setStatusMessage] = React.useState("");
 
   const resetStatusIsHidden = () => setIsStatusHidden(true);
-  const onSearchProduct = (event) => {
+  const onSearchBooking = useCallback((event) => {
     if (event.target.value !== "") {
-      getProduct(event.target.value).then((response) =>
-        setProducts(response.data.data)
-      );
-    } else setProducts([]);
+      getOutPuts(event.target.value).then((response) => {
+        setBookings(response.data);
+      });
+    } else setBookings([]);
 
-    setProduct(event.target.value);
-  };
-  const onClickProduct = (name, id) => {
-    setProduct(name);
-    setProductId(id);
-    setProducts([]);
+    setBooking(event.target.value);
+  }, []);
+  const onClickBooking = (name, id) => {
+    setBooking(name);
+    setBookingId(id);
+    setBookings([]);
   };
   useIsLoggedIn();
   const [{ comment, daysDate, quantity, initialPrice }, handleChange] = useForm(
@@ -54,7 +53,7 @@ export default function input() {
   const onHandleAddOutPut = (event) => {
     event.preventDefault();
     useAddOutPut({
-      product: productId,
+      booking: bookingId,
       comment,
       daysDate,
       quantity,
@@ -86,59 +85,68 @@ export default function input() {
           />
           <form className="w-9/12 mt-5 flex flex-col justify-center">
             <Datalist
-              event={onSearchProduct}
-              placeholder="Produit"
-              value={product}
-              name="product"
+              event={onSearchBooking}
+              placeholder="Commande"
+              value={booking}
+              name="booking"
               icon={<FaPollH />}
-              options={products}
             >
               <div
                 className={`${
-                  products.length > 0
-                    ? "flex flex-col w-full z-10 bg-white -left-2 top-8"
+                  bookings.length > 0
+                    ? "flex flex-col max-h-64 rounded-b scrollBar overflow-y-auto overflow-x-hidden w-full bg-white  top-8"
                     : "hidden"
                 }`}
               >
-                {products.length > 0 &&
-                  products.map((item) => {
+                <div className="grid place-items-center bg-white sticky top-0 p-1">
+                  <span className="text-gray-800 text-2xl">
+                    {bookings.length > 0 &&
+                      usePascalCase(bookings[0].client_name)}
+                  </span>
+                </div>
+                {bookings.length > 0 &&
+                  bookings.map((item) => {
                     return (
                       <div
-                        onClick={() =>
-                          onClickProduct(item.product_name, item.product_id)
-                        }
                         key={item.product_id}
-                        className="text-gray-800 cursor-pointer m-2 p-1"
+                        className="text-gray-800 border-b cursor-pointer m-2 p-1"
                       >
-                        <p>{item.product_name}</p>
+                        <p className="font-semibold primaryColor">
+                          {item.product_name}
+                        </p>
+                        <div className="flex justify-between">
+                          <p>
+                            Quantité :{" "}
+                            <span className="bg-pink-500 text-white p-1 rounded focus:outline-none focus:border-2 focus:border-pink-800">
+                              {item.quantity}
+                            </span>
+                          </p>
+
+                          <p>Prix: {item.unite_price} $</p>
+                        </div>
+                        <div className="flex justify-between mt-1">
+                          <div className="flex justify-between">
+                            <span>Montant à retirer :&#160;</span>
+                            <div onChange={(e)=>onChangeNewQuantity (e,item)}
+                              className="bg-pink-500 rounded text-white p-1 w-8 focus:outline-none focus:border-2 focus:border-pink-800"
+                              contentEditable="true"
+                            >
+                              0
+                            </div>
+                          </div>
+                          <span data-id={item.product_id}
+                            className="bg-yellow-500 w-6 h-6 shadow  text-white rounded-full cursor-pointer p-1 grid place-items-center"
+                          >
+                          </span>
+                        </div>
                       </div>
                     );
                   })}
               </div>
             </Datalist>
-            <div className="md:flex justify-between ">
-              <TextBox
-                style="md:mr-1"
-                event={handleChange}
-                placeholder="Quantité"
-                value={quantity}
-                name="quantity"
-                icon={<FaBoxes />}
-                type="number"
-              />
-              <TextBox
-                style="md:ml-1"
-                event={handleChange}
-                placeholder="Prix initaire"
-                value={initialPrice}
-                name="initialPrice"
-                icon={<FaDollarSign />}
-                type="number"
-              />
-            </div>
             <DateInput
               type="date"
-              style="md:mr-1"
+              style="md:mr-1 z-0"
               event={handleChange}
               value={daysDate}
               name="daysDate"

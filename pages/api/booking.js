@@ -7,13 +7,17 @@ import { post_add_booking } from "../../constants/booking";
  * @returns Response sent by the server in some kind of promise 'cause we use async javascript here
  */
 
-export const useAddBooking = async (inputData) => {
+export const useAddBooking = async (inputData, allowOutPut, isCash) => {
   try {
-    const response = await axios.post(post_add_booking, inputData, {
-      headers: {
-        "x-access-token": localStorage.getItem("token"),
-      },
-    });
+    const response = await axios.post(
+      post_add_booking,
+      { inputData, allowOutPut, isCash },
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+    );
     return response;
   } catch (error) {
     /**
