@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 import { userGetAll, useDeleteUser } from "../api/users";
-import { FaMinus, FaPen } from "react-icons/fa";
+import { FaBan, FaMinus, FaPen } from "react-icons/fa";
 import Headers from "../../components/Headers";
 import Status from "../../components/Status";
 import { getAllExercises } from "../api/exercise";
@@ -12,19 +12,23 @@ export default function data() {
   const [statusType, setStatusType] = useState("");
   const [isStatusHidden, setIsStatusHidden] = useState(true);
   const [statusMessage, setStatusMessage] = useState("");
+  const [exerciseEdit, setExerciseEdit] = useState({})
 
   useEffect(() => {
-    getAllExercises().then((exe) => setExercises(exe));
+    getAllExercises().then((exe) => setExercises(exe.data));
   }, []);
 
-  const onEditExercises = (exercise) => {};
-  const onDeleteExercises = (exerciseId) => {
-    useDeleteExercise(exerciseId).then((res) => {
+  const onEditExercise = (exercise) => {
+
+  };
+  const onBanExercise = (exerciseId) => {
+    useBanExercise(exerciseId).then((res) => {
       setIsStatusHidden(false);
       setStatusMessage(res.message);
       res.type.toLowerCase() === "failure"
         ? setStatusType("error")
-        : setStatusType("success") && getAllExercises().then((exe) => setExercises(exe));
+        : setStatusType("success") &&
+          getAllExercises().then((exe) => setExercises(exe));
     });
   };
   const resetStatusIsHidden = () => setIsStatusHidden(true);
@@ -44,7 +48,7 @@ export default function data() {
           resetStatusIsHidden={resetStatusIsHidden}
         />
         <div className="w-full mt-3">
-          <table className="table-auto rounded w-10/12 border mt-2 mx-auto">
+          <table className="table-auto rounded w-10/12 border mb-3 mt-2 mx-auto">
             <thead>
               <tr className="bg-blue-50">
                 <th className="border w-1/">Début</th>
@@ -54,26 +58,38 @@ export default function data() {
               </tr>
             </thead>
             <tbody>
-              {users.length > 0
-                ? users.map((user) => {
-                    console.log(users);
+              {exercises.length > 0
+                ? exercises.map((exercise) => {
                     return (
-                      <tr key={user.user_id} className="text-center border">
+                      <tr
+                        key={exercise.exercise_id}
+                        className={`text-center border ${
+                          exercise.exercise_status === 1 &&
+                          "primaryBg text-white "
+                        }`}
+                      >
                         <td className="border">
-                          {user.user_first_name + " " + user.user_last_name}
+                          {new Date(exercise.exercise_start_date.split("T")[0]).toLocaleDateString()}
                         </td>
-                        <td className="border">{user.user_mail_adress}</td>
-                        <td className="border">{user.user_phone_number}</td>
-                        <td className="border">{user.user_type}</td>
-                        <td className="flex justify-around">
+                        <td className="border">
+                          {new Date(exercise.exercise_end_date.split("T")[0]).toLocaleDateString()}
+                        </td>
+                        <td className="border">
+                          {exercise.exercise_status === 1 ? (
+                            <div className="font-semibold ">Activé</div>
+                          ) : (
+                            <div>Desactivé</div>
+                          )}
+                        </td>
+                        <td className="flex justify-around bg-white">
                           <button
-                            onClick={() => onDeleteUser(user.user_id)}
+                            onClick={() => onBanExercise(exercise.exercise_id)}
                             className="w-7 h-7 rounded focus:ring-2 m-1 p-1 focus:outline-none border-none focus:ring-red-600 bg-red-500 cursor-pointer text-white grid place-items-center"
                           >
-                            <FaMinus />
+                            <FaBan />
                           </button>
                           <button
-                            onClick={() => onEditUser(user)}
+                            onClick={() => onEditExercise(exercise)}
                             className="w-7 h-7 rounded focus:ring-2 m-1 p-1 focus:outline-none border-none focus:ring-green-600 bg-green-500 cursor-pointer text-white grid place-items-center"
                           >
                             <FaPen />
