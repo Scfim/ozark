@@ -17,7 +17,7 @@ export default function DateInput({
   return (
     <>
       <fieldset
-        className={`bg-blue-50 relative set-legend-to-38acec  rounded-md my-2 ${style} h-22 flex justify-around items-center ${textBoxWrapper} ${textBoxInitial}`}
+        className={`bg-blue-50 set-legend-to-38acec  rounded-md my-2 ${style} h-22 flex justify-around items-center ${textBoxWrapper} ${textBoxInitial}`}
       >
         <legend className="text-gray-700 ml-2 mt-2">{placeholder}</legend>
         <span className="w-6 ml-1 text-gray-600">{icon}</span>

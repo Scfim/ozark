@@ -20,6 +20,7 @@ function TextBox({ type, icon, placeholder, name, value, event, style }) {
           type={type}
           value={value}
           onChange={event}
+          data-type={type}
         />
       </div>
     </>

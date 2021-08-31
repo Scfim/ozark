@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import Status from "../../components/Status";
 import {
   FaBoxes,
   FaCheckCircle,
   FaComment,
   FaDollarSign,
   FaPollH,
-  FaSortNumericUp,
   FaUser,
 } from "react-icons/fa";
 import Headers from "../../components/Headers";
@@ -16,43 +16,76 @@ import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
 import { useAddInput } from "../api/inputs";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
+import { getProvider } from "../api/provider";
+import { getProduct } from "../api/product";
 
 export default function input() {
-  useIsLoggedIn()
-  const [
+  const [providers, setProviders] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [statusType, setStatusType] = useState("");
+  const [isStatusHidden, setIsStatusHidden] = useState(true);
+  const [statusMessage, setStatusMessage] = useState("");
+  const resetStatusIsHidden = () => setIsStatusHidden(true);
+  const [provider, setProvider] = useState("");
+  const [providerId, setProviderId] = useState("");
+  const [product, setProduct] = useState("");
+  const [productId, setProductId] = useState("");
+
+  const onSearchProvider = (event) => {
+    if (event.target.value !== "") {
+      getProvider(event.target.value).then((response) =>
+        setProviders(response.data.data)
+      );
+    } else setProviders([]);
+
+    setProvider(event.target.value);
+  };
+  const onClickProvider = (name, id) => {
+    setProvider(name);
+    setProviderId(id);
+    setProviders([]);
+  };
+  const onSearchProduct = (event) => {
+    if (event.target.value !== "") {
+      getProduct(event.target.value).then((response) =>
+        setProducts(response.data.data)
+      );
+    } else setProducts([]);
+
+    setProduct(event.target.value);
+  };
+  const onClickProduct = (name, id) => {
+    setProduct(name);
+    setProductId(id);
+    setProducts([]);
+  };
+  useIsLoggedIn();
+  const [{ comment, daysDate, quantity, initialPrice }, handleChange] = useForm(
     {
-      product,
-      provider,
-      comment,
-      daysDate,
-      expirationDate,
-      lotNumber,
-      quantity,
-      initialPrice,
-    },
-    handleChange,
-  ] = useForm({
-    provider: "",
-    product: "",
-    initialPrice: "",
-    quantity: "",
-    lotNumber: "",
-    daysDate: "",
-    expirationDate: "",
-    comment: "",
-  });
+      product: "",
+      initialPrice: "",
+      quantity: "",
+      daysDate: "",
+      comment: "",
+    }
+  );
   const onHandleAddInput = (event) => {
     event.preventDefault();
     useAddInput({
-      product,
+      product:productId,
       provider,
       comment,
       daysDate,
-      expirationDate,
-      lotNumber,
       quantity,
       initialPrice,
-    }).then((res) => console.log(res));
+      provider: providerId,
+    }).then((res) => {
+      setIsStatusHidden(false);
+      setStatusMessage(res.message);
+      res.type.toLowerCase() === "failure"
+        ? setStatusType("error")
+        : setStatusType("success");
+    });
   };
   return (
     <>
@@ -65,21 +98,73 @@ export default function input() {
             showUploadPhoto={false}
             icon=""
           />
+          <Status
+            type={statusType}
+            isHidden={isStatusHidden}
+            message={statusMessage}
+            resetStatusIsHidden={resetStatusIsHidden}
+          />
           <form className="w-9/12 mt-5 flex flex-col justify-center">
             <Datalist
-              event={handleChange}
+              event={onSearchProvider}
               placeholder="Fournisseur (falcultatif)"
               value={provider}
-              name="provider"
               icon={<FaUser />}
-            />
+            >
+              <div
+                className={`${
+                  providers.length > 0
+                    ? "flex flex-col w-full z-10 bg-white -left-2 top-8"
+                    : "hidden"
+                }`}
+              >
+                {providers.length > 0 &&
+                  providers.map((item) => {
+                    return (
+                      <div
+                        onClick={() =>
+                          onClickProvider(item.provider_name, item.provider_id)
+                        }
+                        key={item.provider_id}
+                        className="text-gray-800 cursor-pointer m-2 p-1"
+                      >
+                        <p>{item.provider_name}</p>
+                      </div>
+                    );
+                  })}
+              </div>
+            </Datalist>
             <Datalist
-              event={handleChange}
+              event={onSearchProduct}
               placeholder="Produit"
               value={product}
               name="product"
               icon={<FaPollH />}
-            />
+              options={products}
+            >
+              <div
+                className={`${
+                  products.length > 0
+                    ? "flex flex-col w-full z-10 bg-white -left-2 top-8"
+                    : "hidden"
+                }`}
+              >
+                {products.length > 0 &&
+                  products.map((item) => {
+                    return (
+                      <div
+                        onClick={() =>
+                          onClickProduct(item.product_name, item.product_id)
+                        }
+                        key={item.product_id}
+                        className="text-gray-800 cursor-pointer m-2 p-1"
+                      >
+                        <p>{item.product_name}</p>
+                      </div>
+                    );
+                  })}
+              </div>
+            </Datalist>
             <div className="md:flex justify-between ">
               <TextBox
                 style="md:mr-1"
@@ -99,28 +184,12 @@ export default function input() {
               />
             </div>
             <TextBox
+              type="date"
+              style="md:mr-1"
               event={handleChange}
-              placeholder="Numéro du lot"
-              value={lotNumber}
-              name="lotNumber"
-              icon={<FaSortNumericUp />}
+              value={daysDate}
+              name="daysDate"
             />
-            <div className="md:flex justify-between ">
-              <TextBox
-                type="date"
-                style="md:mr-1"
-                event={handleChange}
-                value={daysDate}
-                name="daysDate"
-              />
-              <TextBox
-                type="date"
-                style="md:ml-1"
-                event={handleChange}
-                value={expirationDate}
-                name="expirationDate"
-              />
-            </div>
             <TextBox
               event={handleChange}
               placeholder="Commentaire"

@@ -25,9 +25,10 @@ export default function add() {
   const onHandleAddExercise = (event) => {
     event.preventDefault();
     useAddExercise(startDate, endDate).then((res) => {
+      console.log(res)
       setIsStatusHidden(false);
       setStatusMessage(res.message || "Enregistrement reussi !");
-      res.type.toLowerCase() === "failure"
+     res.type === undefined || res.type.toLowerCase() === "failure" 
         ? setStatusType("error")
         : setStatusType("success");
     });

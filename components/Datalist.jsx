@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import {
   textBoxStyle,
   textBoxWrapper,
@@ -6,40 +6,24 @@ import {
 } from "../styles/TextBoxes.module.css";
 import PropTypes from "prop-types";
 
-function DataList({
-  icon,
-  placeholder,
-  name,
-  value,
-  event,
-  options,
-  style,
-}) {
+function DataList({ icon, placeholder, value, event, style, children }) {
   return (
     <>
       <div
-        className={`bg-blue-50 ${style} w-full rounded-md my-2 h-26 flex justify-around items-center ${textBoxWrapper} ${textBoxInitial}`}
+        className={`bg-blue-50 z-0 ${style} relative w-full rounded-md my-2  ${textBoxWrapper} ${textBoxInitial}`}
       >
-        <span className="w-6 ml-1 text-gray-600">{icon}</span>
-        <input
-          name={name}
-          placeholder={placeholder}
-          className={`${textBoxStyle} w-full mr-1`}
-          list={name}
-          value={value}
-          onInput={event}
-        />
-        <datalist id={name}>
-          {options.length > 0
-            ? options.map((option) => {
-                return (
-                  <option key={option.value+option.key} value={option.value}>
-                    {option.key}
-                  </option>
-                );
-              })
-            : null}
-        </datalist>
+        <div className="flex justify-around items-center ">
+          <span className="w-6 ml-1 text-gray-600  h-26">{icon}</span>
+          <input
+            placeholder={placeholder}
+            className={`${textBoxStyle} w-full mr-1`}
+            value={value}
+            onChange={event}
+            data-type="list"
+            type="text"
+          />
+        </div>
+            {children}
       </div>
     </>
   );
@@ -68,4 +52,4 @@ DataList.propTypes = {
   style: PropTypes.string,
 };
 
-export default DataList;
+export default React.memo(DataList);

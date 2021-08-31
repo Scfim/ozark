@@ -16,43 +16,100 @@ import Datalist from "../../components/Datalist";
 import useForm from "../../hooks/useForm";
 import Button from "../../components/Button";
 import { useAddBooking } from "../api/booking";
-import useArrayContainsObject from "../../hooks/useArrayContainsObject";
 import validate from "../../hooks/useValidate";
+import { getProduct } from "../api/product";
+import Status from "../../components/Status";
+import { getClients } from "../api/client";
+import Checkbox from "../../components/Checkbox";
+import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 
 export default function add() {
+  useIsLoggedIn()
+  const [products, setProducts] = useState([]);
+  const [product, setProduct] = useState("");
+  const [productId, setProductId] = useState("");
+  const [clients, setClients] = useState([]);
+  const [client, setClient] = useState("");
+  const [clientId, setClientId] = useState("");
   const [bookings, setBookings] = useState([]);
   const [bookingIds, setBookingIds] = useState([]);
   const [totalOfTotal, setTotalOfTotal] = useState([]);
   const [generalTotal, setGeneralTotal] = useState(0);
-  const [
-    { product, customer, comment, daysDate, quantity, initialPrice },
-    handleChange,
-  ] = useForm({
-    customer: "",
-    product: "",
-    initialPrice: "",
-    quantity: "",
-    daysDate: "",
-    comment: "",
-  });
+
+  const [isCash, setIsCash] = useState(true);
+  const [allowOutPut, setAllowOutPut] = useState(true);
+
+  const [statusType, setStatusType] = useState("");
+  const [isStatusHidden, setIsStatusHidden] = useState(true);
+  const [statusMessage, setStatusMessage] = useState("");
+  const [{ comment, daysDate, quantity, initialPrice }, handleChange] = useForm(
+    {
+      initialPrice: "",
+      quantity: "",
+      daysDate: "",
+      comment: "",
+    }
+  );
+  const onCheckIsCash = (event) => {
+    if (event.target.checked) {
+      setIsCash(true);
+    } else setIsCash(false);
+  };
+  const onCheckAllowOutPut = (event) => {
+    if (event.target.checked) {
+      setAllowOutPut(true);
+    } else setAllowOutPut(false);
+  };
   useEffect(() => {
-    console.log(bookings);
     const total = totalOfTotal.reduce(
       (acc, val) => parseFloat(acc) + parseFloat(val),
       0
     );
     setGeneralTotal(parseFloat(total));
   }, [bookings, totalOfTotal]);
+
+  const resetStatusIsHidden = () => setIsStatusHidden(true);
+
+  const onSearchProduct = (event) => {
+    if (event.target.value !== "") {
+      getProduct(event.target.value).then((response) =>
+        setProducts(response.data.data)
+      );
+    } else setProducts([]);
+
+    setProduct(event.target.value);
+  };
+  const onClickProduct = (name, id) => {
+    setProduct(name);
+    setProductId(id);
+    setProducts([]);
+  };
+  const onSearchClient = (event) => {
+    if (event.target.value !== "") {
+      getClients(event.target.value).then((response) =>
+        setClients(response.data.data)
+      );
+    } else setClients([]);
+
+    setClient(event.target.value);
+  };
+  const onClickClient = (name, id) => {
+    setClient(name);
+    setClientId(id);
+    setClients([]);
+  };
   const onHandleAddInput = (event) => {
     event.preventDefault();
     let total = parseFloat(quantity) * parseFloat(initialPrice);
     total = parseFloat(total);
     let bookingId =
-      product + quantity + customer + daysDate + comment + initialPrice + total;
+      product + quantity + client + daysDate + comment + initialPrice + total;
     bookingId = bookingId.trim();
     const newItem = {
       product,
-      customer,
+      productId,
+      client,
+      clientId,
       comment,
       daysDate,
       quantity,
@@ -63,7 +120,7 @@ export default function add() {
     if (
       !bookingIds.includes(bookingId) &&
       validate.parse(product).not.empty() &&
-      validate.parse(customer).not.empty() &&
+      validate.parse(client).not.empty() &&
       validate.parse(comment).not.empty() &&
       validate.parse(daysDate).not.empty() &&
       validate.parse(quantity).not.empty() &&
@@ -73,21 +130,24 @@ export default function add() {
       setBookings([...bookings, newItem]);
       setTotalOfTotal([...totalOfTotal, total]);
       setBookingIds([...bookingIds, bookingId]);
+    } else {
+      setIsStatusHidden(false);
+      setStatusMessage("Tous les champs sont obligatoires !");
+      setStatusType("error");
     }
   };
   const onSaveBookings = () => {
-    useAddBooking(bookings)
-      .then((booking) => {})
+    useAddBooking(bookings, allowOutPut, isCash)
+      .then((result) => console.log(result))
       .catch((err) => console.info(err));
   };
   const removeBooking = (item) => {
-    console.log(item);
-    let nBookings = bookings.slice()
-    let nBookingIds = bookingIds.slice()
-    let nTotalOfTotal = totalOfTotal.slice()
-    nTotalOfTotal.splice(nTotalOfTotal.indexOf(item.total),1)
-    nBookings.splice(nBookings.indexOf(item), 1)
-    nBookingIds.splice(nBookingIds.indexOf(item.bookingId),1)
+    let nBookings = bookings.slice();
+    let nBookingIds = bookingIds.slice();
+    let nTotalOfTotal = totalOfTotal.slice();
+    nTotalOfTotal.splice(nTotalOfTotal.indexOf(item.total), 1);
+    nBookings.splice(nBookings.indexOf(item), 1);
+    nBookingIds.splice(nBookingIds.indexOf(item.bookingId), 1);
     setBookings(nBookings);
     setTotalOfTotal(nTotalOfTotal);
     setBookingIds(nBookingIds);
@@ -105,19 +165,65 @@ export default function add() {
           />
           <form className="w-9/12 mt-5 flex flex-col justify-center">
             <Datalist
-              event={handleChange}
+              event={onSearchClient}
               placeholder="Client"
-              value={customer}
+              value={client}
               name="customer"
               icon={<FaUser />}
-            />
+            >
+              <div
+                className={`${
+                  clients.length > 0
+                    ? "flex flex-col w-full z-10 bg-white -left-2 top-8"
+                    : "hidden"
+                }`}
+              >
+                {clients.length > 0 &&
+                  clients.map((item) => {
+                    return (
+                      <div
+                        onClick={() =>
+                          onClickClient(item.client_name, item.client_id)
+                        }
+                        key={item.product_id}
+                        className="text-gray-800 cursor-pointer m-2 p-1"
+                      >
+                        <p>{item.client_name}</p>
+                      </div>
+                    );
+                  })}
+              </div>
+            </Datalist>
             <Datalist
-              event={handleChange}
+              event={onSearchProduct}
               placeholder="Produit"
               value={product}
               name="product"
               icon={<FaPollH />}
-            />
+            >
+              <div
+                className={`${
+                  products.length > 0
+                    ? "flex flex-col w-full z-10 bg-white -left-2 top-8"
+                    : "hidden"
+                }`}
+              >
+                {products.length > 0 &&
+                  products.map((item) => {
+                    return (
+                      <div
+                        onClick={() =>
+                          onClickProduct(item.product_name, item.product_id)
+                        }
+                        key={item.product_id}
+                        className="text-gray-800 cursor-pointer m-2 p-1"
+                      >
+                        <p>{item.product_name}</p>
+                      </div>
+                    );
+                  })}
+              </div>
+            </Datalist>
             <div className="md:flex justify-between ">
               <TextBox
                 style="md:mr-1"
@@ -161,6 +267,12 @@ export default function add() {
             </div>
           </form>
         </div>
+        <Status
+          type={statusType}
+          isHidden={isStatusHidden}
+          message={statusMessage}
+          resetStatusIsHidden={resetStatusIsHidden}
+        />
         <div className="col-span-8 mx-3 bg-white rounded shadow flex flex-col h-fit-content justify-center">
           <table className="table-auto rounded w-10/12 border mt-2 mx-auto">
             <thead>
@@ -198,6 +310,10 @@ export default function add() {
                 : null}
             </tbody>
           </table>
+          <div className="flex flex-col h-auto pl-4">
+            <Checkbox label="Le client paie-t-il en cash  ?" event={onCheckIsCash} checked={isCash} name="cashMoney" />
+            <Checkbox label="Autoriser la sortie ?" event={onCheckAllowOutPut} checked={allowOutPut} name="allowOutPut" />
+          </div>
           <div
             style={{ width: "40%" }}
             className="flex h-36 ml-16 justify-between items-center"
