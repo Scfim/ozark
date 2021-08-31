@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import Status from "../../components/Status";
+import React, { useCallback, useState } from "react";
+import Status from "../../../components/Status";
 import {
   FaBoxes,
   FaCheckCircle,
@@ -8,16 +8,16 @@ import {
   FaPollH,
   FaUser,
 } from "react-icons/fa";
-import Headers from "../../components/Headers";
-import HeadSection from "../../components/HeadSection";
-import TextBox from "../../components/TextBox";
-import Datalist from "../../components/Datalist";
-import useForm from "../../hooks/useForm";
-import Button from "../../components/Button";
-import { useAddInput } from "../api/inputs";
-import useIsLoggedIn from "../../hooks/useIsLoggedIn";
-import { getProvider } from "../api/provider";
-import { getProduct } from "../api/product";
+import Headers from "../../../components/Headers";
+import HeadSection from "../../../components/HeadSection";
+import TextBox from "../../../components/TextBox";
+import Datalist from "../../../components/Datalist";
+import useForm from "../../../hooks/useForm";
+import Button from "../../../components/Button";
+import { useAddInput } from "../../api/inputs";
+import useIsLoggedIn from "../../../hooks/useIsLoggedIn";
+import { getProvider } from "../../api/provider";
+import { getProduct } from "../../api/product";
 
 export default function input() {
   const [providers, setProviders] = useState([]);
@@ -31,7 +31,7 @@ export default function input() {
   const [product, setProduct] = useState("");
   const [productId, setProductId] = useState("");
 
-  const onSearchProvider = (event) => {
+  const onSearchProvider = useCallback((event) => {
     if (event.target.value !== "") {
       getProvider(event.target.value).then((response) =>
         setProviders(response.data.data)
@@ -39,7 +39,7 @@ export default function input() {
     } else setProviders([]);
 
     setProvider(event.target.value);
-  };
+  },[])
   const onClickProvider = (name, id) => {
     setProvider(name);
     setProviderId(id);

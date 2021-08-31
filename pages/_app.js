@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 
 function MyApp({ Component, pageProps }) {
   const [canSetNavBar, setCanSetNavBar] = useState(true);
-  const [currentLayout, setCurrentLayout] = useState("");
+  const [currentLayout, setCurrentLayout] = useState("Dashboard");
   const [navLinks, setNavLinks] = useState({});
   const { pathname } = useRouter();
   const [showNavbar, setShowNavbar] = useState(true);
@@ -58,7 +58,7 @@ function MyApp({ Component, pageProps }) {
               showNavbar ? "w-10/12" : "w-full"
             } h-screen scrollBar overflow-y-auto`}
           >
-            <div className="w-11/12 ml-11 mt-2 p-1 sticky top-0">
+            <div className="w-11/12 mx-auto mt-2 p-1 sticky top-0">
               <NavBar
                 activeLayout={currentLayout}
                 onSetNewLayout={onSetNewLayout}

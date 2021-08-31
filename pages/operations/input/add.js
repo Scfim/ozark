@@ -1,20 +1,19 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { FaCheckCircle, FaComment, FaPollH } from "react-icons/fa";
-import Headers from "../../components/Headers";
-import HeadSection from "../../components/HeadSection";
-import TextBox from "../../components/TextBox";
-import Datalist from "../../components/Datalist";
-import useForm from "../../hooks/useForm";
-import Button from "../../components/Button";
-import useIsLoggedIn from "../../hooks/useIsLoggedIn";
-import DateInput from "../../components/DateInput";
-import { getOutPuts, useAddOutPut } from "../api/output";
-import Status from "../../components/Status";
-import { usePascalCase } from "../../hooks/usePascalCase";
+import Headers from "../../../components/Headers";
+import HeadSection from "../../../components/HeadSection";
+import TextBox from "../../../components/TextBox";
+import Datalist from "../../../components/Datalist";
+import useForm from "../../../hooks/useForm";
+import Button from "../../../components/Button";
+import useIsLoggedIn from "../../../hooks/useIsLoggedIn";
+import DateInput from "../../../components/DateInput";
+import { getOutPuts, useAddOutPut } from "../../api/output";
+import Status from "../../../components/Status";
+import { usePascalCase } from "../../../hooks/usePascalCase";
 
 export default function input() {
   const [booking, setBooking] = React.useState("");
-  const [bookingId, setBookingId] = React.useState("");
   const [bookings, setBookings] = React.useState([]);
   const [outBookings, setOutBookings] = React.useState([]);
 
