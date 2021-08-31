@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {server} from "../../constants/common"
+axios.defaults.withCredentials = true;
 
 export const addProduct=(data)=>{
     const url=`${server}/products/add`

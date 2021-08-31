@@ -7,11 +7,11 @@ import {
   BiPencil,
 } from "react-icons/bi";
 import { Input } from "../../components/s/input";
-import { Button} from "../../components/s/button";
+import { Button } from "../../components/s/button";
 import style from "../../styles/App.module.css";
-import { addCategory, getCategory,deleteCategory,updateCategory } from "../api/category";
+import { addCategory, getCategory, deleteCategory, updateCategory } from "../api/category";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
-
+import Status from "../../components/Status";
 
 const Category = ({ state }) => {
   useIsLoggedIn()
@@ -58,16 +58,20 @@ const Category = ({ state }) => {
     await addCategory({
       name: category,
       type: typeCategory,
-    }).then((res) => {     
-        GetCategory();       
+    }).then((res) => {
+
+      setIsStatusHidden(false);
+      setStatusMessage(res.message);
+      res.data.type.toLowerCase() === "success" ? setStatusType("success") : setStatusType("error")
+
     });
   }
   const DeleteCategory = async (category_id) => {
     await deleteCategory({
-      categorieid:category_id,
-    }).then((res) => {     
-        GetCategory();       
-        console.log(res)
+      categorieid: category_id,
+    }).then((res) => {
+      GetCategory();
+      console.log(res)
     });
   }
   return (
@@ -77,7 +81,9 @@ const Category = ({ state }) => {
         <label className={` text-xl font-bold`}> Ajouter une nouvelle catégorie </label>
         <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier une catégorie </label>
       </div>
-
+      <div>
+          <Status type={statusType} isHidden={isStatusHidden} message={statusMessage} resetStatusIsHidden={resetStatusIsHidden} />
+      </div>
       <div className=" flex mx-14 my-8" >
         <div className="flex">
           <div className="flex flex-col bg-white shadow-md rounded-md p-4  ">
@@ -88,45 +94,45 @@ const Category = ({ state }) => {
         </div>
 
         <div className="ml-6 bg-white shadow-md rounded-md p-4 w-full ">
-              <table className={`border  border-gray-200 w-full`}>
-                <tr className={`${style.bg}`}>
-                  <td className={`border border-gray-200 text-white px-2`}>
-                    Categorie
+          <table className={`border  border-gray-200 w-full`}>
+            <tr className={`${style.bg}`}>
+              <td className={`border border-gray-200 text-white px-2`}>
+                Categorie
                   </td>
-                </tr>
-                {dataCategory != undefined || dataCategory != null
-                  ? dataCategory.map((value) => {
-                    return (
-                      <tr key={value.categorie_id} className={`border border-gray-200 text-xs`}>
-                        <td
-                          className={`border border-gray-200 text-sm px-2 `}
-                        >
-                          {value.categorie_name}
-                        </td>
-                        <td className={`border border-gray-200 text-sm px-2`}>
-                          {
-                            <BiTrash
-                              size="0.95rem"
-                              className={`cursor-pointer hover:text-gray-900`}
-                              onClick={() =>DeleteCategory(value.categorie_id)}
-                            />
-                          }
-                        </td>
-                        <td className={`border border-gray-200 text-sm px-2`}>
-                          {
-                            <BiPencil
-                              size="0.95rem"
-                              className={`cursor-pointer hover:text-gray-900`}
-                              
-                            />
-                          }
-                        </td>
-                      </tr>
-                    );
-                  })
-                  : null}
-              </table>
-            </div>
+            </tr>
+            {dataCategory != undefined || dataCategory != null
+              ? dataCategory.map((value) => {
+                return (
+                  <tr key={value.categorie_id} className={`border border-gray-200 text-xs`}>
+                    <td
+                      className={`border border-gray-200 text-sm px-2 `}
+                    >
+                      {value.categorie_name}
+                    </td>
+                    <td className={`border border-gray-200 text-sm px-2`}>
+                      {
+                        <BiTrash
+                          size="0.95rem"
+                          className={`cursor-pointer hover:text-blue-400`}
+                          onClick={() => DeleteCategory(value.categorie_id)}
+                        />
+                      }
+                    </td>
+                    <td className={`border border-gray-200 text-sm px-2`}>
+                      {
+                        <BiPencil
+                          size="0.95rem"
+                          className={`cursor-pointer hover:text-blue-400 `}
+
+                        />
+                      }
+                    </td>
+                  </tr>
+                );
+              })
+              : null}
+          </table>
+        </div>
 
       </div>
 

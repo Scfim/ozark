@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {server} from "../../constants/common"
+axios.defaults.withCredentials = true;
 
 export const addMark=(data)=>{
     const url=`${server}/marks/add`

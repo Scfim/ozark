@@ -1,5 +1,6 @@
 import axios from 'axios'
 import {server} from "../../constants/common"
+axios.defaults.withCredentials = true;
 
 export const addClient=(data)=>{
     const url=`${server}/clients/add`

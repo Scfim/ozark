@@ -6,10 +6,15 @@ import { BiBox, BiMailSend, BiPencil, BiPhone, BiTrash, BiUser } from 'react-ico
 import { addClient, editClient,deleteClient,getClient } from '../api/client'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 import Headers from '../../components/Headers'
-
+import Status from "../../components/Status";
 
 const NewProvider = () => {
 useIsLoggedIn()
+const resetStatusIsHidden = () => setIsStatusHidden(true);
+const [statusType, setStatusType] = useState("");
+const [isStatusHidden, setIsStatusHidden] = useState(true);
+const [statusMessage, setStatusMessage] = useState("");
+
      useEffect(()=>{  
           GetClient()
      }, [])
@@ -32,9 +37,11 @@ useIsLoggedIn()
      };
 
      const AddClient = async () => {
-          await addClient({ name: client, adress: addres, phone: phone, mail: mailAdress }).then((response) => {
-              
-               GetClient()
+          await addClient({ name: client, adress: addres, phone: phone, mail: mailAdress }).then((res) => {
+               setIsStatusHidden(false);
+               setStatusMessage(res.message);
+               res.data.type.toLowerCase() === "success" ? setStatusType("success") : setStatusType("error")
+               GetClient()            
           })
      }
      const EditClient = async () => {
@@ -63,6 +70,9 @@ useIsLoggedIn()
                <div className={` flex flex-col w-full mx-14`}>
                     <label className={` text-xl font-bold`}> Ajouter un client </label>
                     <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un client </label>
+               </div>
+               <div>
+                    <Status type={statusType} isHidden={isStatusHidden} message={statusMessage} resetStatusIsHidden={resetStatusIsHidden} />
                </div>
                <div className=" flex mx-14 my-8" >
                     <div className="flex">

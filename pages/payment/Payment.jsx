@@ -1,16 +1,19 @@
 import React, { useEffect, useState } from 'react'
 import style from '../../styles/App.module.css'
 import { Input } from '../../components/s/input'
-import { BiMoney, BiNavigation, BiTime } from 'react-icons/bi'
+import { BiMoney, BiNavigation } from 'react-icons/bi'
 import { Dropdown } from '../../components/s/dropdown'
 import { Button } from '../../components/s/button'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
+import {getBooking} from '../api/payement'
 
 
 const Payement = () => {
     useIsLoggedIn()
 
     useEffect(() => {
+
+
         var today = new Date();
         setTime(today.getHours() + ':' + today.getMinutes())
 
@@ -34,14 +37,13 @@ const Payement = () => {
     const [bookingState, setBookingState] = useState("hidden")
     const [booking, setBooking] = useState("")
     const [bookingData, setBookingData] = useState([])
-    const onSetBooking = (e) => {
+    const onSetBooking = async(e) => {
         setBooking(e.target.value)
         if (e.target.value != "") {
-            const data = [
-                { bookingId: "12EC", bookingDesignation: "Garoumie", bookingDate: '21-09-2021' },
-                { bookingId: "42HB", bookingDesignation: "Kapouchino", bookingDate: '01-09-2021' }
-            ]
-            setBookingData(data)
+            await getBooking({bookingNumber: e.target.value}).then((response) =>{
+                    console.log(response)
+            })
+            // setBookingData(data)
             setBookingState("")
         } else setBookingState("hidden")
     }

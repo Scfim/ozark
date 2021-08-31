@@ -8,9 +8,17 @@ import { addSubCategory, editSubCategory, deleteSubCategory, getSubCategory } fr
 import { getCategoryLike } from "../api/category";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
 import Headers from '../../components/Headers'
+import Status from "../../components/Status";
+
 
 export default function SubCategory({ state }) {
   useIsLoggedIn()
+
+  const resetStatusIsHidden = () => setIsStatusHidden(true);
+  const [statusType, setStatusType] = useState("");
+  const [isStatusHidden, setIsStatusHidden] = useState(true);
+  const [statusMessage, setStatusMessage] = useState("");
+
   useEffect(() => {
     GetSubCategory()
   }, [])
@@ -52,8 +60,9 @@ export default function SubCategory({ state }) {
       name: subCategory,
       type: typeCategory
     }).then((res) => {
-      console.log(res);
-      GetSubCategory()
+      setIsStatusHidden(false);
+      setStatusMessage(res.message);
+      res.data.type.toLowerCase() === "success" ? setStatusType("success") : setStatusType("error")
     });
   };
   const EditSubCategory = async () => {
@@ -82,6 +91,9 @@ export default function SubCategory({ state }) {
       <div className={` flex flex-col w-full mx-14`}>
         <label className={` text-xl font-bold`}> Ajouter une nouvelle sous-catégorie </label>
         <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier une sous-catégorie </label>
+      </div>
+      <div>
+          <Status type={statusType} isHidden={isStatusHidden} message={statusMessage} resetStatusIsHidden={resetStatusIsHidden} />
       </div>
       <div className=" flex mx-14 my-8" >
         <div className="flex">
@@ -118,8 +130,8 @@ export default function SubCategory({ state }) {
                 return <tr key={value.sub_categorie_id} className={`border border-gray-200 text-xs`}>
                   <td className={`border border-gray-200 text-sm px-2 `}>{value.categorie_name}</td>
                   <td className={`border border-gray-200 text-sm px-2`}>{value.sub_categorie_name}</td>
-                  <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} onClick={() => DeleteSubCategory(value.sub_categorie_id)} />}</td>
-                  <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
+                  <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-blue-400 `} onClick={() => DeleteSubCategory(value.sub_categorie_id)} />}</td>
+                  <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-blue-400 `} />}</td>
                 </tr>
 
 

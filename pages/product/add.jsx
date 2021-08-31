@@ -5,14 +5,21 @@ import style from '../../styles/App.module.css'
 import { BiAddToQueue, BiNavigation, BiPencil, BiTrash } from 'react-icons/bi'
 import { Dropdown } from '../../components/s/dropdown'
 import Headers from '../../components/Headers'
-import {getAllLike } from '../api/Mark'
-import { addProduct, getProduct,deleteProduct } from '../api/product'
+import { getAllLike } from '../api/Mark'
+import { addProduct, getProduct, deleteProduct } from '../api/product'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
-
+import Status from "../../components/Status";
 
 
 const NewProduct = () => {
      useIsLoggedIn()
+
+     const resetStatusIsHidden = () => setIsStatusHidden(true);
+     const [statusType, setStatusType] = useState("");
+     const [isStatusHidden, setIsStatusHidden] = useState(true);
+     const [statusMessage, setStatusMessage] = useState("");
+
+
      useEffect(() => {
           GetProduct()
      }, [])
@@ -38,8 +45,8 @@ const NewProduct = () => {
      };
 
 
-    
-   const [mark, setMark] = useState("");
+
+     const [mark, setMark] = useState("");
      const [Idmark, setIdMark] = useState("");
      const [dataMarque, setDataMarque] = useState([]);
      const onSetMark = async (e) => {
@@ -64,34 +71,40 @@ const NewProduct = () => {
 
      const [markState, setMarkState] = useState("hidden")
      const AddProduct = async () => {
-          await addProduct({ markId: Idmark, name: designation,alertStock: alertStock }).then((response) => {
-               GetProduct()               
-          })
-     }
-  
-     const DeleteProduct = async (product_Id) => {
-          await deleteProduct({productId:product_Id }).then((response) => {
-               GetProduct()     
-               console.log(product_Id)          
+          await addProduct({ markId: Idmark, name: designation, alertStock: alertStock }).then((res) => {
+               GetProduct()
+               setIsStatusHidden(false);
+               setStatusMessage(res.message);
+               res.data.type.toLowerCase() === "success" ? setStatusType("success") : setStatusType("error")
           })
      }
 
-    
+     const DeleteProduct = async (product_Id) => {
+          await deleteProduct({ productId: product_Id }).then((response) => {
+               GetProduct()
+               console.log(product_Id)
+          })
+     }
+
+
 
      const [data, setData] = useState([])
      const GetProduct = async () => {
           await getProduct().then((response) => {
-               setData(response.data.data)              
+               setData(response.data.data)
           })
 
      }
 
      return (
           <div className={` flex flex-col  bg-gray-4 my-6 `}>
-              <Headers title="Ajouter Produit" />
+               <Headers title="Ajouter Produit" />
                <div className={` flex flex-col w-full mx-14`}>
                     <label className={` text-xl font-bold`}> Ajouter un nouveu produit </label>
                     <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un nouveau produit </label>
+               </div>
+               <div>
+                    <Status type={statusType} isHidden={isStatusHidden} message={statusMessage} resetStatusIsHidden={resetStatusIsHidden} />
                </div>
                <div className="flex mx-14  ">
                     <div className={`flex  `}>
@@ -106,33 +119,33 @@ const NewProduct = () => {
                               <Button text={'Enregistrer le produit'} event={() => AddProduct()} />
                          </div>
                     </div>
-                    
+
                     <div className={`mt-4 w-full ml-3 bg-white p-4  rounded-md shadow-md`}>
                          <table className={`w-full`}>
                               <tr className={`${style.bg}`}>
-                                  
+
                                    <td className={`border border-gray-200 text-white px-2`}>Marques</td>
                                    <td className={`border border-gray-200 text-white px-2`}>Désignation</td>
-                                   <td className={`border border-gray-200 text-white px-2`}>Stock Alerte</td>                                  
+                                   <td className={`border border-gray-200 text-white px-2`}>Stock Alerte</td>
                               </tr >
                               {
-                                   data != undefined? data.map((value) => {
-                                        return <tr key={value.product_id} className={`border border-gray-200 text-xs`}>                                        
+                                   data != undefined ? data.map((value) => {
+                                        return <tr key={value.product_id} className={`border border-gray-200 text-xs`}>
                                              <td className={`border border-gray-200 text-sm px-2 `}>{value.mark_name}</td>
                                              <td className={`border border-gray-200 text-sm px-2`}>{value.product_name}</td>
                                              <td className={`border border-gray-200 text-sm px-2`}>{value.product_alert_stock}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-blue-400`} onClick={()=>DeleteProduct(value.product_id)} />}</td>
+                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-blue-400`} onClick={() => DeleteProduct(value.product_id)} />}</td>
                                              <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-blue-400`} />}</td>
                                         </tr>
-                                      
+
                                    }) : setData([])
                               }
                          </table>
                     </div>
-                    
+
                </div>
 
-            
+
           </div>
      )
 

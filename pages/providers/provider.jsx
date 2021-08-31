@@ -6,10 +6,18 @@ import { BiBox, BiMailSend, BiPencil, BiPhone, BiTrash, BiUser } from 'react-ico
 import { addProvider, editProvider, deleteProvider, getProvider } from '../api/provider'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 import Headers from '../../components/Headers'
+import Status from "../../components/Status";
 
 
 const NewProvider = () => {
      useIsLoggedIn()
+
+
+     const resetStatusIsHidden = () => setIsStatusHidden(true);
+     const [statusType, setStatusType] = useState("");
+     const [isStatusHidden, setIsStatusHidden] = useState(true);
+     const [statusMessage, setStatusMessage] = useState("");
+
 
      useEffect(() => {
           GetProvider()
@@ -35,9 +43,10 @@ const NewProvider = () => {
 
 
      const AddProvider = async () => {
-          console.log("ksdgk")
-          await addProvider({ name: provider, adress: addres, phone: phone, mail: mailAdress }).then((response) => {
-               console.log(response)
+          await addProvider({ name: provider, adress: addres, phone: phone, mail: mailAdress }).then((res) => {
+               setIsStatusHidden(false);
+               setStatusMessage(res.message);
+               res.data.type.toLowerCase() === "success" ? setStatusType("success") : setStatusType("error")
                GetProvider()
           })
      }
@@ -68,8 +77,9 @@ const NewProvider = () => {
                     <label className={` text-xl font-bold`}> Ajouter un nouveau fournisseur </label>
                     <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un fournisseur </label>
                </div>
-
-
+               <div>
+                    <Status type={statusType} isHidden={isStatusHidden} message={statusMessage} resetStatusIsHidden={resetStatusIsHidden} />
+               </div>
                <div className=" flex mx-14 my-8" >
                     <div className="flex">
                          <div className="flex flex-col bg-white shadow-md rounded-md p-4  ">
@@ -99,10 +109,7 @@ const NewProvider = () => {
                                              <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} onClick={() => DeleteProvider(value.provider_id)} />}</td>
                                              <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
                                         </tr>
-
-                                        // </div>
                                    }) : null
-
                               }
                          </table>
                     </div>

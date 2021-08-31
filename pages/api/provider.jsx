@@ -1,6 +1,8 @@
 import axios from 'axios'
 import {server} from "../../constants/common"
 
+axios.defaults.withCredentials = true;
+
 export const addProvider=(data)=>{
     const url=`${server}/providers/add`
     return new Promise((resolve,reject)=>{
