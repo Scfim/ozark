@@ -40,20 +40,21 @@ export const deleteProduct = (data) => {
       .catch((err) => reject(err));
   });
 };
-export const getProduct = (productName) => {
+export const getProduct = async (productName) => {
   const url = `${server}/products/getProductLike`;
-  return new Promise((resolve, reject) => {
-    axios
-      .post(
-        url,
-        { productName },
-        {
-          headers: {
-            "x-access-token": localStorage.getItem("token"),
-          },
-        }
-      )
-      .then((res) => resolve(res))
-      .catch((err) => reject(err));
-  });
+  try{
+    const response = await axios
+    .post(
+      url,
+      { productName },
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+    )
+    return response.data
+  }catch(error){
+    throw new Error(error)
+  }
 };

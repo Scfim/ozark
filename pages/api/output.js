@@ -45,3 +45,21 @@ export const useAddOutPut = async (dataOutput) => {
     }
 };
 
+export const getBillStatement = async (bookingNumber) =>{
+  try{
+    const response = await axios
+    .post(
+      get_outputBillStatement,
+      {bookingNumber},
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+    )
+    return response.data
+  }catch(err){
+    throw new Error(err)
+  }
+}
+

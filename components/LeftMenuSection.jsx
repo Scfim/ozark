@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Menu from "./Menu";
 import MenuWrapper from "./MenuWrapper";
+import { useRouter } from "next/router";
 import {
   FaUsers,
   FaUserFriends,
@@ -19,10 +20,16 @@ import {
 } from "react-icons/bi";
 
 export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
+  const router = useRouter()
+  useEffect(()=>{
+    const pathHash  = router.asPath.split("#_p1g5_index/")[1]
+   console.log(pathHash)
+  },[router.pathname])
   //currentOpenedPage and layout
   const [currentPage, setCurrentPage] = useState("Dashboard");
   const onClickMenu = (activePage, links) => {
     setCurrentPage(activePage);
+    window.location.hash = "_p1g5_index/"+activePage
     setNavLinks(links);
     onInitNewPage();
   };
