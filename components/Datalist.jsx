@@ -6,7 +6,7 @@ import {
 } from "../styles/TextBoxes.module.css";
 import PropTypes from "prop-types";
 
-function DataList({ icon, placeholder, value, event, style, children }) {
+function DataList({ icon, placeholder, value, event, style, children, secondIcon }) {
   return (
     <>
       <div
@@ -22,6 +22,11 @@ function DataList({ icon, placeholder, value, event, style, children }) {
             data-type="list"
             type="text"
           />
+          {
+            secondIcon !== undefined && <div className="w-7 h-26 mr-1">
+            {secondIcon}
+            </div>
+          }
         </div>
             {children}
       </div>

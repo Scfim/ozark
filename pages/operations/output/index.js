@@ -2,21 +2,11 @@ import { useState, useEffect } from "react";
 import { BiBookOpen, BiTv } from "react-icons/bi";
 import OutPutMenuItem from "../../../components/OutPutMenuItem";
 import { useRouter } from "next/router";
-import { FaPollH } from "react-icons/fa";
-import Datalist from "../../../components/Datalist";
-import { getBillStatement } from "../../api/output";
 import Headers from "../../../components/Headers";
+import OutPutBillStatement from "../../../components/OutPutBillStatement"
+import OutPutDashboard from "../../../components/OutPutDashboard"
 
 export default function index() {
-    const [billNumber, setBillNumber] = useState("")
-    const [billStatement, setBillStatement] = useState([])
-  function onSearchBill(event) {
-    setBillNumber(event.target.value)
-    getBillStatement(event.target.value).then(res =>{
-        console.log(res)
-        setBillStatement
-    })
-  }
   const router = useRouter();
 
   const [activeMenu, setActiveMenu] = useState("Dashboard");
@@ -44,15 +34,9 @@ export default function index() {
           onClick={(menu) => setActiveMenu(menu)}
         />
       </div>
-      <div className="grid col-span-10 mt-4 rounded shadow h-auto p-3 ml-2 bg-white">
-        <Datalist
-          event={onSearchBill}
-          placeholder="Entrer le numéro de la  commande"
-          value={billNumber}
-          name="command"
-          style="h-12 w-5/12 mx-auto"
-          icon={<FaPollH />}
-        ></Datalist>
+      <div className="flex flex-col justify-center col-span-10 mt-4 rounded shadow h-auto p-3 ml-2 bg-white">
+        <OutPutBillStatement activeMenu={activeMenu} />
+        <OutPutDashboard activeMenu={activeMenu}/>
       </div>
     </div>
   );
