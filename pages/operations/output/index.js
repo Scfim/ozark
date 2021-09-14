@@ -4,6 +4,8 @@ import OutPutMenuItem from "../../../components/OutPutMenuItem";
 import { useRouter } from "next/router";
 import { FaPollH } from "react-icons/fa";
 import Datalist from "../../../components/Datalist";
+import { getBillStatement } from "../../api/output";
+import Headers from "../../../components/Headers";
 
 export default function index() {
     const [billNumber, setBillNumber] = useState("")
@@ -26,6 +28,7 @@ export default function index() {
   }, [router.pathname]);
   return (
     <div className="grid grid-cols-12 w-11/12 mx-auto">
+      <Headers title=" Sortie Stock | Umarps Shop Manager" />
       <div className="bg-white mt-4 rounded flex flex-col shadow col-span-2 h-60">
         <OutPutMenuItem
           activeMenu={activeMenu}

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { post_add_output, get_bookings } from "../../constants/output";
+import { post_add_output, get_bookings, get_outputBillStatement } from "../../constants/output";
 /**
  * An output in our case is just a product and this function helps to out one
  * @param {object} outputData when it is about to out a new product,
