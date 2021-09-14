@@ -1,5 +1,5 @@
 import axios from "axios";
-import { post_add_output, get_bookings } from "../../constants/output";
+import { post_add_output, get_bookings, get_outputBillStatement } from "../../constants/output";
 /**
  * An output in our case is just a product and this function helps to out one
  * @param {object} outputData when it is about to out a new product,
@@ -44,4 +44,22 @@ export const useAddOutPut = async (dataOutput) => {
       throw new Error(err)
     }
 };
+
+export const getBillStatement = async (bookingNumber) =>{
+  try{
+    const response = await axios
+    .post(
+      get_outputBillStatement,
+      {bookingNumber},
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+    )
+    return response.data
+  }catch(err){
+    throw new Error(err)
+  }
+}
 
