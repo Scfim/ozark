@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react'
 import { Input } from '../../components/s/input'
 import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
-import { BiBox, BiMailSend, BiPencil, BiPhone, BiTrash, BiUser } from 'react-icons/bi'
-import { addClient, editClient,deleteClient,getClient } from '../api/client'
+import { BiBox, BiMailSend, BiMinus, BiPencil, BiPhone, BiTrash, BiUser } from 'react-icons/bi'
+import { addClient, editClient, deleteClient, getClient } from '../api/client'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
 import Headers from '../../components/Headers'
 import Status from "../../components/Status";
 
 const NewProvider = () => {
-useIsLoggedIn()
-const resetStatusIsHidden = () => setIsStatusHidden(true);
-const [statusType, setStatusType] = useState("");
-const [isStatusHidden, setIsStatusHidden] = useState(true);
-const [statusMessage, setStatusMessage] = useState("");
+     useIsLoggedIn()
+     const resetStatusIsHidden = () => setIsStatusHidden(true);
+     const [statusType, setStatusType] = useState("");
+     const [isStatusHidden, setIsStatusHidden] = useState(true);
+     const [statusMessage, setStatusMessage] = useState("");
 
-     useEffect(()=>{  
+     useEffect(() => {
           GetClient()
      }, [])
 
@@ -39,9 +39,14 @@ const [statusMessage, setStatusMessage] = useState("");
      const AddClient = async () => {
           await addClient({ name: client, adress: addres, phone: phone, mail: mailAdress }).then((res) => {
                setIsStatusHidden(false);
-               setStatusMessage(res.message);
-               res.data.type.toLowerCase() === "success" ? setStatusType("success") : setStatusType("error")
-               GetClient()            
+               setStatusMessage(res.data.message);
+               if (res.data.type.toLowerCase() === "success") setStatusType("success")
+               else {
+
+                    setStatusType("error")
+                    setStatusMessage(res.data.message);
+               }
+               GetClient()
           })
      }
      const EditClient = async () => {
@@ -56,17 +61,15 @@ const [statusMessage, setStatusMessage] = useState("");
      }
 
      const [data, setData] = useState([])
-     const GetClient = async () => {
-          await getClient().then((response) => {
-               setData(response.data.data)
+     const GetClient = () => {
+          getClient().then((response) => {
+               setData(response.data)
           })
      }
 
-
-
      return (
           <div className={`flex flex-col my-6`} >
-               <Headers title="Ajouter un client"/>
+               <Headers title="Ajouter un client" />
                <div className={` flex flex-col w-full mx-14`}>
                     <label className={` text-xl font-bold`}> Ajouter un client </label>
                     <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier un client </label>
@@ -87,27 +90,36 @@ const [statusMessage, setStatusMessage] = useState("");
 
                     <div className="ml-6 bg-white shadow-md rounded-md p-4 w-full ">
                          <table className={`border  border-gray-200 w-full`}>
-                              <tr className={`${style.bg}`}>
-                                   <td className={`border border-gray-200 text-white px-2`}>Nom</td>
-                                   <td className={`border border-gray-200 text-white px-2`}>Télephone</td>
-                                   <td className={`border border-gray-200 text-white px-2`}>Mail</td>
-                                   <td className={`border border-gray-200 text-white px-2`}>Adresse</td>
-                              </tr >
-                              {
-                                   data != undefined && data != null ? data.map((value) => {
-                                        return <tr className={`border border-gray-200 text-xs`}>
-                                             <td className={`border border-gray-200 text-sm px-2 `}>{value.client_name}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{value.client_phone_number}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{value.client_mail_adress}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{value.client_adress}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} onClick={()=>DeleteClient(value.client_id)} />}</td>
-                                             <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                                        </tr>
+                              <tbody>
+                                   <tr className={`${style.bg}`}>
+                                        <td className={`border border-gray-200 text-white px-2`}>Nom</td>
+                                        <td className={`border border-gray-200 text-white px-2`}>Télephone</td>
+                                        <td className={`border border-gray-200 text-white px-2`}>Mail</td>
+                                        <td className={`border border-gray-200 text-white px-2`}>Adresse</td>
+                                   </tr >
+                                   {
+                                        data != undefined && data != null ? data.map((value) => {
+                                             return <tr className={`border border-gray-200 text-xs`}>
+                                                  <td className={`border border-gray-200 text-sm px-2 `}>{value.client_name}</td>
+                                                  <td className={`border border-gray-200 text-sm px-2`}>{value.client_phone_number}</td>
+                                                  <td className={`border border-gray-200 text-sm px-2`}>{value.client_mail_adress}</td>
+                                                  <td className={`border border-gray-200 text-sm px-2`}>{value.client_adress}</td>
+                                                  <td className={`border border-gray-200 text-sm px-2`}>
+                                                       <div className={`bg-red-600 flex justify-center p-1 rounded-sm cursor-pointer w-9`} onClick={() => DeleteClient(value.client_id)}>
+                                                            {<BiMinus size="0.95rem" className={` text-white`} />}
+                                                       </div>
+                                                  </td> <td className={`border border-gray-200 text-sm px-2`}>
+                                                       <div className={`bg-green-500 flex justify-center p-1 rounded-sm cursor-pointer w-9`} onClick={() => DeleteClient(value.client_id)}>
+                                                            {<BiPencil size="0.95rem" className={` text-white`} />}
+                                                       </div>
+                                                  </td>
+                                             </tr>
 
-                                        // </div>
-                                   }) : setData([])
+                                             // </div>
+                                        }) : setData([])
 
-                              }
+                                   }
+                              </tbody>
                          </table>
                     </div>
                </div>

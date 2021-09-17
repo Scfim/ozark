@@ -5,8 +5,8 @@ import { BiMoney, BiNavigation } from 'react-icons/bi'
 import { Dropdown } from '../../components/s/dropdown'
 import { Button } from '../../components/s/button'
 import useIsLoggedIn from '../../hooks/useIsLoggedIn'
-import {getBooking} from '../api/payement'
-
+import { getBooking, addPayement } from '../api/payement'
+import Status from "../../components/Status";
 
 const Payement = () => {
     useIsLoggedIn()
@@ -22,7 +22,6 @@ const Payement = () => {
     const [date, setDate] = useState("")
     const onSetDate = (e) => {
         setDate(e.target.value)
-        console.log(time)
     }
     const [mount, setMount] = useState("")
     const onSetMount = (e) => {
@@ -34,46 +33,91 @@ const Payement = () => {
     }
     const [time, setTime] = useState("")
 
+    const resetStatusIsHidden = () => setIsStatusHidden(true);
+    const [statusType, setStatusType] = useState("");
+    const [isStatusHidden, setIsStatusHidden] = useState(true);
+    const [statusMessage, setStatusMessage] = useState("");
+
+
     const [bookingState, setBookingState] = useState("hidden")
     const [booking, setBooking] = useState("")
     const [bookingData, setBookingData] = useState([])
-    const onSetBooking = async(e) => {
+    const onSetBooking = (e) => {
         setBooking(e.target.value)
         if (e.target.value != "") {
-            await getBooking({bookingNumber: e.target.value}).then((response) =>{
-                    console.log(response)
+            getBooking({ bookingNumber: e.target.value }).then((response) => {
+                setBookingData(response.data)
+                console.log(response)
+
+                var totalPay = 0
+                for (var i = 0; i < response.data.length; i++) {
+                    totalPay = totalPay + response.data[i].quantity * response.data[i].unite_price
+                    setTotal(totalPay)
+                }
+
             })
-            // setBookingData(data)
             setBookingState("")
         } else setBookingState("hidden")
     }
 
 
     const [bookingId, setBookingId] = useState("")
-    const GetBooking = (bookingId, bookingDesignation, bookingDate) => {
-        setBookingId(bookingId)
-        setBooking(bookingDesignation)
+    const GetBooking = (bookingRefID) => {
+        setBookingId(bookingRefID)
         setBookingState("hidden")
+
     }
 
 
-    const AddPayement = () => {
-        console.log("63119d9d-45ad-42e5-8022-935e9458a88c", date, time, mount, envoy)
-        // console.log(bookingId, date, time, mount, envoy)
+    const AddPayement = async () => {
+        await addPayement({
+            referenceId: bookingId,
+            dateRecord: date,
+            mount: mount,
+            envoy: envoy
+        }).then((res) => {
+            setIsStatusHidden(false);
+            setStatusMessage(res.data.message);
+            console.log(res.data);
+            if (res.data.type.toLowerCase() === "success") setStatusType("success")
+            else {
+
+                setStatusType("error")
+                setStatusMessage(res.data.message);
+            }
+
+        })
+
     }
 
+    const [total, setTotal] = useState(100)
     return <div className={`flex flex-col my-6`} >
         <div className={` flex flex-col w-full mx-14`}>
             <label className={` text-xl font-bold`}> Transaction de paiement </label>
         </div>
+        <Status type={statusType} isHidden={isStatusHidden} message={statusMessage} resetStatusIsHidden={resetStatusIsHidden} />
 
         <div className=" flex mx-14 my-8" >
             <div className="flex">
                 <div className="flex flex-col bg-white shadow-md rounded-md p-4  ">
                     <Dropdown state={bookingState} type="text" htmlFor="bookingId" name="booking" label="N° de la commande" value={booking} event={onSetBooking}>
-                        {bookingData != undefined && bookingData != null ? bookingData.map((value) => {
-                            return <div key={value.bookingId} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetBooking(value.bookingId, value.bookingDesignation, value.bookingDate)}>{value.bookingDesignation}</div>
-                        }) : setBookingData([])}
+                        {
+                            bookingData != undefined && bookingData != null ? bookingData.map((value) => {
+                                return <div key={value.booking_id} className={`text-xs  cursor-pointer py-1 px-2 ${style.bgHovered}`} onClick={() => GetBooking(value.booking_reference_id)}>
+                                    <div className={`flex`}>
+                                        <label className={`pr-3`} >{value.client_name}</label>
+                                        <label className={`pr-3`} >{value.product_name}</label>
+                                        <label className={`pr-3`} >{value.date_record}</label>
+                                        <label className={`pr-3`} >{value.quantity * value.unite_price}</label>
+                                    </div>
+                                </div>
+                            },
+                            ) : setBookingData([])
+                        }
+                        <div className="flex rounded-md bg-gray-600 p-2 m-2 text-white">
+                            <label className={`px-2 `} >{`Total à payer : `}</label>
+                            <label className={`px-2 font-bold`} >{`${total} $`}</label>
+                        </div>
                     </Dropdown>
                     <Input type="date" htmlFor="dateId" name="date" label="Date de l'opération" event={onSetDate} />
                     <Input type="number" htmlFor="mountId" name="mount" label="Montant payé" event={onSetMount} icon={<BiMoney size="0.95rem" />} />
@@ -81,10 +125,7 @@ const Payement = () => {
                     <Button text={'Enregistrer la Transaction'} event={() => AddPayement()} />
                 </div>
             </div>
-
         </div>
-
-
     </div>
 
 }

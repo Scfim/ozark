@@ -59,3 +59,21 @@ export const getProduct = (productName) => {
       .catch((err) => reject(err));
   });
 };
+export const getProductAll =async () => {
+  const url = `${server}/products/getAll`;
+  try {
+    const response = await axios
+    .post(
+      url,
+      {} ,     
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+    )
+      return response.data
+  } catch (error) {
+    throw new Error(error)
+  }  
+};

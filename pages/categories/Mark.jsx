@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { BiBeer, BiPencil, BiTrash, BiTrophy } from 'react-icons/bi';
+import { BiBeer, BiMinus, BiPencil, BiTrash, BiTrophy } from 'react-icons/bi';
 import { Input } from '../../components/s/input'
 import { Button } from '../../components/s/button'
 import style from '../../styles/App.module.css'
@@ -37,14 +37,19 @@ const Mark = () => {
      async function AddMark() {
           await addMark({ name: mark, description: descriptionMark, subCategorieId: subCategoryId }).then((res) => {
                setIsStatusHidden(false);
-               setStatusMessage(res.message);
-               res.data.type.toLowerCase() === "success" ? setStatusType("success") : setStatusType("error")
-               GetMark() 
+               setStatusMessage(res.data.message);
+               if (res.data.type.toLowerCase() === "success") setStatusType("success")
+               else {
+
+                    setStatusType("error")
+                    setStatusMessage(res.data.message);
+               }
+               GetMark()
           })
      }
      async function DeleteMark(marque_id) {
           await deleteMark({ markId: marque_id }).then((response) => {
-               GetMark()              
+               GetMark()
           })
      }
 
@@ -68,10 +73,9 @@ const Mark = () => {
           setCategory(subCategoryName)
      }
 
-     async function GetMark() {
-          await getMark().then((response) => {
-               setData(response.data.data)
-               console.log(response.data.data, 'gggg')
+     function GetMark() {
+          getMark().then((response) => {
+               setData(response.data)
           })
      }
 
@@ -101,20 +105,31 @@ const Mark = () => {
 
                <div className="ml-6 bg-white shadow-md rounded-md p-4 w-full ">
                     <table className={`border  border-gray-200 w-full`}>
-                         <tr className={`${style.bg}`}>
-                              <td className={`border border-gray-200 text-white px-2`}>Sous categorie</td>
-                              <td className={`border border-gray-200 text-white px-2`}>Marques des produits</td>
-                         </tr >
-                         {
-                              data != undefined && data != null ? data.map((value) => {
-                                   return <tr key={value.mark_id} className={`border border-gray-200 text-xs`}>
-                                        <td className={`border border-gray-200 text-sm px-2 `}>{value.sub_categorie_name}</td>
-                                        <td className={`border border-gray-200 text-sm px-2 `}>{value.mark_name}</td>
-                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-blue-400 `} onClick={() => DeleteMark(value.mark_id)} />}</td>
-                                        <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-blue-400 `} />}</td>
-                                   </tr>
-                              }) : null
-                         } </table>
+                         <tbody>
+                              <tr className={`${style.bg}`}>
+                                   <td className={`border border-gray-200 text-white px-2`}>Sous categorie</td>
+                                   <td className={`border border-gray-200 text-white px-2`}>Marques des produits</td>
+                              </tr >
+                              {
+                                   data != undefined && data != null ? data.map((value) => {
+                                        return <tr key={value.mark_id} className={`border border-gray-200 text-xs`}>
+                                             <td className={`border border-gray-200 text-sm px-2 `}>{value.sub_categorie_name}</td>
+                                             <td className={`border border-gray-200 text-sm px-2 `}>{value.mark_name}</td>
+                                             <td className={`border border-gray-200 text-sm px-2`}>
+                                                  <div className={`bg-red-600 flex justify-center p-1 rounded-sm cursor-pointer w-9`} onClick={() => DeleteMark(value.mark_id)} >
+                                                       {<BiMinus size="0.95rem" className={` text-white`} />}
+                                                  </div>
+                                             </td>
+                                             <td className={`border border-gray-200 text-sm px-2`}>
+                                                  <div className={`bg-green-500 flex justify-center p-1 rounded-sm cursor-pointer w-9`} onClick={() => DeleteMark(value.mark_id)} >
+                                                       {<BiPencil size="0.95rem" className={` text-white`} />}
+                                                  </div>
+                                             </td>
+                                        </tr>
+                                   }) : null
+                              }
+                         </tbody>
+                    </table>
                </div>
           </div>
      </div>

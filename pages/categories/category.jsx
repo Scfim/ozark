@@ -5,6 +5,7 @@ import {
   BiTrophy,
   BiTrash,
   BiPencil,
+  BiMinus,
 } from "react-icons/bi";
 import { Input } from "../../components/s/input";
 import { Button } from "../../components/s/button";
@@ -34,27 +35,15 @@ const Category = ({ state }) => {
   };
 
   const [dataCategory, setDataCategory] = useState([]);
-  async function GetCategory() {
-    await getCategory().then((res) => {
+  function GetCategory() {
+    getCategory().then((res) => {
       console.log(res);
-      setDataCategory(res.data.data);
+      setDataCategory(res.data);
     });
   }
   const resetStatusIsHidden = () => setIsStatusHidden(true);
-  const [stateCategory, setStatecategory] = useState("");
-  const [stateSubCategory, setSubStatecategory] = useState("hidden");
-  const [title, setTitle] = useState("Sous Catégorie");
-  const ChangeState = () => {
-    if (stateCategory == "") {
-      setStatecategory("hidden");
-      setSubStatecategory("");
-      setTitle(" Catégorie");
-    } else {
-      setStatecategory("");
-      setSubStatecategory("hidden");
-      setTitle("Sous Catégorie");
-    }
-  };
+
+
   const AddCategory = async () => {
     await addCategory({
       name: category,
@@ -63,7 +52,14 @@ const Category = ({ state }) => {
 
       setIsStatusHidden(false);
       setStatusMessage(res.message);
-      res.data.type.toLowerCase() === "success" ? setStatusType("success") : setStatusType("error")
+      setStatusMessage(res.data.message);
+      if (res.data.type.toLowerCase() === "success") setStatusType("success")
+      else {
+
+        setStatusType("error")
+        setStatusMessage(res.data.message);
+      }
+      GetCategory()
 
     });
   }
@@ -83,7 +79,7 @@ const Category = ({ state }) => {
         <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier une catégorie </label>
       </div>
       <div>
-          <Status type={statusType} isHidden={isStatusHidden} message={statusMessage} resetStatusIsHidden={resetStatusIsHidden} />
+        <Status type={statusType} isHidden={isStatusHidden} message={statusMessage} resetStatusIsHidden={resetStatusIsHidden} />
       </div>
       <div className=" flex mx-14 my-8" >
         <div className="flex">
@@ -96,42 +92,38 @@ const Category = ({ state }) => {
 
         <div className="ml-6 bg-white shadow-md rounded-md p-4 w-full ">
           <table className={`border  border-gray-200 w-full`}>
-            <tr className={`${style.bg}`}>
-              <td className={`border border-gray-200 text-white px-2`}>
-                Categorie
+            <tbody>
+              <tr className={`${style.bg}`}>
+                <td className={`border border-gray-200 text-white px-2`}>
+                  Categorie
                   </td>
-            </tr>
-            {dataCategory != undefined || dataCategory != null
-              ? dataCategory.map((value) => {
-                return (
-                  <tr key={value.categorie_id} className={`border border-gray-200 text-xs`}>
-                    <td
-                      className={`border border-gray-200 text-sm px-2 `}
-                    >
-                      {value.categorie_name}
-                    </td>
-                    <td className={`border border-gray-200 text-sm px-2`}>
-                      {
-                        <BiTrash
-                          size="0.95rem"
-                          className={`cursor-pointer hover:text-blue-400`}
-                          onClick={() => DeleteCategory(value.categorie_id)}
-                        />
-                      }
-                    </td>
-                    <td className={`border border-gray-200 text-sm px-2`}>
-                      {
-                        <BiPencil
-                          size="0.95rem"
-                          className={`cursor-pointer hover:text-blue-400 `}
+              </tr>
+              {dataCategory != undefined || dataCategory != null
+                ? dataCategory.map((value) => {
+                  return (
+                    <tr key={value.categorie_id} className={`border border-gray-200 text-xs`}>
+                      <td
+                        className={`border border-gray-200 text-sm px-2 `}
+                      >
+                        {value.categorie_name}
+                      </td>
+                      
+                      <td className={`border border-gray-200 text-sm px-2`}>
+                        <div className={`bg-red-600 flex justify-center p-1 rounded-sm cursor-pointer w-9`} onClick={() => DeleteCategory(value.categorie_id)} >
+                          {<BiMinus size="0.95rem" className={` text-white`} />}
+                        </div>
+                      </td>
+                      <td className={`border border-gray-200 text-sm px-2`}>
+                        <div className={`bg-green-500 flex justify-center p-1 rounded-sm cursor-pointer w-9`} onClick={() => DeleteCategory(value.categorie_id)} >
+                          {<BiPencil size="0.95rem" className={` text-white`} />}
+                        </div>
+                      </td>
 
-                        />
-                      }
-                    </td>
-                  </tr>
-                );
-              })
-              : null}
+                    </tr>
+                  );
+                })
+                : null}
+            </tbody>
           </table>
         </div>
 
