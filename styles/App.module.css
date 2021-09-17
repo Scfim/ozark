@@ -28,7 +28,7 @@
     transition: ease-in-out all 2s height ;
 }
 .text {
-    color: #13CCE8;
+    color: #38acec;
   }
   .border {
     border-color: #ced1d1;
@@ -38,36 +38,36 @@
     color:#6e6e6e
   }
   .borde:hover{
-    border-color: #13CCE8;
-    color: #13CCE8;
+    border-color: #38acec;
+    color: #38acec;
   }
   .bgHovered{
-    color: #13CCE8;
+    color: #38acec;
   }
   .bgHovered:hover{
-   background: #13CCE8;
+   background: #38acec;
    color: white;
   }
   .bg{
-    background: #13CCE8;
+    background: #38acec;
 
   }
   .color:hover{
-    background-color: #13CCE8;
+    background-color: #38acec;
     color: #fff;
   }
   .color{
-    color: #13CCE8;
+    color: #38acec;
   }
   .bgLighten{
     background: #026372;
   }
   .onHover:hover{
     background:#026372;
-    color:#13CCE8;
+    color:#38acec;
   }
   .btn {
-    background-color: #13CCE8;
+    background-color: #38acec;
   }
   
   .btn:hover {
@@ -75,7 +75,7 @@
   }
   
   .input:focus {
-    border-color: #13CCE8;
+    border-color: #38acec;
   }
   .hr {
     height: 2px;
@@ -170,7 +170,7 @@
     color: #969696;
   }
   .controls span:nth-child(3){
-    color: #13CCE8;font-size: 24px;
+    color: #38acec;font-size: 24px;
   }
   .controls span:nth-child(even){
     font-size: 20px;
@@ -179,7 +179,7 @@
   .defaultButtonStyle{
     outline: none;
     border: 2px solid transparent;
-    background: #13CCE8;
+    background: #38acec;
     color: white;
     padding: 0px 10px;
     border-radius: 3px;
@@ -189,8 +189,8 @@
     font-size: 14px;
   }
   .defaultButtonStyle:hover{
-    background: #13CCE8;
-    border: #13CCE8 2px solid
+    background: #38acec;
+    border: #38acec 2px solid
   }
   .defaultButtonStyle:focus{
     outline: transparent;
@@ -202,7 +202,7 @@
     background-color:#b0eff8 ;
    }
   .iconButton:hover{
-    background-color:#13CCE8 ;
+    background-color:#38acec ;
     color:#fff;
   }
   .iconButton:focus{

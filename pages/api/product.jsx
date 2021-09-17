@@ -1,5 +1,7 @@
-import axios from "axios";
-import { server } from "../../constants/common";
+
+import axios from 'axios'
+import {server} from "../../constants/common"
+axios.defaults.withCredentials = true;
 
 export const addProduct = (data) => {
   const url = `${server}/products/add`;
@@ -57,4 +59,22 @@ export const getProduct = async (productName) => {
   }catch(error){
     throw new Error(error)
   }
+};
+export const getProductAll =async () => {
+  const url = `${server}/products/getAll`;
+  try {
+    const response = await axios
+    .post(
+      url,
+      {} ,     
+      {
+        headers: {
+          "x-access-token": localStorage.getItem("token"),
+        },
+      }
+    )
+      return response.data
+  } catch (error) {
+    throw new Error(error)
+  }  
 };

@@ -2,14 +2,25 @@ import React, { useEffect, useState } from "react";
 import { Input } from "../../components/s/input";
 import { Button } from "../../components/s/button";
 import style from "../../styles/App.module.css";
-import { BiAlarmSnooze, BiBeer, BiPencil, BiTrash } from "react-icons/bi";
+import { BiAlarmSnooze, BiBeer, BiMinus, BiPencil, BiTrash } from "react-icons/bi";
 import { Dropdown } from "../../components/s/dropdown";
 import { addSubCategory, editSubCategory, deleteSubCategory, getSubCategory } from "../api/subCategory";
-import { getCategory, getCategoryLike } from "../api/category";
+
+import { getCategoryLike } from "../api/category";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
+import Headers from '../../components/Headers'
+import Status from "../../components/Status";
+
+
 
 export default function SubCategory({ state }) {
-useIsLoggedIn()
+  useIsLoggedIn()
+
+  const resetStatusIsHidden = () => setIsStatusHidden(true);
+  const [statusType, setStatusType] = useState("");
+  const [isStatusHidden, setIsStatusHidden] = useState(true);
+  const [statusMessage, setStatusMessage] = useState("");
+
   useEffect(() => {
     GetSubCategory()
   }, [])
@@ -27,12 +38,12 @@ useIsLoggedIn()
   const [idCategory, setIdCategory] = useState("");
   const [categoryState, setCategoryState] = useState("hidden");
   const [dataCategory, setDataCategory] = useState([]);
-  const onSetCategory = async (e) => {
+  const onSetCategory = (e) => {
     setCategory(e.target.value);
     if (e.target.value != "") {
-      await getCategoryLike({ categorieName: e.target.value }).then((res) => {
-        setDataCategory(res.data.data)
-        console.log(res.data.data)
+      getCategoryLike({ categorieName: e.target.value }).then((res) => {
+        setDataCategory(res.data)
+
       })
 
       setCategoryState("");
@@ -51,7 +62,15 @@ useIsLoggedIn()
       name: subCategory,
       type: typeCategory
     }).then((res) => {
-      console.log(res);
+      setIsStatusHidden(false);
+      setStatusMessage(res.data.message);
+      if (res.data.type.toLowerCase() === "success") setStatusType("success")
+      else {
+
+        setStatusType("error")
+        setStatusMessage(res.data.message);
+      }
+
       GetSubCategory()
     });
   };
@@ -69,21 +88,21 @@ useIsLoggedIn()
 
 
   const [dataSubCategory, SetDatatSubCategory] = useState([])
-  async function GetSubCategory() {
-    await getSubCategory().then((res) => {
-      SetDatatSubCategory(res.data.data)
-      console.log(res.data.data)
+  function GetSubCategory() {
+    getSubCategory().then((res) => {
+      SetDatatSubCategory(res.data)
     })
   }
   return (
     <div className={`flex flex-col my-6`} >
-
+      <Headers title="Ajouter une sous-categorie" />
       <div className={` flex flex-col w-full mx-14`}>
         <label className={` text-xl font-bold`}> Ajouter une nouvelle sous-catégorie </label>
         <label className={` text-sm font-normal ${style.text}`}> Complèter les champs ci-bas pour identifier une sous-catégorie </label>
       </div>
-
-
+      <div>
+        <Status type={statusType} isHidden={isStatusHidden} message={statusMessage} resetStatusIsHidden={resetStatusIsHidden} />
+      </div>
       <div className=" flex mx-14 my-8" >
         <div className="flex">
           <div className="flex flex-col bg-white shadow-md rounded-md p-4  ">
@@ -110,23 +129,35 @@ useIsLoggedIn()
 
         <div className="ml-6 bg-white shadow-md rounded-md p-4 w-full ">
           <table className={`border  border-gray-200 w-full`}>
-            <tr className={`${style.bg}`}>
-              <td className={`border border-gray-200 text-white px-2`}>Catégorie</td>
-              <td className={`border border-gray-200 text-white px-2`}>Sous catégorie</td>
-            </tr >
-            {
-              dataSubCategory != undefined && dataSubCategory != null ? dataSubCategory.map((value) => {
-                return <tr key={value.sub_categorie_id} className={`border border-gray-200 text-xs`}>
-                  <td className={`border border-gray-200 text-sm px-2 `}>{value.categorie_name}</td>
-                  <td className={`border border-gray-200 text-sm px-2`}>{value.sub_categorie_name}</td>
-                  <td className={`border border-gray-200 text-sm px-2`}>{<BiTrash size="0.95rem" className={`cursor-pointer hover:text-gray-900`} onClick={() => DeleteSubCategory(value.sub_categorie_id)} />}</td>
-                  <td className={`border border-gray-200 text-sm px-2`}>{<BiPencil size="0.95rem" className={`cursor-pointer hover:text-gray-900`} />}</td>
-                </tr>
+            <tbody>
+              <tr className={`${style.bg}`}>
+                <td className={`border border-gray-200 text-white px-2`}>Catégorie</td>
+                <td className={`border border-gray-200 text-white px-2`}>Sous catégorie</td>
+              </tr >
+              {
+                dataSubCategory != undefined && dataSubCategory != null ? dataSubCategory.map((value) => {
+                  return <tr key={value.sub_categorie_id} className={`border border-gray-200 text-xs`}>
+                    <td className={`border border-gray-200 text-sm px-2 `}>{value.categorie_name}</td>
+                    <td className={`border border-gray-200 text-sm px-2`}>{value.sub_categorie_name}</td>
+                    <td className={`border border-gray-200 text-sm px-2`}>
+                      <div className={`bg-red-600 flex justify-center p-1 rounded-sm cursor-pointer w-9`} onClick={() => DeleteSubCategory(value.sub_categorie_id)} >
+                        {<BiMinus size="0.95rem" className={` text-white`} />}
+                      </div>
+                    </td>
+                    <td className={`border border-gray-200 text-sm px-2`}>
+                      <div className={`bg-green-500 flex justify-center p-1 rounded-sm cursor-pointer w-9`} onClick={() => DeleteSubCategory(value.sub_categorie_id)} >
+                        {<BiPencil size="0.95rem" className={` text-white`} />}
+                      </div>
+                    </td>
 
 
-              }) : SetDatatSubCategory([])
+                  </tr>
 
-            }
+
+                }) : SetDatatSubCategory([])
+
+              }
+            </tbody>
           </table>
         </div>
       </div>
