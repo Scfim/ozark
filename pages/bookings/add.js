@@ -6,6 +6,7 @@ import {
   FaMinus,
   FaPlusCircle,
   FaPollH,
+  FaPrint,
   FaSave,
   FaUser,
 } from "react-icons/fa";
@@ -22,9 +23,10 @@ import Status from "../../components/Status";
 import { getClients } from "../api/client";
 import Checkbox from "../../components/Checkbox";
 import useIsLoggedIn from "../../hooks/useIsLoggedIn";
+import BillHeader from "../../components/BillHeader";
 
 export default function add() {
-  useIsLoggedIn()
+  useIsLoggedIn();
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState("");
   const [productId, setProductId] = useState("");
@@ -35,6 +37,8 @@ export default function add() {
   const [bookingIds, setBookingIds] = useState([]);
   const [totalOfTotal, setTotalOfTotal] = useState([]);
   const [generalTotal, setGeneralTotal] = useState(0);
+
+  const [printFunctionReady, setPrintFunctionReady] = useState(false);
 
   const [isCash, setIsCash] = useState(true);
   const [allowOutPut, setAllowOutPut] = useState(true);
@@ -72,9 +76,9 @@ export default function add() {
 
   const onSearchProduct = (event) => {
     if (event.target.value !== "") {
-      getProduct(event.target.value).then((response) =>
-        setProducts(response.data.data)
-      );
+      getProduct(event.target.value).then((response) => {
+        response.type === "success" && setProducts(response.data);
+      });
     } else setProducts([]);
 
     setProduct(event.target.value);
@@ -138,7 +142,10 @@ export default function add() {
   };
   const onSaveBookings = () => {
     useAddBooking(bookings, allowOutPut, isCash)
-      .then((result) => console.log(result))
+      .then((result) => {
+        console.log(result);
+        result.type === "success" && setPrintFunctionReady(true);
+      })
       .catch((err) => console.info(err));
   };
   const removeBooking = (item) => {
@@ -274,48 +281,66 @@ export default function add() {
           resetStatusIsHidden={resetStatusIsHidden}
         />
         <div className="col-span-8 mx-3 bg-white rounded shadow flex flex-col h-fit-content justify-center">
-          <table className="table-auto rounded w-10/12 border mt-2 mx-auto">
-            <thead>
-              <tr className="bg-blue-50">
-                <th className="border w-1/6">Quantité</th>
-                <th className="border w-2/6">Produit</th>
-                <th className="border w-1/6">Prix Unitaire</th>
-                <th className="border w-1/6">Prix total</th>
-                <th className="border w-1/6"></th>
-              </tr>
-            </thead>
-            <tbody>
-              {bookings.length > 0
-                ? bookings.map((booking) => {
-                    return (
-                      <tr
-                        key={booking.bookingId}
-                        className="text-center border"
-                      >
-                        <td className="border">{booking.quantity}</td>
-                        <td className="border">{booking.product}</td>
-                        <td className="border">{booking.initialPrice}</td>
-                        <td className="border">{booking.total.toFixed(3)}</td>
-                        <td className="grid place-items-center">
-                          <button
-                            onClick={() => removeBooking(booking)}
-                            className="w-7 h-7 rounded focus:ring-2 m-1 p-1 focus:outline-none border-none focus:ring-red-600 bg-red-500 cursor-pointer text-white grid place-items-center"
-                          >
-                            <FaMinus />
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })
-                : null}
-            </tbody>
-          </table>
+          <div>
+            <BillHeader />
+            <table className="table-auto rounded w-10/12 border mt-2 mx-auto">
+              <thead>
+                <tr className="bg-blue-50">
+                  <th className="border w-1/5">QUANTITE</th>
+                  <th className="border w-2/5">DESIGNATION</th>
+                  <th className="border w-1/5">PU</th>
+                  <th className="border w-1/5">PT</th>
+                  {printFunctionReady === false && (
+                    <th className="border w-1/5"></th>
+                  )}
+                </tr>
+              </thead>
+              <tbody>
+                {bookings.length > 0
+                  ? bookings.map((booking) => {
+                      return (
+                        <tr
+                          key={booking.bookingId}
+                          className="text-center border"
+                        >
+                          <td className="border">{booking.quantity}</td>
+                          <td className="border">{booking.product}</td>
+                          <td className="border">{booking.initialPrice}</td>
+                          <td className="border">{booking.total.toFixed(3)}</td>
+                          {printFunctionReady === false && (
+                            <td className="grid place-items-center">
+                              <button
+                                onClick={() => removeBooking(booking)}
+                                className="w-7 h-7 rounded focus:ring-2 m-1 p-1 focus:outline-none border-none focus:ring-red-600 bg-red-500 cursor-pointer text-white grid place-items-center"
+                              >
+                                <FaMinus />
+                              </button>
+                            </td>
+                          )}
+                        </tr>
+                      );
+                    })
+                  : null}
+              </tbody>
+            </table>
+          </div>
+
           <div className="flex flex-col h-auto pl-4">
-            <Checkbox label="Le client paie-t-il en cash  ?" event={onCheckIsCash} checked={isCash} name="cashMoney" />
-            <Checkbox label="Autoriser la sortie ?" event={onCheckAllowOutPut} checked={allowOutPut} name="allowOutPut" />
+            <Checkbox
+              label="Le client paie-t-il en cash  ?"
+              event={onCheckIsCash}
+              checked={isCash}
+              name="cashMoney"
+            />
+            <Checkbox
+              label="Autoriser la sortie ?"
+              event={onCheckAllowOutPut}
+              checked={allowOutPut}
+              name="allowOutPut"
+            />
           </div>
           <div
-            style={{ width: "40%" }}
+            style={{ width: "60%" }}
             className="flex h-36 ml-16 justify-between items-center"
           >
             <div className="w-36 p-2 rounded border flex mr-5 items-center h-10 mt-2">
@@ -327,6 +352,14 @@ export default function add() {
             <Button event={onSaveBookings} design="w-36 p-2 mt-2 ml-3">
               <FaSave className="mr-1" /> Enregistrer
             </Button>
+            {printFunctionReady && (
+              <button
+                onClick={onSaveBookings}
+                className="rounded flex justify-between items-center font-semibold p-2 ml-3 mt-2 bg-gray-300 text-gray-700"
+              >
+                <FaPrint className="mr-1" /> Imprimer
+              </button>
+            )}
           </div>
         </div>
       </div>

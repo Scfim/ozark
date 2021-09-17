@@ -13,9 +13,9 @@ const NewProduct = () => {
      const onSetShop = (e) => {
           setShop(e.target.value);
      };
-     const [mailAddress, setMailAdress] = useState("");
-     const onSetAdressmail = (e) => {
-          setMailAdress(e.target.value);
+     const [mailAddress, setMailAddress] = useState("");
+     const onSetAddressMail = (e) => {
+          setMailAddress(e.target.value);
      };
      const [phone, setPhone] = useState("");
      const onSetPhone = (e) => {
@@ -29,16 +29,16 @@ const NewProduct = () => {
      const onSetBp = (e) => {
           setBp(e.target.value);
      };
-     const [adressShop, setAdressShop] = useState("");
-     const onSetAdressShop = (e) => {
-          setAdressShop(e.target.value);
+     const [addressShop, setAddressShop] = useState("");
+     const onSetAddressShop = (e) => {
+          setAddressShop(e.target.value);
      };
 
      const UpdateShop = async () => {
           //    await NewProduct().then((response)=>{
           //            console.log(response.data)
           //    })
-          console.log(shop, mailAddress, phone, siteWeb, bp, adressShop)
+          console.log(shop, mailAddress, phone, siteWeb, bp, addressShop)
      }
 
      return (
@@ -52,11 +52,11 @@ const NewProduct = () => {
 
                          <div className={` flex flex-col w-full`}>
                               <Input type="text" htmlFor="designationId" name="designation" label="Nom du magasin" event={onSetShop} icon={<BiHome size="0.95rem" />} />
-                              <Input type="numeric" htmlFor="mailId" name="mail" label="Adresse mail" event={onSetAdressmail} icon={<BiMailSend size="0.95rem" />} />
+                              <Input type="numeric" htmlFor="mailId" name="mail" label="Adresse mail" event={onSetAddressMail} icon={<BiMailSend size="0.95rem" />} />
                               <Input type="numeric" htmlFor="phoneId" namat="phone" label="Numéro de télephone" event={onSetPhone} icon={<BiPhone size="0.95rem" />} />
                               <Input type="numeric" htmlFor="phoneId" name="phone" label="Site web" event={onSetSiteWeb} icon={<BiGlobe size="0.95rem" />} />
                               <Input type="text" htmlFor="bpId" name="bp" label="Boîte postale" event={onSetBp} icon={<BiRepost size="0.95rem" />} />
-                              <Input type="text" htmlFor="adressId" name="adress" label="Adresse du magasin" event={onSetAdressShop} icon={<BiWorld size="0.95rem" />} />
+                              <Input type="text" htmlFor="adressId" name="adress" label="Adresse du magasin" event={onSetAddressShop} icon={<BiWorld size="0.95rem" />} />
                               <Button text={'Valider les informations'} event={() => UpdateShop()} />
                          </div>
 

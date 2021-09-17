@@ -18,7 +18,7 @@ export const useAddBooking = async (inputData, allowOutPut, isCash) => {
         },
       }
     );
-    return response;
+    return response.data;
   } catch (error) {
     /**
      * In future version we'll through errors in a better way of good user experiences
