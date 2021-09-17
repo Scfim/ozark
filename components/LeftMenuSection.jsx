@@ -17,19 +17,20 @@ import {
   BiUserCheck,
   BiCalendarPlus,
   BiListPlus,
+  BiHome,
 } from "react-icons/bi";
 
 export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
+  const [currentPage, setCurrentPage] = useState("Dashboard");
   const router = useRouter()
   useEffect(()=>{
-    const pathHash  = router.asPath.split("#_p1g5_index/")[1]
-   console.log(pathHash)
+    setCurrentPage(router.pathname)
+    console.log(router.pathname)
   },[router.pathname])
-  //currentOpenedPage and layout
-  const [currentPage, setCurrentPage] = useState("Dashboard");
+  
   const onClickMenu = (activePage, links) => {
     setCurrentPage(activePage);
-    window.location.hash = "_p1g5_index/"+activePage
+    console.log(activePage)
     setNavLinks(links);
     onInitNewPage();
   };
@@ -151,6 +152,19 @@ export default function LeftMenuSection({ setNavLinks, onInitNewPage }) {
         isDropDown={false}
         icon={<BiCalendarPlus />}
         router="/exercise"
+      ></Menu>
+      <Menu
+        links={{
+          data: "/company/data",
+          dash: "/company",
+          form: "/company/add",
+        }}
+        onClick={onClickMenu}
+        activeMenu={currentPage}
+        title="Etablissement"
+        isDropDown={false}
+        icon={<BiHome />}
+        router="/company"
       ></Menu>
       <MenuWrapper title="Identification produits">
         <Menu

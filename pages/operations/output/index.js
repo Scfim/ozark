@@ -24,13 +24,13 @@ export default function index() {
           activeMenu={activeMenu}
           design="rounded-t"
           name="Dashboard"
-          icon={<BiTv size="1.4rem" />}
+          icon={<BiTv size="1.4rem"/>}
           onClick={(menu) => setActiveMenu(menu)}
         />
         <OutPutMenuItem
           activeMenu={activeMenu}
           name="Rélévé de sortie"
-          icon={<BiBookOpen size="1.4rem" />}
+          icon={<BiBookOpen size="1.4rem"/>}
           onClick={(menu) => setActiveMenu(menu)}
         />
       </div>
